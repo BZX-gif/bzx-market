@@ -329,32 +329,36 @@ let _sb, _user, _profile;
 let _currentThreadId = null;
 let _currentPayHireId = null;
 let _realtimeChannel = null;
+let _initialized = false;
 
 // ── INIT ──
 window.addEventListener('load', async () => {
   _sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // Handle OAuth redirect session
+  // onAuthStateChange fires immediately with current session — single source of truth
   _sb.auth.onAuthStateChange(async (event, session) => {
-    if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session?.user && !_user) {
+    if (event === 'SIGNED_OUT') {
+      window.location.href = '/bzx-market/login.html';
+      return;
+    }
+    if (session?.user && !_initialized) {
+      _initialized = true;
       _user = session.user;
       await loadProfile();
       setupUI();
       loadOverview();
       subscribeRealtime();
     }
-    if (event === 'SIGNED_OUT') {
-      window.location.href = '/bzx-market/login.html';
-    }
   });
 
-  const { data: { session } } = await _sb.auth.getSession();
-  if (!session) { window.location.href = '/bzx-market/login.html'; return; }
-  _user = session.user;
-  await loadProfile();
-  setupUI();
-  loadOverview();
-  subscribeRealtime();
+  // Fallback: if onAuthStateChange doesn't fire within 3s, check manually
+  setTimeout(async () => {
+    if (_initialized) return;
+    const { data: { session } } = await _sb.auth.getSession();
+    if (!session) {
+      window.location.href = '/bzx-market/login.html';
+    }
+  }, 3000);
 });
 
 async function loadProfile() {
