@@ -370,24 +370,31 @@ window.addEventListener('load', async () => {
     }
   });
 
-  // Existing session check — but give OAuth callback a small grace period
-  // so we don't bounce to login.html before the token in the URL hash is processed
+  // Try Supabase session first
   const { data: { session } } = await _sb.auth.getSession();
   if (session?.user) {
     await boot(session.user);
   } else {
-    // If URL contains an OAuth token, wait for onAuthStateChange to process it
-    const hasAuthHash = /access_token=|refresh_token=|type=recovery/.test(window.location.hash || '');
-    if (hasAuthHash) {
-      // wait up to 4s for auth state change before redirect
-      setTimeout(async () => {
-        if (_booted) return;
-        const { data: { session: s2 } } = await _sb.auth.getSession();
-        if (s2?.user) await boot(s2.user);
-        else window.location.href = 'login.html';
-      }, 4000);
+    // Fallback: check sessionStorage set by login.html
+    const storedId = sessionStorage.getItem('bzx_user_id');
+    const storedEmail = sessionStorage.getItem('bzx_user_email');
+    const storedIgn = sessionStorage.getItem('bzx_user_ign');
+    if (storedId) {
+      // Build a minimal user object from sessionStorage
+      const fakeUser = { id: storedId, email: storedEmail, user_metadata: { ign: storedIgn } };
+      await boot(fakeUser);
     } else {
-      window.location.href = 'login.html';
+      const hasAuthHash = /access_token=|refresh_token=|type=recovery/.test(window.location.hash || '');
+      if (hasAuthHash) {
+        setTimeout(async () => {
+          if (_booted) return;
+          const { data: { session: s2 } } = await _sb.auth.getSession();
+          if (s2?.user) await boot(s2.user);
+          else window.location.href = 'login.html';
+        }, 4000);
+      } else {
+        window.location.href = 'login.html';
+      }
     }
   }
 });
