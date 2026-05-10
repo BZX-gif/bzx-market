@@ -370,19 +370,18 @@ window.addEventListener('load', async () => {
     }
   });
 
-  // Try Supabase session first
-  const { data: { session } } = await _sb.auth.getSession();
-  if (session?.user) {
-    await boot(session.user);
+  // Boot immediately from sessionStorage if available
+  const storedId = sessionStorage.getItem('bzx_user_id');
+  const storedEmail = sessionStorage.getItem('bzx_user_email');
+  const storedIgn = sessionStorage.getItem('bzx_user_ign');
+  if (storedId) {
+    const fakeUser = { id: storedId, email: storedEmail, user_metadata: { ign: storedIgn } };
+    await boot(fakeUser);
   } else {
-    // Fallback: check sessionStorage set by login.html
-    const storedId = sessionStorage.getItem('bzx_user_id');
-    const storedEmail = sessionStorage.getItem('bzx_user_email');
-    const storedIgn = sessionStorage.getItem('bzx_user_ign');
-    if (storedId) {
-      // Build a minimal user object from sessionStorage
-      const fakeUser = { id: storedId, email: storedEmail, user_metadata: { ign: storedIgn } };
-      await boot(fakeUser);
+    // Try Supabase session
+    const { data: { session } } = await _sb.auth.getSession();
+    if (session?.user) {
+      await boot(session.user);
     } else {
       const hasAuthHash = /access_token=|refresh_token=|type=recovery/.test(window.location.hash || '');
       if (hasAuthHash) {
@@ -400,8 +399,12 @@ window.addEventListener('load', async () => {
 });
 
 async function loadProfile() {
-  const { data } = await _sb.from('profiles').select('*').eq('id', _user.id).single();
-  _profile = data || { ign: _user.user_metadata?.ign || _user.email?.split('@')[0], role: 'Player', email: _user.email };
+  try {
+    const { data } = await _sb.from('profiles').select('*').eq('id', _user.id).single();
+    _profile = data || { ign: _user.user_metadata?.ign || _user.email?.split('@')[0] || sessionStorage.getItem('bzx_user_ign') || 'Player', role: 'Player', email: _user.email || sessionStorage.getItem('bzx_user_email') };
+  } catch(e) {
+    _profile = { ign: _user.user_metadata?.ign || sessionStorage.getItem('bzx_user_ign') || 'Player', role: 'Player', email: _user.email || sessionStorage.getItem('bzx_user_email') };
+  }
 }
 
 function setupUI() {
