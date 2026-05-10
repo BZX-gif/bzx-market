@@ -1208,15 +1208,15 @@
 
 <!-- TOPBAR -->
 <nav class="topbar">
-  <a href="index.html" class="topbar-brand">BlazeZoneX</a>
+  <a href="/bzx-market/index.html" class="topbar-brand">BlazeZoneX</a>
   <div class="topbar-right">
     <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Light/Dark Mode">🌙 <span id="themeLabel">Dark</span></button>
     <button class="leaderboard-btn" onclick="openLeaderboard()">🏆 <span>Leaderboard</span></button>
     <button class="compare-toggle-btn" id="compareToggleBtn" onclick="toggleComparePanel()">⚔️ <span>Compare</span> <span class="compare-count-badge" id="compareBadge">0</span></button>
     <button class="compare-toggle-btn" id="wishlistTopBtn" onclick="openWishlist()" style="border-color:rgba(255,45,85,.25);color:var(--red);background:rgba(255,45,85,.07)">❤️ <span class="wl-label">Saved</span> <span class="wishlist-count-badge" id="wishlistBadge">0</span></button>
     <button class="compare-toggle-btn" id="dashboardBtn" onclick="goToDashboard()" style="display:none;border-color:rgba(0,229,255,.25);color:var(--cyan);background:rgba(0,229,255,.07)">🎮 <span id="topbarIGN">Dashboard</span></button>
-    <a href="login.html" class="back-btn" id="loginTopBtn" style="background:linear-gradient(135deg,var(--fire),var(--fire2));border:none;color:#fff;padding:0 18px">🔐 Login</a>
-    <a href="index.html" class="back-btn"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Back</a>
+    <a href="/bzx-market/login.html" class="back-btn" id="loginTopBtn" style="background:linear-gradient(135deg,var(--fire),var(--fire2));border:none;color:#fff;padding:0 18px">🔐 Login</a>
+    <a href="/bzx-market/index.html" class="back-btn"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Back</a>
   </div>
 </nav>
 
@@ -2743,7 +2743,7 @@
       <div style="font-size:2.5rem;margin-bottom:12px">🔐</div>
       <div style="font-weight:700;font-size:.95rem;margin-bottom:8px">Login to Hire</div>
       <div style="font-size:.82rem;color:var(--muted);margin-bottom:20px">Create a free account to send hire requests, track status, and message players.</div>
-      <a href="login.html" class="modal-submit" style="text-decoration:none;display:inline-block;text-align:center">🔐 Login / Register Free →</a>
+      <a href="/bzx-market/login.html" class="modal-submit" style="text-decoration:none;display:inline-block;text-align:center">🔐 Login / Register Free →</a>
     </div>
 
     <!-- LOGGED IN HIRE FORM -->
@@ -3089,7 +3089,7 @@
 
 <!-- FOOTER -->
 <footer class="market-footer">
-  <p>BZX Player Market · Part of <a href="index.html">BlazeZoneX</a> · Built For Pressure 🔥</p>
+  <p>BZX Player Market · Part of <a href="/bzx-market/index.html">BlazeZoneX</a> · Built For Pressure 🔥</p>
   <div class="footer-links">
     <a href="#">Privacy Policy</a>
     <a href="#">Terms of Service</a>
@@ -4934,7 +4934,7 @@ function updateTopbarAuth(loggedIn) {
   }
 }
 
-function goToDashboard() { window.location.href = 'dashboard.html'; }
+function goToDashboard() { window.location.href = "/bzx-market/dashboard.html"; }
 
 // ── OPEN HIRE MODAL (auth-aware) ──
 function openHireModal(playerName, playerId) {
@@ -4968,7 +4968,7 @@ function closeHireModal() {
 
 // ── SUBMIT HIRE (to Supabase, not WhatsApp) ──
 async function submitHire() {
-  if (!_bzxUser) { window.location.href = 'login.html'; return; }
+  if (!_bzxUser) { window.location.href = "/bzx-market/login.html"; return; }
   const sb = getSB();
   const playerName = document.getElementById('hirePlayerName').value;
   const tournament = document.getElementById('hireTournament').value;
@@ -5031,7 +5031,7 @@ function showHireConfirmBanner(playerName) {
   const banner = document.createElement('div');
   banner.id = 'hireConfirmBanner';
   banner.style.cssText = `position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:9999;background:rgba(0,255,136,.1);border:1.5px solid rgba(0,255,136,.3);border-radius:16px;padding:14px 24px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(16px);box-shadow:0 10px 40px rgba(0,0,0,.4);animation:slideDown .4s cubic-bezier(.34,1.56,.64,1)`;
-  banner.innerHTML = `<span style="font-size:1.4rem">✅</span><div><div style="font-weight:700;font-size:.9rem;color:var(--green)">Hire request sent to ${playerName}!</div><div style="font-size:.76rem;color:var(--muted);margin-top:2px">Check your <a href="dashboard.html" style="color:var(--cyan);font-weight:700">Dashboard</a> to track status & messages.</div></div><button onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--soft);font-size:1rem;cursor:pointer;margin-left:8px">✕</button>`;
+  banner.innerHTML = `<span style="font-size:1.4rem">✅</span><div><div style="font-weight:700;font-size:.9rem;color:var(--green)">Hire request sent to ${playerName}!</div><div style="font-size:.76rem;color:var(--muted);margin-top:2px">Check your <a href="/bzx-market/dashboard.html" style="color:var(--cyan);font-weight:700">Dashboard</a> to track status & messages.</div></div><button onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--soft);font-size:1rem;cursor:pointer;margin-left:8px">✕</button>`;
   document.body.appendChild(banner);
   setTimeout(() => banner.remove(), 8000);
 }
