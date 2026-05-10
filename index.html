@@ -3075,6 +3075,11 @@ function unlockScroll() {
 //    4. Copy the /exec URL and paste it here:
 const BZX_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyv7m-gtXuCAsVsQKnSkAeUFLvGpW1nFOClMkuP10-j7-mSC3aBOyL_aGopzCVKw91j/exec';
 
+// 👉 RAZORPAY KEY (test mode — swap with live key after KYC approval)
+const RAZORPAY_KEY = 'rzp_test_Snf0xUf41V43bR';
+// Tier prices in paise (₹1 = 100 paise)
+const TIER_PRICES = { starter: 0, proboost: 2900, elite: 3000, legendary: 9900 };
+
 // 👉 YOUR WHATSAPP CHANNEL LINK (NOT a phone number — a public channel invite)
 //    Get it from: WhatsApp → Updates tab → your channel → Share link
 const WHATSAPP_CHANNEL_URL = 'https://whatsapp.com/channel/0029VbC5JUCCRs1xILik1B2U';
@@ -3655,14 +3660,13 @@ function submitAdd() {
   if (!ignEl || !ignEl.value.trim()) { showToast('Please enter your IGN', 'warn'); return; }
   const emailEl = document.getElementById('aEmail');
   const emailVal = emailEl ? emailEl.value.trim() : '';
-  // Light email validation if a value was supplied
   if (emailVal && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
     showToast('Please enter a valid email address', 'warn'); return;
   }
 
   const payload = {
     type:        'new_listing',
-    tier:        (typeof addTier !== 'undefined' ? addTier : '') ,
+    tier:        (typeof addTier !== 'undefined' ? addTier : ''),
     ign:         document.getElementById('aIGN')?.value || '',
     uid:         document.getElementById('aUID')?.value || '',
     role:        document.getElementById('aRole')?.value || '',
@@ -3682,8 +3686,49 @@ function submitAdd() {
     source:      'BlazeZoneX Player Market'
   };
 
+  const tierAmount = (typeof TIER_PRICES !== 'undefined' && TIER_PRICES[addTier]) ? TIER_PRICES[addTier] : 0;
+
+  // Starter is free — skip payment
+  if (tierAmount === 0) {
+    closeAddModal();
+    showSubmitOverlay('BZX Admin', 'New Listing Request', payload);
+    return;
+  }
+
+  // Paid tier — open Razorpay
   closeAddModal();
-  showSubmitOverlay('BZX Admin', 'New Listing Request', payload);
+  const options = {
+    key: RAZORPAY_KEY,
+    amount: tierAmount,
+    currency: 'INR',
+    name: 'BlazeZoneX Player Market',
+    description: payload.tier.toUpperCase() + ' Card Listing — ' + payload.ign,
+    image: 'https://bzx-gif.github.io/bzx-market/favicon.ico',
+    handler: function(response) {
+      // Payment success — add payment ID to payload and save to sheet
+      payload.payment_id = response.razorpay_payment_id;
+      payload.payment_status = 'paid';
+      showSubmitOverlay('BZX Admin', 'New Listing Request', payload);
+      showToast('✅ Payment successful! ID: ' + response.razorpay_payment_id, 'success');
+    },
+    prefill: {
+      name: payload.ign,
+      email: emailVal || payload.user_email || '',
+    },
+    notes: {
+      tier: payload.tier,
+      ign: payload.ign,
+      uid: payload.uid
+    },
+    theme: { color: '#ff7a18' },
+    modal: {
+      ondismiss: function() {
+        showToast('⚠️ Payment cancelled. Submit again to complete listing.', 'warn');
+      }
+    }
+  };
+  const rzp = new Razorpay(options);
+  rzp.open();
 }
 
 // ═══ SUBMIT-TO-BZX OVERLAY (Google Apps Script POST) ═══
@@ -5049,6 +5094,7 @@ window.addEventListener('load', () => {
 setTimeout(() => applyFilters(), 100);
 </script>
 <!-- SUPABASE SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 @keyframes slideDown{0%{transform:translateX(-50%) translateY(-20px);opacity:0}100%{transform:translateX(-50%) translateY(0);opacity:1}}
