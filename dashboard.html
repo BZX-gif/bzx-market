@@ -202,7 +202,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       <button class="nav-item" data-page="mycard" onclick="showPage('mycard',this)"><span class="nav-icon">🎴</span> My Card</button>
       <button class="nav-item" data-page="earnings" onclick="showPage('earnings',this)"><span class="nav-icon">💰</span> Earnings</button>
       <div class="nav-section">Market</div>
-      <a class="nav-item" href="market_4.html"><span class="nav-icon">🛒</span> Browse Market</a>
+      <a class="nav-item" href="/bzx-market/index.html"><span class="nav-icon">🛒</span> Browse Market</a>
     </nav>
     <div class="sidebar-footer">
       <button class="logout-btn" onclick="doLogout()">🚪 Logout</button>
@@ -344,12 +344,12 @@ window.addEventListener('load', async () => {
       subscribeRealtime();
     }
     if (event === 'SIGNED_OUT') {
-      window.location.href = 'login.html';
+      window.location.href = '/bzx-market/login.html';
     }
   });
 
   const { data: { session } } = await _sb.auth.getSession();
-  if (!session) { window.location.href = 'login.html'; return; }
+  if (!session) { window.location.href = '/bzx-market/login.html'; return; }
   _user = session.user;
   await loadProfile();
   setupUI();
@@ -574,7 +574,7 @@ async function loadMyCard() {
   const el = document.getElementById('myCardBody');
   const { data: card } = await _sb.from('player_cards').select('*').eq('user_id', _user.id).single();
   if (!card) {
-    el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🎴</div><div class="empty-state-title">No card yet</div><div class="empty-state-sub">Go to the market and submit your listing to create your card.</div><br><a href="market_4.html" style="color:var(--fire);font-weight:700;font-size:.84rem">→ Go to Market</a></div>`;
+    el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🎴</div><div class="empty-state-title">No card yet</div><div class="empty-state-sub">Go to the market and submit your listing to create your card.</div><br><a href="/bzx-market/index.html" style="color:var(--fire);font-weight:700;font-size:.84rem">→ Go to Market</a></div>`;
     return;
   }
   const seed = (card.ign||'player').replace(/\s+/g,'');
@@ -632,7 +632,7 @@ async function loadEarnings() {
 // ── LOGOUT ──
 async function doLogout() {
   await _sb?.auth.signOut();
-  window.location.href = 'login.html';
+  window.location.href = '/bzx-market/login.html';
 }
 
 // ── UTILS ──
