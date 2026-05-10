@@ -4894,31 +4894,22 @@ async function initBZXAuth() {
   const sb = getSB();
   if (!sb) return;
 
-  // onAuthStateChange handles Google OAuth token in URL hash
+  // onAuthStateChange is the ONLY reliable way to read session after any login type
+  // It fires immediately on page load if a session exists in storage
   sb.auth.onAuthStateChange(async (event, session) => {
-    if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session?.user) {
+    if (session?.user) {
       _bzxUser = session.user;
       if (!_bzxProfile) {
         const { data } = await sb.from('profiles').select('*').eq('id', _bzxUser.id).single();
         _bzxProfile = data;
       }
       updateTopbarAuth(true);
-    }
-    if (event === 'SIGNED_OUT') {
-      _bzxUser = null; _bzxProfile = null;
+    } else {
+      _bzxUser = null;
+      _bzxProfile = null;
       updateTopbarAuth(false);
     }
   });
-
-  const { data: { session } } = await sb.auth.getSession();
-  if (session?.user) {
-    _bzxUser = session.user;
-    const { data } = await sb.from('profiles').select('*').eq('id', _bzxUser.id).single();
-    _bzxProfile = data;
-    updateTopbarAuth(true);
-  } else {
-    updateTopbarAuth(false);
-  }
 }
 
 function updateTopbarAuth(loggedIn) {
