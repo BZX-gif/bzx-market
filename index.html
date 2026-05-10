@@ -3073,7 +3073,7 @@ function unlockScroll() {
 //    2. Paste the Apps Script template (see README/notes)
 //    3. Deploy → New Deployment → Type: Web app → Execute as: Me, Access: Anyone
 //    4. Copy the /exec URL and paste it here:
-const BZX_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbycXP0Ty9fq4BoxqsvtjjxCdp74YEPtyKtY__pSAzKjpCVEpBHOs2xhPZ47awq13U53lw/exec';
+const BZX_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxLZ4T_RrazTEnYhrUPCZLpm_v-ax63_0pREn5llSTiGEU6pLgrfr4jk0_WpMyIStgZ/exec';
 
 // 👉 YOUR WHATSAPP CHANNEL LINK (NOT a phone number — a public channel invite)
 //    Get it from: WhatsApp → Updates tab → your channel → Share link
@@ -3763,16 +3763,29 @@ function showSubmitOverlay(targetName, context, payload) {
     return;
   }
 
-  // Fire the request
+  // Fire via hidden iframe form — bypasses Apps Script CORS/allowlist
   try {
-    fetch(BZX_SHEETS_URL, {
-      method: 'POST',
-      mode: 'no-cors', // Apps Script /exec doesn't need CORS this way
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
-    })
-    .then(() => setTimeout(finishSuccess, 600))
-    .catch(err => { console.error('[submitAdd] fetch error', err); finishError(err && err.message); });
+    let iframe = document.getElementById('_bzx_hidden_frame');
+    if (!iframe) {
+      iframe = document.createElement('iframe');
+      iframe.name = '_bzx_hidden_frame';
+      iframe.id = '_bzx_hidden_frame';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+    }
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = BZX_SHEETS_URL;
+    form.target = '_bzx_hidden_frame';
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'data';
+    input.value = JSON.stringify(payload);
+    form.appendChild(input);
+    document.body.appendChild(form);
+    form.submit();
+    form.remove();
+    setTimeout(finishSuccess, 1800);
   } catch (e) {
     console.error('[submitAdd] threw', e);
     finishError(e && e.message);
