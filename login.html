@@ -433,38 +433,45 @@ async function doGoogleAuth() {
   if (error) showMsg('❌ ' + error.message, 'error');
 }
 
+let _redirecting = false;
+
 function onLoginSuccess(user) {
+  if (_redirecting) return; // prevent double-fire
+  _redirecting = true;
   const ign = user.user_metadata?.ign || user.email?.split('@')[0] || 'Player';
   try {
-    sessionStorage.setItem('bzx_user_id', user.id);
-    sessionStorage.setItem('bzx_user_email', user.email);
-    sessionStorage.setItem('bzx_user_ign', ign);
+    localStorage.setItem('bzx_user_id', user.id);
+    localStorage.setItem('bzx_user_email', user.email);
+    localStorage.setItem('bzx_user_ign', ign);
   } catch(e) {}
   document.getElementById('loginPanel').style.display = 'none';
   document.getElementById('registerPanel').style.display = 'none';
   document.getElementById('successMsg').textContent = `Welcome, ${ign}! Taking you to the market…`;
   document.getElementById('successScreen').classList.add('show');
-  // Hide tabs during success
   document.querySelector('.auth-tabs').style.display = 'none';
-  setTimeout(() => { window.location.href = "/bzx-market/index.html"; }, 1800);
+  setTimeout(() => { window.location.href = '/bzx-market/index.html'; }, 1800);
 }
 
-// ── SESSION CHECK — handles both normal login AND OAuth callback ──
+// ── SESSION CHECK ──
 window.addEventListener('load', async () => {
   generateParticles();
   const sb = getSupabase();
   if (!sb) return;
 
-  // onAuthStateChange catches the OAuth redirect token in the URL hash
-  sb.auth.onAuthStateChange((event, session) => {
-    if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session?.user) {
-      onLoginSuccess(session.user);
-    }
-  });
+  // Only handle SIGNED_IN from an actual OAuth redirect (URL contains #access_token)
+  // NOT from a pre-existing session on page load
+  const isOAuthCallback = window.location.hash.includes('access_token');
 
-  // Also check existing session (for normal page reload)
-  const { data: { session } } = await sb.auth.getSession();
-  if (session?.user) onLoginSuccess(session.user);
+  if (isOAuthCallback) {
+    // OAuth redirect — let onAuthStateChange handle it
+    sb.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session?.user && !_redirecting) {
+        onLoginSuccess(session.user);
+      }
+    });
+  }
+  // For normal page load — DON'T auto-redirect if already logged in.
+  // User explicitly came to login page, let them stay here.
 });
 
 // ── PARTICLES ──
