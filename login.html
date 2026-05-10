@@ -152,8 +152,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);-webk
 
 <!-- Topbar -->
 <nav class="topbar">
-  <a href="index.html" class="brand">BlazeZoneX</a>
-  <a href="index.html" class="back-link">← Back to Market</a>
+  <a href="/bzx-market/index.html" class="brand">BlazeZoneX</a>
+  <a href="/bzx-market/index.html" class="back-link">← Back to Market</a>
 </nav>
 
 <!-- Main -->
@@ -270,7 +270,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);-webk
         <div class="success-icon">🔥</div>
         <div class="success-title">You're In!</div>
         <div class="success-sub" id="successMsg">Welcome to BZX. Redirecting you to the market…</div>
-        <a href="index.html" class="go-market-btn">🎮 Go to Market →</a>
+        <a href="/bzx-market/index.html" class="go-market-btn">🎮 Go to Market →</a>
       </div>
 
     </div><!-- /auth-card -->
@@ -374,7 +374,7 @@ function showForgot() {
   if (!email) { showMsg('Enter your email first, then click Forgot Password', 'info'); return; }
   const sb = getSupabase();
   if (!sb) return;
-  sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + '/login.html' })
+  sb.auth.resetPasswordForEmail(email, { redirectTo: 'https://bzx-gif.github.io/bzx-market/login.html' })
     .then(({ error }) => {
       if (error) showMsg('❌ ' + error.message, 'error');
       else showMsg('📧 Password reset link sent to ' + email, 'success');
@@ -426,13 +426,9 @@ async function doRegister() {
 async function doGoogleAuth() {
   const sb = getSupabase();
   if (!sb) return;
-  // Build redirect URL — works whether file is index.html or market_4.html
-  const origin = window.location.origin;
-  const path = window.location.pathname.replace('login.html','');
-  const redirectTo = origin + path + 'market_4.html';
   const { error } = await sb.auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo }
+    options: { redirectTo: 'https://bzx-gif.github.io/bzx-market/index.html' }
   });
   if (error) showMsg('❌ ' + error.message, 'error');
 }
@@ -450,7 +446,7 @@ function onLoginSuccess(user) {
   document.getElementById('successScreen').classList.add('show');
   // Hide tabs during success
   document.querySelector('.auth-tabs').style.display = 'none';
-  setTimeout(() => { window.location.href = 'market_4.html'; }, 1800);
+  setTimeout(() => { window.location.href = "/bzx-market/index.html"; }, 1800);
 }
 
 // ── SESSION CHECK — handles both normal login AND OAuth callback ──
