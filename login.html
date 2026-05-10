@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BZX — Login / Register</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#030308;--fire:#ff7a18;--fire2:#ff4d00;--gold:#ffb347;
+  --cyan:#00e5ff;--purple:#b44dff;--green:#00ff88;--red:#ff2d55;
+  --text:#f8f8f8;--muted:rgba(255,255,255,.55);--soft:rgba(255,255,255,.3);
+  --line:rgba(255,255,255,.08);--glass:rgba(255,255,255,.04);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow-x:hidden}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+
+/* ── ANIMATED BG ── */
+.bg-scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,122,24,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,122,24,.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%)}
+.bg-orb{position:absolute;border-radius:50%;filter:blur(80px);animation:orbFloat 12s ease-in-out infinite}
+.bg-orb.o1{width:500px;height:500px;background:rgba(255,122,24,.12);top:-100px;left:-100px;animation-delay:0s}
+.bg-orb.o2{width:400px;height:400px;background:rgba(180,77,255,.1);bottom:-80px;right:-80px;animation-delay:-4s}
+.bg-orb.o3{width:300px;height:300px;background:rgba(0,229,255,.08);top:40%;left:60%;animation-delay:-8s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-20px) scale(1.05)}66%{transform:translate(-20px,30px) scale(.95)}}
+.bg-particles{position:absolute;inset:0}
+.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--fire);opacity:0;animation:particleRise linear infinite}
+@keyframes particleRise{0%{opacity:0;transform:translateY(0) scale(0)}10%{opacity:.8}90%{opacity:.2}100%{opacity:0;transform:translateY(-100vh) scale(.5)}}
+.scanlines{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.06) 3px,rgba(0,0,0,.06) 4px);pointer-events:none;opacity:.5}
+
+/* ── TOPBAR ── */
+.topbar{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;background:rgba(3,3,8,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--line)}
+.brand{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;background:linear-gradient(135deg,var(--fire),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px;text-decoration:none}
+.back-link{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:.8rem;font-weight:600;text-decoration:none;transition:color .2s}
+.back-link:hover{color:var(--fire)}
+
+/* ── MAIN LAYOUT ── */
+.main{position:relative;z-index:1;flex:1;display:flex;align-items:flex-start;justify-content:center;padding:24px 20px 60px;min-height:calc(100vh - 64px);overflow-y:auto}
+@media(min-height:800px){.main{align-items:center}}
+
+/* ── AUTH CONTAINER ── */
+.auth-wrap{width:100%;max-width:460px;position:relative;padding-top:4px}
+
+/* Tab switcher — always on top, never hidden */
+.auth-tabs{display:flex;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:16px;padding:4px;gap:4px;margin-bottom:20px;position:relative;z-index:2}
+.auth-tab{flex:1;padding:11px;border:none;border-radius:12px;background:transparent;color:var(--muted);font-family:'Inter',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .25s;letter-spacing:.3px}
+.auth-tab.active{background:linear-gradient(135deg,var(--fire),var(--fire2));color:#fff;box-shadow:0 4px 20px rgba(255,122,24,.3)}
+
+/* Card */
+.auth-card{background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:36px;backdrop-filter:blur(20px);box-shadow:0 30px 80px rgba(0,0,0,.5);position:relative;overflow:hidden}
+.auth-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--fire),var(--gold),var(--fire));background-size:200%;animation:shimmer 2.5s linear infinite}
+@keyframes shimmer{0%{background-position:0%}100%{background-position:200%}}
+
+.auth-header{text-align:center;margin-bottom:28px}
+.auth-icon{width:60px;height:60px;border-radius:18px;background:linear-gradient(135deg,rgba(255,122,24,.2),rgba(255,77,0,.15));border:1.5px solid rgba(255,122,24,.3);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 16px}
+.auth-title{font-family:'Orbitron',monospace;font-size:1.3rem;font-weight:900;margin-bottom:6px}
+.auth-sub{font-size:.82rem;color:var(--muted);line-height:1.5}
+
+/* Form */
+.auth-panel{display:none}
+.auth-panel.active{display:block}
+.form-group{margin-bottom:16px}
+.form-group label{display:flex;align-items:center;gap:6px;font-size:.76rem;font-weight:700;color:var(--muted);margin-bottom:7px;text-transform:uppercase;letter-spacing:.8px}
+.form-group label .lbl-icon{font-size:.9rem}
+.form-input{width:100%;padding:13px 16px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.08);border-radius:12px;color:var(--text);font-family:'Inter',sans-serif;font-size:.9rem;transition:all .2s;outline:none}
+.form-input:focus{border-color:rgba(255,122,24,.5);background:rgba(255,122,24,.05);box-shadow:0 0 0 3px rgba(255,122,24,.1)}
+.form-input::placeholder{color:var(--soft)}
+.form-input-wrap{position:relative}
+.form-input-wrap .form-input{padding-right:44px}
+.pwd-toggle{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--soft);cursor:pointer;font-size:.9rem;padding:4px;transition:color .2s}
+.pwd-toggle:hover{color:var(--text)}
+
+/* Role selector */
+.role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px}
+.role-opt{padding:10px 6px;background:rgba(255,255,255,.04);border:1.5px solid var(--line);border-radius:12px;text-align:center;cursor:pointer;transition:all .2s;font-size:.72rem;font-weight:700;color:var(--muted)}
+.role-opt:hover{border-color:rgba(255,122,24,.3);background:rgba(255,122,24,.05)}
+.role-opt.selected{border-color:var(--fire);background:rgba(255,122,24,.12);color:var(--fire)}
+.role-opt .ro-icon{font-size:1.2rem;display:block;margin-bottom:3px}
+
+/* Divider */
+.auth-divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:var(--soft);font-size:.72rem;font-weight:600}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--line)}
+
+/* Google btn */
+.google-btn{width:100%;padding:13px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.1);border-radius:12px;color:var(--text);font-family:'Inter',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:10px}
+.google-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2)}
+
+/* Submit btn */
+.auth-submit{width:100%;padding:15px;background:linear-gradient(135deg,var(--fire),var(--fire2));border:none;border-radius:14px;color:#fff;font-family:'Orbitron',monospace;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;letter-spacing:.5px;margin-top:4px}
+.auth-submit::before{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.15) 50%,transparent 65%);background-size:200%;animation:shimmer 2s linear infinite}
+.auth-submit:hover{transform:translateY(-2px);box-shadow:0 12px 35px rgba(255,122,24,.4)}
+.auth-submit:active{transform:translateY(0)}
+.auth-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* Spinner inside btn */
+.btn-spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:middle;margin-right:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Error / success messages */
+.auth-msg{padding:11px 14px;border-radius:10px;font-size:.8rem;font-weight:600;margin-bottom:14px;display:none;align-items:center;gap:8px;line-height:1.4}
+.auth-msg.show{display:flex}
+.auth-msg.error{background:rgba(255,45,85,.1);border:1px solid rgba(255,45,85,.25);color:var(--red)}
+.auth-msg.success{background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.2);color:var(--green)}
+.auth-msg.info{background:rgba(0,229,255,.07);border:1px solid rgba(0,229,255,.2);color:var(--cyan)}
+
+/* Password strength */
+.pwd-strength{margin-top:7px}
+.pwd-strength-bar{height:3px;border-radius:50px;background:rgba(255,255,255,.06);overflow:hidden;margin-bottom:4px}
+.pwd-strength-fill{height:100%;border-radius:50px;width:0%;transition:width .3s,background .3s}
+.pwd-strength-label{font-size:.65rem;color:var(--soft);font-weight:600}
+
+/* Terms */
+.auth-terms{font-size:.7rem;color:var(--soft);text-align:center;margin-top:14px;line-height:1.5}
+.auth-terms a{color:var(--fire);text-decoration:none}
+
+/* Success screen */
+.auth-success-screen{display:none;text-align:center;padding:20px 0}
+.auth-success-screen.show{display:block}
+.success-icon{font-size:3.5rem;animation:popIn .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{0%{transform:scale(0)}100%{transform:scale(1)}}
+.success-title{font-family:'Orbitron',monospace;font-size:1.2rem;font-weight:900;margin:16px 0 8px;color:var(--green)}
+.success-sub{font-size:.84rem;color:var(--muted);line-height:1.6;margin-bottom:24px}
+.go-market-btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:linear-gradient(135deg,var(--fire),var(--fire2));border:none;border-radius:50px;color:#fff;font-family:'Orbitron',monospace;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .25s;text-decoration:none}
+.go-market-btn:hover{transform:scale(1.04);box-shadow:0 10px 30px rgba(255,122,24,.35)}
+
+/* Verify email screen */
+.verify-screen{display:none;text-align:center;padding:10px 0}
+.verify-screen.show{display:block}
+
+/* Mobile */
+@media(max-width:480px){
+  .topbar{padding:0 16px}
+  .auth-card{padding:22px 16px}
+  .main{padding:16px 14px 50px;align-items:flex-start}
+  .auth-tabs{margin-bottom:16px}
+  .auth-tab{font-size:.8rem;padding:10px 6px}
+}
+</style>
+</head>
+<body>
+
+<!-- Animated Background -->
+<div class="bg-scene">
+  <div class="bg-grid"></div>
+  <div class="bg-orb o1"></div>
+  <div class="bg-orb o2"></div>
+  <div class="bg-orb o3"></div>
+  <div class="bg-particles" id="bgParticles"></div>
+  <div class="scanlines"></div>
+</div>
+
+<!-- Topbar -->
+<nav class="topbar">
+  <a href="index.html" class="brand">BlazeZoneX</a>
+  <a href="market_4.html" class="back-link">← Back to Market</a>
+</nav>
+
+<!-- Main -->
+<div class="main">
+  <div class="auth-wrap">
+
+    <!-- Tab Switch -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">🔐 Login</button>
+      <button class="auth-tab" id="tabRegister" onclick="switchTab('register')">⚡ Register</button>
+    </div>
+
+    <!-- Card -->
+    <div class="auth-card">
+
+      <!-- Error/Success msg -->
+      <div class="auth-msg" id="authMsg"></div>
+
+      <!-- ══ LOGIN PANEL ══ -->
+      <div class="auth-panel active" id="loginPanel">
+        <div class="auth-header">
+          <div class="auth-icon">🔥</div>
+          <div class="auth-title">Welcome Back</div>
+          <div class="auth-sub">Login to manage your card, hires & messages</div>
+        </div>
+
+        <div class="form-group">
+          <label><span class="lbl-icon">📧</span> Email</label>
+          <input class="form-input" type="email" id="loginEmail" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label><span class="lbl-icon">🔒</span> Password</label>
+          <div class="form-input-wrap">
+            <input class="form-input" type="password" id="loginPassword" placeholder="Your password" autocomplete="current-password">
+            <button class="pwd-toggle" onclick="togglePwd('loginPassword',this)" type="button">👁</button>
+          </div>
+        </div>
+        <div style="text-align:right;margin-bottom:18px">
+          <a href="#" onclick="showForgot()" style="font-size:.76rem;color:var(--fire);text-decoration:none;font-weight:600">Forgot password?</a>
+        </div>
+
+        <button class="auth-submit" id="loginBtn" onclick="doLogin()">🔐 Login to BZX</button>
+
+        <div class="auth-divider">or continue with</div>
+        <button class="google-btn" onclick="doGoogleAuth()">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Continue with Google
+        </button>
+
+        <div class="auth-terms">Don't have an account? <a href="#" onclick="switchTab('register')">Register free →</a></div>
+      </div>
+
+      <!-- ══ REGISTER PANEL ══ -->
+      <div class="auth-panel" id="registerPanel">
+        <div class="auth-header">
+          <div class="auth-icon">⚡</div>
+          <div class="auth-title">Join BZX</div>
+          <div class="auth-sub">Create your account to list your card and get hired</div>
+        </div>
+
+        <div class="form-group">
+          <label><span class="lbl-icon">🎮</span> In-Game Name (IGN)</label>
+          <input class="form-input" type="text" id="regIGN" placeholder="Your Free Fire IGN" maxlength="30">
+        </div>
+        <div class="form-group">
+          <label><span class="lbl-icon">📧</span> Email</label>
+          <input class="form-input" type="email" id="regEmail" placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label><span class="lbl-icon">🔒</span> Password</label>
+          <div class="form-input-wrap">
+            <input class="form-input" type="password" id="regPassword" placeholder="Minimum 6 characters" autocomplete="new-password" oninput="checkPwdStrength(this.value)">
+            <button class="pwd-toggle" onclick="togglePwd('regPassword',this)" type="button">👁</button>
+          </div>
+          <div class="pwd-strength">
+            <div class="pwd-strength-bar"><div class="pwd-strength-fill" id="pwdFill"></div></div>
+            <div class="pwd-strength-label" id="pwdLabel">Enter a password</div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label><span class="lbl-icon">🎯</span> Your Role</label>
+          <div class="role-grid" id="roleGrid">
+            <div class="role-opt" onclick="selectRole(this,'Fragger')"><span class="ro-icon">💥</span>Fragger</div>
+            <div class="role-opt" onclick="selectRole(this,'Sniper')"><span class="ro-icon">🎯</span>Sniper</div>
+            <div class="role-opt" onclick="selectRole(this,'IGL')"><span class="ro-icon">📡</span>IGL</div>
+            <div class="role-opt" onclick="selectRole(this,'Support')"><span class="ro-icon">🛡️</span>Support</div>
+            <div class="role-opt" onclick="selectRole(this,'All-Rounder')"><span class="ro-icon">⚡</span>All-Rounder</div>
+            <div class="role-opt" onclick="selectRole(this,'Hirer')"><span class="ro-icon">👑</span>Hirer Only</div>
+          </div>
+          <input type="hidden" id="regRole" value="">
+        </div>
+
+        <button class="auth-submit" id="registerBtn" onclick="doRegister()">⚡ Create My Account</button>
+
+        <div class="auth-divider">or continue with</div>
+        <button class="google-btn" onclick="doGoogleAuth()">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Continue with Google
+        </button>
+
+        <div class="auth-terms">By registering you agree to our <a href="#">Terms</a> & <a href="#">Privacy Policy</a></div>
+      </div>
+
+      <!-- ══ VERIFY EMAIL SCREEN ══ -->
+      <div class="verify-screen" id="verifyScreen">
+        <div style="font-size:3rem;margin-bottom:16px">📧</div>
+        <div class="auth-title" style="margin-bottom:10px">Check Your Email</div>
+        <div class="auth-sub" style="margin-bottom:20px">We sent a confirmation link to <strong id="verifyEmail" style="color:var(--fire)"></strong>. Click it to activate your account then come back here to login.</div>
+        <button class="auth-submit" onclick="switchTab('login')" style="max-width:200px;margin:0 auto;display:block">← Go to Login</button>
+      </div>
+
+      <!-- ══ SUCCESS SCREEN ══ -->
+      <div class="auth-success-screen" id="successScreen">
+        <div class="success-icon">🔥</div>
+        <div class="success-title">You're In!</div>
+        <div class="success-sub" id="successMsg">Welcome to BZX. Redirecting you to the market…</div>
+        <a href="market_4.html" class="go-market-btn">🎮 Go to Market →</a>
+      </div>
+
+    </div><!-- /auth-card -->
+  </div><!-- /auth-wrap -->
+</div>
+
+<!-- ── SUPABASE SDK ── -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  BZX AUTH — SUPABASE INTEGRATION
+//  Replace YOUR_SUPABASE_URL and YOUR_SUPABASE_ANON_KEY
+//  with values from supabase.com → Project Settings → API
+// ═══════════════════════════════════════════════════════
+const SUPABASE_URL = 'https://zcklqbdfolwoauqisezk.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpja2xxYmRmb2x3b2F1cWlzZXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMTg0OTIsImV4cCI6MjA5Mzg5NDQ5Mn0.89LYcULvSa2iVKNa8VjpHCjiWifknlNQP6uWpZh5fNM';
+
+let _supabase = null;
+let _selectedRole = '';
+
+function getSupabase() {
+  if (!_supabase) {
+    if (SUPABASE_URL === 'YOUR_SUPABASE_URL') {
+      showMsg('⚠️ Supabase not configured yet. See setup guide below.', 'info');
+      return null;
+    }
+    _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+  return _supabase;
+}
+
+// ── UI HELPERS ──
+function showMsg(text, type = 'error') {
+  const el = document.getElementById('authMsg');
+  el.textContent = text;
+  el.className = 'auth-msg show ' + type;
+  setTimeout(() => el.classList.remove('show'), 6000);
+}
+function setLoading(btnId, loading, defaultText) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+  btn.disabled = loading;
+  btn.innerHTML = loading ? `<span class="btn-spinner"></span> Please wait…` : defaultText;
+}
+
+function switchTab(tab) {
+  document.getElementById('loginPanel').classList.toggle('active', tab === 'login');
+  document.getElementById('registerPanel').classList.toggle('active', tab === 'register');
+  document.getElementById('tabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+  document.getElementById('authMsg').classList.remove('show');
+  // Reset success/verify screens
+  document.getElementById('verifyScreen').classList.remove('show');
+  document.getElementById('successScreen').classList.remove('show');
+  if (tab === 'login') {
+    document.getElementById('loginPanel').style.display = '';
+    document.getElementById('registerPanel').style.display = '';
+  }
+}
+
+function togglePwd(id, btn) {
+  const inp = document.getElementById(id);
+  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
+  else { inp.type = 'password'; btn.textContent = '👁'; }
+}
+
+function selectRole(el, role) {
+  document.querySelectorAll('.role-opt').forEach(r => r.classList.remove('selected'));
+  el.classList.add('selected');
+  _selectedRole = role;
+  document.getElementById('regRole').value = role;
+}
+
+function checkPwdStrength(pwd) {
+  const fill = document.getElementById('pwdFill');
+  const lbl = document.getElementById('pwdLabel');
+  if (!fill || !lbl) return;
+  let score = 0;
+  if (pwd.length >= 6) score++;
+  if (pwd.length >= 10) score++;
+  if (/[A-Z]/.test(pwd)) score++;
+  if (/[0-9]/.test(pwd)) score++;
+  if (/[^A-Za-z0-9]/.test(pwd)) score++;
+  const levels = [
+    { w: '0%', c: 'transparent', t: 'Enter a password' },
+    { w: '25%', c: 'var(--red)', t: '😬 Too weak' },
+    { w: '50%', c: 'var(--gold)', t: '⚡ Okay' },
+    { w: '75%', c: 'var(--fire)', t: '💪 Good' },
+    { w: '90%', c: 'var(--cyan)', t: '🔥 Strong' },
+    { w: '100%', c: 'var(--green)', t: '🔒 Very Strong' },
+  ];
+  const l = levels[score] || levels[0];
+  fill.style.width = l.w;
+  fill.style.background = l.c;
+  lbl.textContent = l.t;
+}
+
+function showForgot() {
+  const email = document.getElementById('loginEmail').value.trim();
+  if (!email) { showMsg('Enter your email first, then click Forgot Password', 'info'); return; }
+  const sb = getSupabase();
+  if (!sb) return;
+  sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + '/login.html' })
+    .then(({ error }) => {
+      if (error) showMsg('❌ ' + error.message, 'error');
+      else showMsg('📧 Password reset link sent to ' + email, 'success');
+    });
+}
+
+// ── AUTH FUNCTIONS ──
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  if (!email || !password) { showMsg('Please fill in email and password', 'error'); return; }
+  const sb = getSupabase();
+  if (!sb) return;
+  setLoading('loginBtn', true, '🔐 Login to BZX');
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
+  setLoading('loginBtn', false, '🔐 Login to BZX');
+  if (error) { showMsg('❌ ' + error.message, 'error'); return; }
+  onLoginSuccess(data.user);
+}
+
+async function doRegister() {
+  const ign = document.getElementById('regIGN').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPassword').value;
+  const role = document.getElementById('regRole').value;
+  if (!ign) { showMsg('Please enter your IGN', 'error'); return; }
+  if (!email) { showMsg('Please enter your email', 'error'); return; }
+  if (password.length < 6) { showMsg('Password must be at least 6 characters', 'error'); return; }
+  if (!role) { showMsg('Please select your role', 'error'); return; }
+  const sb = getSupabase();
+  if (!sb) return;
+  setLoading('registerBtn', true, '⚡ Create My Account');
+  const { data, error } = await sb.auth.signUp({
+    email, password,
+    options: { data: { ign, role, created_at: new Date().toISOString() } }
+  });
+  setLoading('registerBtn', false, '⚡ Create My Account');
+  if (error) { showMsg('❌ ' + error.message, 'error'); return; }
+  // Insert profile row
+  if (data.user) {
+    await sb.from('profiles').upsert({ id: data.user.id, ign, role, email, created_at: new Date().toISOString() });
+  }
+  // Show verify screen
+  document.getElementById('registerPanel').style.display = 'none';
+  document.getElementById('verifyEmail').textContent = email;
+  document.getElementById('verifyScreen').classList.add('show');
+}
+
+async function doGoogleAuth() {
+  const sb = getSupabase();
+  if (!sb) return;
+  // Build redirect URL — works whether file is index.html or market_4.html
+  const origin = window.location.origin;
+  const path = window.location.pathname.replace('login.html','');
+  const redirectTo = origin + path + 'market_4.html';
+  const { error } = await sb.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo }
+  });
+  if (error) showMsg('❌ ' + error.message, 'error');
+}
+
+function onLoginSuccess(user) {
+  const ign = user.user_metadata?.ign || user.email?.split('@')[0] || 'Player';
+  try {
+    sessionStorage.setItem('bzx_user_id', user.id);
+    sessionStorage.setItem('bzx_user_email', user.email);
+    sessionStorage.setItem('bzx_user_ign', ign);
+  } catch(e) {}
+  document.getElementById('loginPanel').style.display = 'none';
+  document.getElementById('registerPanel').style.display = 'none';
+  document.getElementById('successMsg').textContent = `Welcome, ${ign}! Taking you to the market…`;
+  document.getElementById('successScreen').classList.add('show');
+  // Hide tabs during success
+  document.querySelector('.auth-tabs').style.display = 'none';
+  setTimeout(() => { window.location.href = 'market_4.html'; }, 1800);
+}
+
+// ── SESSION CHECK — handles both normal login AND OAuth callback ──
+window.addEventListener('load', async () => {
+  generateParticles();
+  const sb = getSupabase();
+  if (!sb) return;
+
+  // onAuthStateChange catches the OAuth redirect token in the URL hash
+  sb.auth.onAuthStateChange((event, session) => {
+    if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session?.user) {
+      onLoginSuccess(session.user);
+    }
+  });
+
+  // Also check existing session (for normal page reload)
+  const { data: { session } } = await sb.auth.getSession();
+  if (session?.user) onLoginSuccess(session.user);
+});
+
+// ── PARTICLES ──
+function generateParticles() {
+  const wrap = document.getElementById('bgParticles');
+  if (!wrap) return;
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `left:${Math.random()*100}%;top:${100+Math.random()*20}%;animation-duration:${4+Math.random()*6}s;animation-delay:${Math.random()*8}s;opacity:${.3+Math.random()*.5};width:${1+Math.random()*2}px;height:${1+Math.random()*2}px`;
+    wrap.appendChild(p);
+  }
+}
+</script>
+</body>
+</html>

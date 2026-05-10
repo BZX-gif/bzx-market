@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BZX — Supabase Setup Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#030308;--fire:#ff7a18;--cyan:#00e5ff;--green:#00ff88;--text:#f8f8f8;--muted:rgba(255,255,255,.55);--line:rgba(255,255,255,.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:40px 20px;line-height:1.7;max-width:800px;margin:0 auto}
+h1{font-family:'Orbitron',monospace;font-size:1.8rem;font-weight:900;background:linear-gradient(135deg,var(--fire),#ffb347);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+h2{font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;color:var(--cyan);margin:32px 0 12px;padding-top:16px;border-top:1px solid var(--line)}
+p{color:var(--muted);margin-bottom:12px;font-size:.9rem}
+.step{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:14px;position:relative}
+.step-num{position:absolute;top:16px;right:16px;width:28px;height:28px;border-radius:50%;background:rgba(255,122,24,.15);border:1px solid rgba(255,122,24,.3);color:var(--fire);font-size:.75rem;font-weight:900;display:flex;align-items:center;justify-content:center}
+.step strong{color:var(--text);font-size:.9rem}
+.step p{margin-bottom:4px}
+code{background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);border-radius:6px;padding:2px 8px;font-size:.82rem;color:var(--cyan);font-family:monospace}
+pre{background:rgba(0,0,0,.5);border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow-x:auto;font-size:.82rem;color:var(--green);font-family:monospace;margin:12px 0}
+.warn{background:rgba(255,122,24,.08);border:1px solid rgba(255,122,24,.2);border-radius:10px;padding:12px 16px;font-size:.82rem;color:#ffb347;margin:16px 0}
+a{color:var(--fire);text-decoration:none}a:hover{text-decoration:underline}
+.done{color:var(--green);font-weight:700}
+</style>
+</head>
+<body>
+<h1>BZX Backend Setup Guide</h1>
+<p>Follow these steps to connect your Supabase backend. Takes about 15 minutes, completely free.</p>
+
+<h2>Step 1 — Create Supabase Project</h2>
+<div class="step"><div class="step-num">1</div>
+<strong>Go to <a href="https://supabase.com" target="_blank">supabase.com</a> → Sign Up (free)</strong>
+<p>Click "New Project" → name it <code>bzx-market</code> → pick any region → set a database password → Create.</p>
+<p>Wait ~2 minutes for it to provision.</p>
+</div>
+
+<h2>Step 2 — Get Your Keys</h2>
+<div class="step"><div class="step-num">2</div>
+<strong>Project Settings → API</strong>
+<p>Copy two values:</p>
+<ul style="margin:8px 0 8px 18px;color:var(--muted);font-size:.85rem">
+  <li><strong style="color:var(--text)">Project URL</strong> — looks like <code>https://xxxx.supabase.co</code></li>
+  <li><strong style="color:var(--text)">anon public key</strong> — long string starting with <code>eyJ…</code></li>
+</ul>
+<p>Paste them into <strong>all 3 files</strong> replacing <code>YOUR_SUPABASE_URL</code> and <code>YOUR_SUPABASE_ANON_KEY</code>:</p>
+<pre>const SUPABASE_URL = 'https://xxxx.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGc...';</pre>
+<p>Files to update: <code>market_4.html</code>, <code>login.html</code>, <code>dashboard.html</code></p>
+</div>
+
+<h2>Step 3 — Create Database Tables</h2>
+<div class="step"><div class="step-num">3</div>
+<strong>Go to SQL Editor in Supabase → paste and run this SQL:</strong>
+<pre>-- Profiles (one per user)
+create table profiles (
+  id uuid references auth.users primary key,
+  ign text,
+  role text,
+  email text,
+  created_at timestamptz default now()
+);
+alter table profiles enable row level security;
+create policy "Users can read own profile" on profiles for select using (auth.uid() = id);
+create policy "Users can update own profile" on profiles for update using (auth.uid() = id);
+create policy "Users can insert own profile" on profiles for insert with check (auth.uid() = id);
+
+-- Player cards
+create table player_cards (
+  id uuid default gen_random_uuid() primary key,
+  user_id uuid references auth.users,
+  ign text,
+  uid text,
+  role text,
+  rank text,
+  kd numeric,
+  win_rate numeric,
+  matches integer,
+  price numeric default 0,
+  skills text,
+  bio text,
+  social text,
+  availability text,
+  whatsapp text,
+  tier text default 'starter',
+  active boolean default true,
+  created_at timestamptz default now()
+);
+alter table player_cards enable row level security;
+create policy "Anyone can read cards" on player_cards for select using (true);
+create policy "Owner can update card" on player_cards for update using (auth.uid() = user_id);
+create policy "Owner can insert card" on player_cards for insert with check (auth.uid() = user_id);
+
+-- Hire requests
+create table hire_requests (
+  id uuid default gen_random_uuid() primary key,
+  hirer_id uuid references auth.users,
+  hirer_name text,
+  player_id uuid references auth.users,
+  player_name text,
+  tournament text,
+  matches text,
+  urgency text,
+  note text,
+  amount numeric default 0,
+  status text default 'pending',
+  paid_at timestamptz,
+  created_at timestamptz default now(),
+  updated_at timestamptz
+);
+alter table hire_requests enable row level security;
+create policy "Hirer sees own requests" on hire_requests for select using (auth.uid() = hirer_id or auth.uid() = player_id);
+create policy "Hirer can create request" on hire_requests for insert with check (auth.uid() = hirer_id);
+create policy "Player can update status" on hire_requests for update using (auth.uid() = player_id or auth.uid() = hirer_id);
+
+-- Messages
+create table messages (
+  id uuid default gen_random_uuid() primary key,
+  sender_id uuid references auth.users,
+  receiver_id uuid references auth.users,
+  thread_id text,
+  content text,
+  type text default 'chat',
+  read boolean default false,
+  created_at timestamptz default now()
+);
+alter table messages enable row level security;
+create policy "Participants can read messages" on messages for select using (auth.uid() = sender_id or auth.uid() = receiver_id);
+create policy "Users can send messages" on messages for insert with check (auth.uid() = sender_id);
+create policy "Receiver can mark read" on messages for update using (auth.uid() = receiver_id);
+</pre>
+<p class="done">✅ Run this once — all tables are created.</p>
+</div>
+
+<h2>Step 4 — Enable Realtime</h2>
+<div class="step"><div class="step-num">4</div>
+<strong>Database → Replication → enable these tables:</strong>
+<ul style="margin:8px 0 8px 18px;color:var(--muted);font-size:.85rem">
+  <li>✅ hire_requests</li>
+  <li>✅ messages</li>
+</ul>
+<p>This makes hire notifications and messages appear live without refreshing.</p>
+</div>
+
+<h2>Step 5 — Enable Google Login (optional)</h2>
+<div class="step"><div class="step-num">5</div>
+<strong>Authentication → Providers → Google → Enable</strong>
+<p>Go to <a href="https://console.cloud.google.com" target="_blank">console.cloud.google.com</a> → create OAuth credentials → paste Client ID & Secret into Supabase.</p>
+<p>Callback URL to add in Google Console: <code>https://xxxx.supabase.co/auth/v1/callback</code></p>
+</div>
+
+<h2>Step 6 — Set Your UPI ID</h2>
+<div class="step"><div class="step-num">6</div>
+<strong>In <code>dashboard.html</code>, find and replace:</strong>
+<pre>const BZX_UPI_ID = 'YOUR_UPI_ID@upi';</pre>
+<p>Replace with your actual UPI ID (e.g. <code>yourname@paytm</code> or <code>9876543210@ybl</code>)</p>
+<p>This is shown to hirers when a player accepts their request.</p>
+</div>
+
+<h2>Step 7 — Deploy to Netlify</h2>
+<div class="step"><div class="step-num">7</div>
+<strong>Put all 4 files in one folder:</strong>
+<ul style="margin:8px 0 8px 18px;color:var(--muted);font-size:.85rem">
+  <li><code>market_4.html</code> → rename to <code>index.html</code></li>
+  <li><code>login.html</code></li>
+  <li><code>dashboard.html</code></li>
+  <li><code>setup.html</code> (this file, optional)</li>
+</ul>
+<p>Go to <a href="https://app.netlify.com/drop" target="_blank">app.netlify.com/drop</a> → drag the folder → done.</p>
+<p>Add your Netlify URL to Supabase: <strong>Authentication → URL Configuration → Site URL</strong></p>
+<p class="done">✅ Your site is live!</p>
+</div>
+
+<h2>How the Hire Flow Works</h2>
+<div class="step">
+<strong>End-to-end flow:</strong>
+<ol style="margin:10px 0 0 18px;color:var(--muted);font-size:.85rem;display:flex;flex-direction:column;gap:6px">
+  <li>Hirer logs in → clicks "Hire Now" on a player card</li>
+  <li>Hire request saved to Supabase → player gets a live notification in their Dashboard</li>
+  <li>Player clicks Accept → a message is auto-sent to the hirer with your UPI ID and amount</li>
+  <li>Hirer pays via UPI → clicks "I've Paid" in their Dashboard</li>
+  <li>Match is confirmed ✅ — both see "PAID" status</li>
+  <li>They can message each other in the Messages tab throughout</li>
+</ol>
+</div>
+
+<div class="warn">⚠️ Never share your Supabase service_role key anywhere in the frontend. The anon key shown here is safe — it only gives access as per your RLS policies.</div>
+
+<p style="margin-top:32px;font-size:.8rem;color:var(--muted)">BZX Backend Setup Guide · Built for BlazeZoneX Player Market</p>
+</body>
+</html>

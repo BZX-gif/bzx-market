@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BZX Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#030308;--bg2:#080810;--fire:#ff7a18;--fire2:#ff4d00;--gold:#ffb347;
+  --cyan:#00e5ff;--purple:#b44dff;--green:#00ff88;--red:#ff2d55;
+  --text:#f8f8f8;--muted:rgba(255,255,255,.55);--soft:rgba(255,255,255,.3);
+  --line:rgba(255,255,255,.07);--glass:rgba(255,255,255,.04);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ── SIDEBAR ── */
+.dash-layout{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+@media(max-width:900px){.dash-layout{grid-template-columns:1fr}.sidebar{display:none}.mob-header{display:flex !important}}
+.sidebar{background:var(--bg2);border-right:1px solid var(--line);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sidebar-brand{padding:24px 20px 20px;border-bottom:1px solid var(--line)}
+.sb-logo{font-family:'Orbitron',monospace;font-size:1rem;font-weight:900;background:linear-gradient(135deg,var(--fire),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px}
+.sb-sub{font-size:.65rem;color:var(--soft);margin-top:3px;letter-spacing:1px;text-transform:uppercase}
+.sidebar-user{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.sb-avatar{width:40px;height:40px;border-radius:12px;overflow:hidden;border:1.5px solid rgba(255,122,24,.3);flex-shrink:0;background:rgba(255,122,24,.1)}
+.sb-avatar img{width:100%;height:100%;object-fit:cover}
+.sb-user-name{font-size:.88rem;font-weight:700;color:var(--text)}
+.sb-user-role{font-size:.66rem;color:var(--cyan);font-weight:600;margin-top:2px}
+.sidebar-nav{flex:1;padding:12px 10px}
+.nav-section{font-size:.6rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--soft);padding:12px 10px 6px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:11px 12px;border-radius:12px;cursor:pointer;transition:all .2s;font-size:.84rem;font-weight:600;color:var(--muted);border:none;background:none;width:100%;text-align:left;text-decoration:none}
+.nav-item:hover{background:rgba(255,255,255,.05);color:var(--text)}
+.nav-item.active{background:linear-gradient(135deg,rgba(255,122,24,.15),rgba(255,77,0,.08));color:var(--fire);border:1px solid rgba(255,122,24,.2)}
+.nav-item .nav-icon{font-size:1rem;width:20px;text-align:center;flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(--red);color:#fff;border-radius:50px;padding:1px 7px;font-size:.6rem;font-weight:900}
+.sidebar-footer{padding:16px 20px;border-top:1px solid var(--line)}
+.logout-btn{width:100%;padding:10px;background:rgba(255,45,85,.08);border:1px solid rgba(255,45,85,.2);border-radius:10px;color:var(--red);font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s}
+.logout-btn:hover{background:rgba(255,45,85,.15)}
+
+/* Mobile header */
+.mob-header{display:none;align-items:center;justify-content:space-between;padding:0 20px;height:60px;background:var(--bg2);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:100}
+.mob-logo{font-family:'Orbitron',monospace;font-size:.95rem;font-weight:900;color:var(--fire)}
+.mob-menu-btn{background:none;border:none;color:var(--text);font-size:1.4rem;cursor:pointer}
+
+/* ── MAIN CONTENT ── */
+.dash-main{background:var(--bg);overflow-y:auto}
+.dash-page{display:none;padding:30px 32px;max-width:1100px}
+.dash-page.active{display:block}
+@media(max-width:768px){.dash-page{padding:20px 16px}}
+
+/* Page header */
+.page-header{margin-bottom:28px}
+.page-title{font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:900;margin-bottom:6px}
+.page-sub{font-size:.84rem;color:var(--muted)}
+
+/* ── STAT CARDS ── */
+.stat-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:28px}
+.stat-card{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:20px;position:relative;overflow:hidden;transition:border-color .2s}
+.stat-card:hover{border-color:rgba(255,122,24,.25)}
+.stat-card-icon{font-size:1.5rem;margin-bottom:10px}
+.stat-card-val{font-family:'Orbitron',monospace;font-size:1.8rem;font-weight:900;line-height:1}
+.stat-card-lbl{font-size:.72rem;color:var(--muted);margin-top:5px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.stat-card-glow{position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;filter:blur(25px);pointer-events:none}
+
+/* ── SECTION CARDS ── */
+.section-card{background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:20px;overflow:hidden;margin-bottom:20px}
+.section-card-header{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line)}
+.section-card-title{font-size:.92rem;font-weight:700;display:flex;align-items:center;gap:8px}
+.section-card-action{font-size:.75rem;color:var(--fire);font-weight:700;cursor:pointer;background:none;border:none;padding:0;transition:opacity .2s}
+.section-card-action:hover{opacity:.7}
+.section-card-body{padding:18px 22px}
+
+/* ── HIRE REQUEST CARDS ── */
+.hire-req{display:flex;align-items:center;gap:14px;padding:14px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;transition:border-color .2s}
+.hire-req:last-child{margin-bottom:0}
+.hire-req:hover{border-color:rgba(255,122,24,.2)}
+.hire-req-avatar{width:44px;height:44px;border-radius:12px;overflow:hidden;flex-shrink:0;border:1px solid var(--line);background:rgba(255,255,255,.05)}
+.hire-req-avatar img{width:100%;height:100%;object-fit:cover}
+.hire-req-body{flex:1;min-width:0}
+.hire-req-name{font-size:.88rem;font-weight:700;color:var(--text)}
+.hire-req-meta{font-size:.72rem;color:var(--muted);margin-top:2px}
+.hire-req-badge{padding:3px 10px;border-radius:50px;font-size:.65rem;font-weight:800;flex-shrink:0}
+.badge-pending{background:rgba(255,179,71,.12);border:1px solid rgba(255,179,71,.3);color:var(--gold)}
+.badge-accepted{background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.25);color:var(--green)}
+.badge-rejected{background:rgba(255,45,85,.08);border:1px solid rgba(255,45,85,.2);color:var(--red)}
+.badge-paid{background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.25);color:var(--cyan)}
+.hire-req-actions{display:flex;gap:6px;flex-shrink:0}
+.btn-accept{padding:7px 14px;background:rgba(0,255,136,.1);border:1.5px solid rgba(0,255,136,.3);border-radius:8px;color:var(--green);font-size:.75rem;font-weight:800;cursor:pointer;transition:all .2s}
+.btn-accept:hover{background:rgba(0,255,136,.2)}
+.btn-reject{padding:7px 14px;background:rgba(255,45,85,.08);border:1.5px solid rgba(255,45,85,.2);border-radius:8px;color:var(--red);font-size:.75rem;font-weight:800;cursor:pointer;transition:all .2s}
+.btn-reject:hover{background:rgba(255,45,85,.15)}
+.btn-pay{padding:7px 14px;background:linear-gradient(135deg,rgba(0,229,255,.15),rgba(180,77,255,.1));border:1.5px solid rgba(0,229,255,.3);border-radius:8px;color:var(--cyan);font-size:.75rem;font-weight:800;cursor:pointer;transition:all .2s}
+.btn-pay:hover{background:rgba(0,229,255,.2)}
+
+/* ── MESSAGES ── */
+.msg-layout{display:grid;grid-template-columns:260px 1fr;gap:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;height:500px}
+@media(max-width:680px){.msg-layout{grid-template-columns:1fr;height:auto}}
+.msg-list{border-right:1px solid var(--line);overflow-y:auto;background:rgba(255,255,255,.02)}
+.msg-list-header{padding:14px 16px;border-bottom:1px solid var(--line);font-size:.78rem;font-weight:700;color:var(--muted)}
+.msg-thread{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;transition:background .15s;border-bottom:1px solid rgba(255,255,255,.04)}
+.msg-thread:hover,.msg-thread.active{background:rgba(255,122,24,.06)}
+.msg-thread-avatar{width:36px;height:36px;border-radius:10px;overflow:hidden;flex-shrink:0;background:rgba(255,255,255,.06)}
+.msg-thread-avatar img{width:100%;height:100%;object-fit:cover}
+.msg-thread-name{font-size:.82rem;font-weight:700;color:var(--text)}
+.msg-thread-preview{font-size:.7rem;color:var(--soft);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px}
+.msg-thread-time{font-size:.62rem;color:var(--soft);margin-left:auto;flex-shrink:0}
+.msg-unread{width:8px;height:8px;border-radius:50%;background:var(--fire);flex-shrink:0}
+.msg-chat{display:flex;flex-direction:column;background:rgba(0,0,0,.2)}
+.msg-chat-header{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.msg-chat-name{font-size:.9rem;font-weight:700}
+.msg-chat-status{font-size:.68rem;color:var(--green);font-weight:600}
+.msg-chat-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;min-height:300px}
+.msg-bubble{max-width:70%;padding:10px 14px;border-radius:16px;font-size:.82rem;line-height:1.5;position:relative}
+.msg-bubble.mine{background:linear-gradient(135deg,rgba(255,122,24,.2),rgba(255,77,0,.15));border:1px solid rgba(255,122,24,.2);margin-left:auto;border-bottom-right-radius:4px}
+.msg-bubble.theirs{background:rgba(255,255,255,.06);border:1px solid var(--line);margin-right:auto;border-bottom-left-radius:4px}
+.msg-bubble-time{font-size:.6rem;color:var(--soft);margin-top:4px;text-align:right}
+.msg-input-row{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}
+.msg-input{flex:1;padding:10px 14px;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:12px;color:var(--text);font-family:'Inter',sans-serif;font-size:.84rem;outline:none;transition:border-color .2s}
+.msg-input:focus{border-color:rgba(255,122,24,.4)}
+.msg-send-btn{padding:10px 18px;background:linear-gradient(135deg,var(--fire),var(--fire2));border:none;border-radius:12px;color:#fff;font-weight:800;font-size:.82rem;cursor:pointer;transition:all .2s;flex-shrink:0}
+.msg-send-btn:hover{transform:scale(1.04)}
+
+/* ── EMPTY STATES ── */
+.empty-state{text-align:center;padding:40px 20px;color:var(--soft)}
+.empty-state-icon{font-size:2.5rem;margin-bottom:12px;opacity:.5}
+.empty-state-title{font-size:.9rem;font-weight:700;color:var(--muted);margin-bottom:6px}
+.empty-state-sub{font-size:.78rem;line-height:1.5}
+
+/* ── PAYMENT MODAL ── */
+.pay-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);backdrop-filter:blur(14px);display:none;align-items:flex-start;justify-content:center;padding:24px 20px;overflow-y:auto}
+.pay-overlay.show{display:flex}
+.pay-box{background:linear-gradient(145deg,#0c0c12,#07070d);border:1.5px solid rgba(0,229,255,.2);border-radius:24px;width:100%;max-width:440px;padding:32px;position:relative;margin:auto}
+.pay-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--text);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.pay-title{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;margin-bottom:6px;color:var(--cyan)}
+.pay-sub{font-size:.8rem;color:var(--muted);margin-bottom:20px}
+.pay-amount{font-family:'Orbitron',monospace;font-size:2.4rem;font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px}
+.pay-upi-box{background:rgba(0,229,255,.06);border:1.5px dashed rgba(0,229,255,.25);border-radius:14px;padding:16px 20px;text-align:center;margin-bottom:16px}
+.pay-upi-id{font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;color:var(--cyan);margin-bottom:4px}
+.pay-upi-note{font-size:.72rem;color:var(--muted)}
+.pay-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.pay-step{display:flex;align-items:flex-start;gap:10px;font-size:.8rem;color:var(--muted);line-height:1.4}
+.pay-step-num{width:22px;height:22px;border-radius:50%;background:rgba(0,229,255,.12);border:1px solid rgba(0,229,255,.25);color:var(--cyan);font-size:.7rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.pay-confirm-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--cyan),var(--purple));border:none;border-radius:14px;color:#000;font-family:'Orbitron',monospace;font-weight:900;font-size:.9rem;cursor:pointer;transition:all .25s}
+.pay-confirm-btn:hover{transform:scale(1.02);box-shadow:0 10px 30px rgba(0,229,255,.3)}
+
+/* ── TOAST ── */
+#dashToast{position:fixed;bottom:24px;right:24px;z-index:99999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.d-toast{background:rgba(10,10,16,.97);border:1px solid rgba(255,122,24,.3);border-radius:12px;padding:12px 16px;font-size:.82rem;font-weight:600;color:var(--text);transform:translateX(120%);transition:transform .3s cubic-bezier(.34,1.56,.64,1);pointer-events:all;max-width:280px}
+.d-toast.show{transform:translateX(0)}
+.d-toast.success{border-color:rgba(0,255,136,.3);color:var(--green)}
+.d-toast.error{border-color:rgba(255,45,85,.3);color:var(--red)}
+
+/* Loading */
+.dash-loader{display:flex;align-items:center;justify-content:center;height:200px;color:var(--muted);font-size:.84rem;gap:10px}
+.dash-spinner{width:20px;height:20px;border:2px solid rgba(255,255,255,.1);border-top-color:var(--fire);border-radius:50%;animation:dspin .7s linear infinite}
+@keyframes dspin{to{transform:rotate(360deg)}}
+
+/* My Card preview */
+.my-card-preview{background:linear-gradient(145deg,rgba(0,229,255,.06),rgba(180,77,255,.04));border:1.5px solid rgba(0,229,255,.25);border-radius:18px;padding:20px;display:flex;align-items:center;gap:16px;margin-bottom:20px;position:relative;overflow:hidden}
+.my-card-preview::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--cyan));background-size:200%;animation:shimmer 2s linear infinite}
+@keyframes shimmer{0%{background-position:0%}100%{background-position:200%}}
+.mcp-avatar{width:64px;height:64px;border-radius:14px;overflow:hidden;flex-shrink:0;border:1.5px solid rgba(0,229,255,.3)}
+.mcp-avatar img{width:100%;height:100%;object-fit:cover}
+.mcp-info{flex:1}
+.mcp-name{font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;margin-bottom:4px}
+.mcp-role{font-size:.75rem;color:var(--muted)}
+.mcp-stats{display:flex;gap:16px;margin-top:8px}
+.mcp-stat{text-align:center}
+.mcp-stat-val{font-family:'Orbitron',monospace;font-size:.95rem;font-weight:700;color:var(--cyan);display:block}
+.mcp-stat-lbl{font-size:.58rem;color:var(--soft);text-transform:uppercase;letter-spacing:.5px}
+.mcp-status{flex-shrink:0;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.mcp-status-badge{padding:4px 12px;border-radius:50px;font-size:.65rem;font-weight:800}
+.mcp-edit-btn{padding:8px 14px;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.25);border-radius:10px;color:var(--cyan);font-size:.75rem;font-weight:700;cursor:pointer;transition:all .2s}
+.mcp-edit-btn:hover{background:rgba(0,229,255,.18)}
+</style>
+</head>
+<body>
+
+<div class="dash-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sb-logo">BlazeZoneX</div>
+      <div class="sb-sub">Player Dashboard</div>
+    </div>
+    <div class="sidebar-user">
+      <div class="sb-avatar"><img id="sbAvatarImg" src="https://api.dicebear.com/7.x/adventurer/svg?seed=default&backgroundColor=001530" alt=""></div>
+      <div>
+        <div class="sb-user-name" id="sbUserName">Loading…</div>
+        <div class="sb-user-role" id="sbUserRole">—</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Main</div>
+      <button class="nav-item active" data-page="overview" onclick="showPage('overview',this)"><span class="nav-icon">🏠</span> Overview</button>
+      <button class="nav-item" data-page="hires" onclick="showPage('hires',this)"><span class="nav-icon">⚡</span> Hire Requests <span class="nav-badge" id="hiresBadge" style="display:none">0</span></button>
+      <button class="nav-item" data-page="messages" onclick="showPage('messages',this)"><span class="nav-icon">💬</span> Messages <span class="nav-badge" id="msgsBadge" style="display:none">0</span></button>
+      <div class="nav-section">My Card</div>
+      <button class="nav-item" data-page="mycard" onclick="showPage('mycard',this)"><span class="nav-icon">🎴</span> My Card</button>
+      <button class="nav-item" data-page="earnings" onclick="showPage('earnings',this)"><span class="nav-icon">💰</span> Earnings</button>
+      <div class="nav-section">Market</div>
+      <a class="nav-item" href="market_4.html"><span class="nav-icon">🛒</span> Browse Market</a>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="doLogout()">🚪 Logout</button>
+    </div>
+  </aside>
+
+  <!-- MOBILE HEADER -->
+  <div class="mob-header">
+    <div class="mob-logo">BZX</div>
+    <div style="font-size:.8rem;color:var(--muted)" id="mobUserName">Dashboard</div>
+    <button class="mob-menu-btn" onclick="toggleMobMenu()">☰</button>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="dash-main">
+
+    <!-- ── OVERVIEW PAGE ── -->
+    <div class="dash-page active" id="page-overview">
+      <div class="page-header">
+        <div class="page-title">👋 Welcome back, <span id="welcomeName">Player</span></div>
+        <div class="page-sub">Here's what's happening with your BZX account today.</div>
+      </div>
+      <div class="stat-cards" id="overviewStats">
+        <div class="stat-card"><div class="stat-card-glow" style="background:rgba(255,122,24,.2)"></div><div class="stat-card-icon">⚡</div><div class="stat-card-val" id="statPending">—</div><div class="stat-card-lbl">Pending Hires</div></div>
+        <div class="stat-card"><div class="stat-card-glow" style="background:rgba(0,255,136,.15)"></div><div class="stat-card-icon">✅</div><div class="stat-card-val" id="statAccepted">—</div><div class="stat-card-lbl">Accepted</div></div>
+        <div class="stat-card"><div class="stat-card-glow" style="background:rgba(0,229,255,.15)"></div><div class="stat-card-icon">💰</div><div class="stat-card-val" id="statEarnings">—</div><div class="stat-card-lbl">Total Earned</div></div>
+        <div class="stat-card"><div class="stat-card-glow" style="background:rgba(180,77,255,.15)"></div><div class="stat-card-icon">💬</div><div class="stat-card-val" id="statMsgs">—</div><div class="stat-card-lbl">Messages</div></div>
+      </div>
+      <div class="section-card">
+        <div class="section-card-header"><div class="section-card-title">⚡ Recent Hire Requests</div><button class="section-card-action" onclick="showPage('hires',document.querySelector('[data-page=hires]'))">View All →</button></div>
+        <div class="section-card-body" id="recentHiresBody"><div class="dash-loader"><div class="dash-spinner"></div> Loading…</div></div>
+      </div>
+    </div>
+
+    <!-- ── HIRE REQUESTS PAGE ── -->
+    <div class="dash-page" id="page-hires">
+      <div class="page-header">
+        <div class="page-title">⚡ Hire Requests</div>
+        <div class="page-sub">Players wanting to hire you. Accept to confirm, reject to decline.</div>
+      </div>
+      <div id="hiresBody"><div class="dash-loader"><div class="dash-spinner"></div> Loading…</div></div>
+    </div>
+
+    <!-- ── MESSAGES PAGE ── -->
+    <div class="dash-page" id="page-messages">
+      <div class="page-header">
+        <div class="page-title">💬 Messages</div>
+        <div class="page-sub">Direct messages with hirers and players.</div>
+      </div>
+      <div class="msg-layout section-card" style="padding:0">
+        <div class="msg-list">
+          <div class="msg-list-header">Conversations</div>
+          <div id="msgThreadList"><div class="empty-state"><div class="empty-state-icon">💬</div><div class="empty-state-title">No conversations yet</div><div class="empty-state-sub">Hire requests will create message threads here.</div></div></div>
+        </div>
+        <div class="msg-chat">
+          <div class="msg-chat-header">
+            <div style="font-size:1.2rem">💬</div>
+            <div><div class="msg-chat-name" id="chatName">Select a conversation</div><div class="msg-chat-status" id="chatStatus"></div></div>
+          </div>
+          <div class="msg-chat-body" id="chatBody"><div class="empty-state" style="margin:auto"><div class="empty-state-icon">👈</div><div class="empty-state-title">Select a chat</div></div></div>
+          <div class="msg-input-row" id="msgInputRow" style="display:none">
+            <input class="msg-input" id="msgInput" placeholder="Type a message…" onkeydown="if(event.key==='Enter')sendMessage()">
+            <button class="msg-send-btn" onclick="sendMessage()">Send →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── MY CARD PAGE ── -->
+    <div class="dash-page" id="page-mycard">
+      <div class="page-header">
+        <div class="page-title">🎴 My Player Card</div>
+        <div class="page-sub">Your listing on the BZX market.</div>
+      </div>
+      <div id="myCardBody"><div class="dash-loader"><div class="dash-spinner"></div> Loading…</div></div>
+    </div>
+
+    <!-- ── EARNINGS PAGE ── -->
+    <div class="dash-page" id="page-earnings">
+      <div class="page-header">
+        <div class="page-title">💰 Earnings</div>
+        <div class="page-sub">Track your income from accepted hires.</div>
+      </div>
+      <div id="earningsBody"><div class="dash-loader"><div class="dash-spinner"></div> Loading…</div></div>
+    </div>
+
+  </main>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="pay-overlay" id="payOverlay">
+  <div class="pay-box">
+    <button class="pay-close" onclick="closePayModal()">✕</button>
+    <div class="pay-title">💳 Complete Payment</div>
+    <div class="pay-sub">Your hire has been accepted! Complete payment to confirm the match.</div>
+    <div class="pay-amount" id="payAmount">₹0</div>
+    <div class="pay-upi-box">
+      <div class="pay-upi-id" id="payUpiId">bzx@upi</div>
+      <div class="pay-upi-note">Send payment to this UPI ID</div>
+    </div>
+    <div class="pay-steps">
+      <div class="pay-step"><div class="pay-step-num">1</div><span>Open any UPI app (GPay, PhonePe, Paytm)</span></div>
+      <div class="pay-step"><div class="pay-step-num">2</div><span>Send <strong id="payAmountSmall">₹0</strong> to the UPI ID above</span></div>
+      <div class="pay-step"><div class="pay-step-num">3</div><span>Screenshot your payment & share in the message thread</span></div>
+      <div class="pay-step"><div class="pay-step-num">4</div><span>Click "I've Paid" below — your hire is confirmed!</span></div>
+    </div>
+    <button class="pay-confirm-btn" id="payConfirmBtn" onclick="confirmPayment()">✅ I've Paid — Confirm Hire</button>
+  </div>
+</div>
+
+<div id="dashToast"></div>
+
+<!-- SUPABASE -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ═══════════════════════════════════════════════════════
+//  REPLACE WITH YOUR VALUES FROM supabase.com
+// ═══════════════════════════════════════════════════════
+const SUPABASE_URL = 'https://zcklqbdfolwoauqisezk.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpja2xxYmRmb2x3b2F1cWlzZXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMTg0OTIsImV4cCI6MjA5Mzg5NDQ5Mn0.89LYcULvSa2iVKNa8VjpHCjiWifknlNQP6uWpZh5fNM';
+const BZX_UPI_ID = '9982593279@ybl'; // your UPI ID for payments
+
+let _sb, _user, _profile;
+let _currentThreadId = null;
+let _currentPayHireId = null;
+let _realtimeChannel = null;
+
+// ── INIT ──
+window.addEventListener('load', async () => {
+  _sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // Handle OAuth redirect session
+  _sb.auth.onAuthStateChange(async (event, session) => {
+    if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session?.user && !_user) {
+      _user = session.user;
+      await loadProfile();
+      setupUI();
+      loadOverview();
+      subscribeRealtime();
+    }
+    if (event === 'SIGNED_OUT') {
+      window.location.href = 'login.html';
+    }
+  });
+
+  const { data: { session } } = await _sb.auth.getSession();
+  if (!session) { window.location.href = 'login.html'; return; }
+  _user = session.user;
+  await loadProfile();
+  setupUI();
+  loadOverview();
+  subscribeRealtime();
+});
+
+async function loadProfile() {
+  const { data } = await _sb.from('profiles').select('*').eq('id', _user.id).single();
+  _profile = data || { ign: _user.user_metadata?.ign || _user.email?.split('@')[0], role: 'Player', email: _user.email };
+}
+
+function setupUI() {
+  const ign = _profile.ign || 'Player';
+  document.getElementById('sbUserName').textContent = ign;
+  document.getElementById('sbUserRole').textContent = _profile.role || 'Player';
+  document.getElementById('welcomeName').textContent = ign;
+  document.getElementById('mobUserName').textContent = ign;
+  const seed = ign.replace(/\s+/g,'');
+  document.getElementById('sbAvatarImg').src = `https://api.dicebear.com/7.x/adventurer/svg?seed=${seed}&backgroundColor=001530`;
+}
+
+// ── NAVIGATION ──
+function showPage(page, btn) {
+  document.querySelectorAll('.dash-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + page)?.classList.add('active');
+  if (btn) btn.classList.add('active');
+  // Lazy load page data
+  if (page === 'hires') loadHires();
+  if (page === 'messages') loadMessages();
+  if (page === 'mycard') loadMyCard();
+  if (page === 'earnings') loadEarnings();
+}
+
+// ── OVERVIEW ──
+async function loadOverview() {
+  // Count pending hires for this player
+  const { data: hires } = await _sb.from('hire_requests').select('*').eq('player_id', _user.id);
+  const pending = (hires||[]).filter(h=>h.status==='pending').length;
+  const accepted = (hires||[]).filter(h=>h.status==='accepted').length;
+  const totalEarned = (hires||[]).filter(h=>h.status==='paid').reduce((s,h)=>s+(h.amount||0),0);
+  const { count: msgCount } = await _sb.from('messages').select('*',{count:'exact',head:true}).eq('receiver_id',_user.id).eq('read',false);
+  document.getElementById('statPending').textContent = pending;
+  document.getElementById('statAccepted').textContent = accepted;
+  document.getElementById('statEarnings').textContent = '₹' + totalEarned;
+  document.getElementById('statMsgs').textContent = msgCount || 0;
+  if (pending > 0) { const b = document.getElementById('hiresBadge'); b.textContent = pending; b.style.display = ''; }
+  // Recent hires
+  const recent = (hires||[]).slice(0,3);
+  renderHireList('recentHiresBody', recent, true);
+}
+
+// ── HIRES ──
+async function loadHires() {
+  const { data: hires } = await _sb.from('hire_requests')
+    .select('*, hirer:hirer_id(ign,email)')
+    .eq('player_id', _user.id)
+    .order('created_at', { ascending: false });
+  renderHireList('hiresBody', hires||[], false);
+}
+
+function renderHireList(containerId, hires, compact) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  if (!hires.length) { el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">⚡</div><div class="empty-state-title">No hire requests yet</div><div class="empty-state-sub">When someone hires you from the market, they'll appear here.</div></div>`; return; }
+  el.innerHTML = hires.map(h => {
+    const hirerName = h.hirer?.ign || h.hirer_name || 'Unknown Player';
+    const hirerSeed = hirerName.replace(/\s+/g,'');
+    const actions = h.status === 'pending'
+      ? `<button class="btn-accept" onclick="acceptHire('${h.id}','${hirerName}','${h.hirer_id||''}',${h.amount||0})">✅ Accept</button><button class="btn-reject" onclick="rejectHire('${h.id}')">✗ Reject</button>`
+      : h.status === 'accepted'
+      ? `<button class="btn-pay" onclick="openPayModal('${h.id}',${h.amount||0})">💳 Pay Now</button>`
+      : '';
+    return `<div class="hire-req">
+      <div class="hire-req-avatar"><img src="https://api.dicebear.com/7.x/adventurer/svg?seed=${hirerSeed}&backgroundColor=001530" alt="${hirerName}" onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=${hirerSeed}'"></div>
+      <div class="hire-req-body">
+        <div class="hire-req-name">${hirerName}</div>
+        <div class="hire-req-meta">${h.tournament||'Tournament TBD'} · ${h.matches||1} match(es) · ${timeAgo(h.created_at)}</div>
+        ${h.note ? `<div class="hire-req-meta" style="margin-top:3px;font-style:italic">"${h.note}"</div>` : ''}
+      </div>
+      <span class="hire-req-badge badge-${h.status||'pending'}">${(h.status||'pending').toUpperCase()}</span>
+      ${!compact ? `<div class="hire-req-actions">${actions}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+async function acceptHire(hireId, hirerName, hirerId, amount) {
+  const { error } = await _sb.from('hire_requests').update({ status:'accepted', updated_at: new Date().toISOString() }).eq('id', hireId);
+  if (error) { showDashToast('Error: ' + error.message, 'error'); return; }
+  // Send message to hirer with payment details
+  if (hirerId) {
+    await _sb.from('messages').insert({
+      sender_id: _user.id, receiver_id: hirerId, thread_id: hireId,
+      content: `✅ Hire Accepted! I've confirmed your request. Please complete the payment of ₹${amount} to proceed.\n\n💳 UPI ID: ${BZX_UPI_ID}\n\nAfter payment, share the screenshot here and we're good to go! 🔥`,
+      created_at: new Date().toISOString(), read: false,
+      type: 'system_accept'
+    });
+  }
+  showDashToast('✅ Hire accepted! Payment details sent to hirer.', 'success');
+  loadHires(); loadOverview();
+}
+
+async function rejectHire(hireId) {
+  const { error } = await _sb.from('hire_requests').update({ status:'rejected', updated_at: new Date().toISOString() }).eq('id', hireId);
+  if (error) { showDashToast('Error: ' + error.message, 'error'); return; }
+  showDashToast('Hire rejected.', 'error');
+  loadHires(); loadOverview();
+}
+
+// ── PAYMENT MODAL ──
+function openPayModal(hireId, amount) {
+  _currentPayHireId = hireId;
+  document.getElementById('payAmount').textContent = '₹' + (amount||0);
+  document.getElementById('payAmountSmall').textContent = '₹' + (amount||0);
+  document.getElementById('payUpiId').textContent = BZX_UPI_ID;
+  document.getElementById('payOverlay').classList.add('show');
+}
+function closePayModal() { document.getElementById('payOverlay').classList.remove('show'); }
+
+async function confirmPayment() {
+  if (!_currentPayHireId) return;
+  const btn = document.getElementById('payConfirmBtn');
+  btn.disabled = true; btn.textContent = '⏳ Confirming…';
+  await _sb.from('hire_requests').update({ status:'paid', paid_at: new Date().toISOString() }).eq('id', _currentPayHireId);
+  closePayModal();
+  showDashToast('🎉 Payment confirmed! Match is locked in. GL HF!', 'success');
+  btn.disabled = false; btn.textContent = '✅ I\'ve Paid — Confirm Hire';
+  loadHires(); loadOverview();
+}
+
+// ── MESSAGES ──
+async function loadMessages() {
+  const { data: threads } = await _sb.from('messages')
+    .select('*')
+    .or(`sender_id.eq.${_user.id},receiver_id.eq.${_user.id}`)
+    .order('created_at', { ascending: false });
+  // Group by thread_id
+  const threadMap = {};
+  (threads||[]).forEach(m => {
+    if (!threadMap[m.thread_id]) threadMap[m.thread_id] = [];
+    threadMap[m.thread_id].push(m);
+  });
+  const threadList = document.getElementById('msgThreadList');
+  const threadIds = Object.keys(threadMap);
+  if (!threadIds.length) { threadList.innerHTML = `<div class="empty-state"><div class="empty-state-icon">💬</div><div class="empty-state-title">No messages yet</div></div>`; return; }
+  threadList.innerHTML = threadIds.map(tid => {
+    const msgs = threadMap[tid];
+    const last = msgs[0];
+    const otherId = last.sender_id === _user.id ? last.receiver_id : last.sender_id;
+    const unread = msgs.filter(m => m.receiver_id === _user.id && !m.read).length;
+    return `<div class="msg-thread ${_currentThreadId===tid?'active':''}" onclick="openThread('${tid}','${otherId}')">
+      <div class="msg-thread-avatar"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=${otherId}" alt="" onerror="this.src='https://api.dicebear.com/7.x/adventurer/svg?seed=${otherId}'"></div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:6px"><div class="msg-thread-name">Hirer</div>${unread?`<div class="msg-unread"></div>`:''}</div>
+        <div class="msg-thread-preview">${last.content?.slice(0,40)||'...'}</div>
+      </div>
+      <div class="msg-thread-time">${timeAgo(last.created_at)}</div>
+    </div>`;
+  }).join('');
+}
+
+async function openThread(threadId, otherId) {
+  _currentThreadId = threadId;
+  document.getElementById('msgInputRow').style.display = '';
+  document.getElementById('chatName').textContent = 'Chat Thread';
+  document.getElementById('chatStatus').textContent = '🟢 Active';
+  // Mark messages as read
+  await _sb.from('messages').update({ read: true }).eq('thread_id', threadId).eq('receiver_id', _user.id);
+  // Load messages
+  const { data: msgs } = await _sb.from('messages').select('*').eq('thread_id', threadId).order('created_at', { ascending: true });
+  const chatBody = document.getElementById('chatBody');
+  chatBody.innerHTML = (msgs||[]).map(m => {
+    const mine = m.sender_id === _user.id;
+    return `<div class="msg-bubble ${mine?'mine':'theirs'}">
+      ${m.content}
+      <div class="msg-bubble-time">${timeAgo(m.created_at)}</div>
+    </div>`;
+  }).join('');
+  chatBody.scrollTop = chatBody.scrollHeight;
+  loadMessages();
+}
+
+async function sendMessage() {
+  const input = document.getElementById('msgInput');
+  const content = input.value.trim();
+  if (!content || !_currentThreadId) return;
+  input.value = '';
+  // Get other party from thread
+  const { data: threadMsgs } = await _sb.from('messages').select('sender_id,receiver_id').eq('thread_id', _currentThreadId).limit(1);
+  const first = threadMsgs?.[0];
+  if (!first) return;
+  const receiverId = first.sender_id === _user.id ? first.receiver_id : first.sender_id;
+  await _sb.from('messages').insert({
+    sender_id: _user.id, receiver_id: receiverId, thread_id: _currentThreadId,
+    content, created_at: new Date().toISOString(), read: false, type: 'chat'
+  });
+  openThread(_currentThreadId, receiverId);
+}
+
+// ── REALTIME SUBSCRIPTIONS ──
+function subscribeRealtime() {
+  if (!_sb || !_user) return;
+  _realtimeChannel = _sb.channel('bzx_realtime')
+    .on('postgres_changes', { event:'INSERT', schema:'public', table:'hire_requests', filter:`player_id=eq.${_user.id}` }, payload => {
+      showDashToast('⚡ New hire request!', 'success');
+      loadOverview();
+      if (document.getElementById('page-hires').classList.contains('active')) loadHires();
+    })
+    .on('postgres_changes', { event:'INSERT', schema:'public', table:'messages', filter:`receiver_id=eq.${_user.id}` }, payload => {
+      showDashToast('💬 New message received!', 'success');
+      if (document.getElementById('page-messages').classList.contains('active')) {
+        loadMessages();
+        if (_currentThreadId === payload.new.thread_id) openThread(_currentThreadId, payload.new.sender_id);
+      }
+    })
+    .subscribe();
+}
+
+// ── MY CARD ──
+async function loadMyCard() {
+  const el = document.getElementById('myCardBody');
+  const { data: card } = await _sb.from('player_cards').select('*').eq('user_id', _user.id).single();
+  if (!card) {
+    el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🎴</div><div class="empty-state-title">No card yet</div><div class="empty-state-sub">Go to the market and submit your listing to create your card.</div><br><a href="market_4.html" style="color:var(--fire);font-weight:700;font-size:.84rem">→ Go to Market</a></div>`;
+    return;
+  }
+  const seed = (card.ign||'player').replace(/\s+/g,'');
+  el.innerHTML = `
+    <div class="my-card-preview">
+      <div class="mcp-avatar"><img src="https://api.dicebear.com/7.x/adventurer/svg?seed=${seed}&backgroundColor=001530" alt="${card.ign}"></div>
+      <div class="mcp-info">
+        <div class="mcp-name">${card.ign||'—'}</div>
+        <div class="mcp-role">${card.role||'—'} · ${card.rank||'—'}</div>
+        <div class="mcp-stats">
+          <div class="mcp-stat"><span class="mcp-stat-val">${card.kd||'—'}</span><span class="mcp-stat-lbl">K/D</span></div>
+          <div class="mcp-stat"><span class="mcp-stat-val">${card.win_rate||'—'}%</span><span class="mcp-stat-lbl">Win Rate</span></div>
+          <div class="mcp-stat"><span class="mcp-stat-val">${card.matches||'—'}</span><span class="mcp-stat-lbl">Matches</span></div>
+        </div>
+      </div>
+      <div class="mcp-status">
+        <span class="mcp-status-badge" style="background:rgba(0,255,136,.1);border:1px solid rgba(0,255,136,.25);color:var(--green);font-size:.65rem;font-weight:800;padding:3px 10px;border-radius:50px;">${card.tier?.toUpperCase()||'FREE'}</span>
+        <span class="mcp-status-badge" style="background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.2);color:var(--cyan);font-size:.65rem;font-weight:800;padding:3px 10px;border-radius:50px;margin-top:4px">${card.active?'🟢 LIVE':'⏸ PAUSED'}</span>
+      </div>
+    </div>
+    <div class="section-card">
+      <div class="section-card-header"><div class="section-card-title">Card Details</div></div>
+      <div class="section-card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:.84rem">
+        <div><span style="color:var(--muted)">UID:</span> ${card.uid||'—'}</div>
+        <div><span style="color:var(--muted)">Price/Match:</span> ₹${card.price||'Free'}</div>
+        <div><span style="color:var(--muted)">Skills:</span> ${card.skills||'—'}</div>
+        <div><span style="color:var(--muted)">Availability:</span> ${card.availability||'—'}</div>
+        <div><span style="color:var(--muted)">WhatsApp:</span> ${card.whatsapp||'—'}</div>
+        <div><span style="color:var(--muted)">Listed:</span> ${card.created_at?new Date(card.created_at).toLocaleDateString():'—'}</div>
+      </div>
+    </div>`;
+}
+
+// ── EARNINGS ──
+async function loadEarnings() {
+  const { data: paid } = await _sb.from('hire_requests').select('*').eq('player_id', _user.id).eq('status','paid');
+  const el = document.getElementById('earningsBody');
+  const total = (paid||[]).reduce((s,h) => s + (h.amount||0), 0);
+  el.innerHTML = `
+    <div class="stat-cards">
+      <div class="stat-card"><div class="stat-card-icon">💰</div><div class="stat-card-val" style="color:var(--green)">₹${total}</div><div class="stat-card-lbl">Total Earned</div></div>
+      <div class="stat-card"><div class="stat-card-icon">✅</div><div class="stat-card-val">${(paid||[]).length}</div><div class="stat-card-lbl">Completed Hires</div></div>
+    </div>
+    <div class="section-card">
+      <div class="section-card-header"><div class="section-card-title">💰 Payment History</div></div>
+      <div class="section-card-body">
+        ${(paid||[]).length ? paid.map(h => `<div class="hire-req">
+          <div class="hire-req-body"><div class="hire-req-name">${h.hirer_name||'Hirer'}</div><div class="hire-req-meta">${h.tournament||'—'} · ${timeAgo(h.paid_at||h.created_at)}</div></div>
+          <span class="hire-req-badge badge-paid">₹${h.amount||0} PAID</span>
+        </div>`).join('') : `<div class="empty-state"><div class="empty-state-icon">💰</div><div class="empty-state-title">No payments yet</div><div class="empty-state-sub">Accepted and completed hires will appear here.</div></div>`}
+      </div>
+    </div>`;
+}
+
+// ── LOGOUT ──
+async function doLogout() {
+  await _sb?.auth.signOut();
+  window.location.href = 'login.html';
+}
+
+// ── UTILS ──
+function timeAgo(iso) {
+  if (!iso) return '';
+  const diff = Date.now() - new Date(iso).getTime();
+  const m = Math.floor(diff/60000);
+  if (m < 1) return 'just now';
+  if (m < 60) return m + 'm ago';
+  const h = Math.floor(m/60);
+  if (h < 24) return h + 'h ago';
+  return Math.floor(h/24) + 'd ago';
+}
+
+function showDashToast(msg, type='success') {
+  const wrap = document.getElementById('dashToast');
+  const el = document.createElement('div');
+  el.className = 'd-toast ' + type;
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(() => el.classList.add('show'), 50);
+  setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 350); }, 4000);
+}
+
+function toggleMobMenu() {
+  const sb = document.querySelector('.sidebar');
+  sb.style.display = sb.style.display === 'flex' ? 'none' : 'flex';
+}
+
+document.getElementById('payOverlay').addEventListener('click', e => { if (e.target === document.getElementById('payOverlay')) closePayModal(); });
+</script>
+</body>
+</html>
