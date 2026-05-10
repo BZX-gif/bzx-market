@@ -202,7 +202,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       <button class="nav-item" data-page="mycard" onclick="showPage('mycard',this)"><span class="nav-icon">🎴</span> My Card</button>
       <button class="nav-item" data-page="earnings" onclick="showPage('earnings',this)"><span class="nav-icon">💰</span> Earnings</button>
       <div class="nav-section">Market</div>
-      <a class="nav-item" href="/bzx-market/index.html"><span class="nav-icon">🛒</span> Browse Market</a>
+      <a class="nav-item" href="index.html"><span class="nav-icon">🛒</span> Browse Market</a>
     </nav>
     <div class="sidebar-footer">
       <button class="logout-btn" onclick="doLogout()">🚪 Logout</button>
@@ -329,36 +329,52 @@ let _sb, _user, _profile;
 let _currentThreadId = null;
 let _currentPayHireId = null;
 let _realtimeChannel = null;
-let _initialized = false;
 
 // ── INIT ──
 window.addEventListener('load', async () => {
   _sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // onAuthStateChange fires immediately with current session — single source of truth
+  let _booted = false;
+  const boot = async (user) => {
+    if (_booted) return;
+    _booted = true;
+    _user = user;
+    await loadProfile();
+    setupUI();
+    loadOverview();
+    subscribeRealtime();
+  };
+
+  // Handle OAuth redirect session (token comes back in URL hash → onAuthStateChange fires)
   _sb.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_OUT') {
-      window.location.href = '/bzx-market/login.html';
-      return;
+    if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'INITIAL_SESSION') && session?.user) {
+      await boot(session.user);
     }
-    if (session?.user && !_initialized) {
-      _initialized = true;
-      _user = session.user;
-      await loadProfile();
-      setupUI();
-      loadOverview();
-      subscribeRealtime();
+    if (event === 'SIGNED_OUT') {
+      window.location.href = 'login.html';
     }
   });
 
-  // Fallback: if onAuthStateChange doesn't fire within 3s, check manually
-  setTimeout(async () => {
-    if (_initialized) return;
-    const { data: { session } } = await _sb.auth.getSession();
-    if (!session) {
-      window.location.href = '/bzx-market/login.html';
+  // Existing session check — but give OAuth callback a small grace period
+  // so we don't bounce to login.html before the token in the URL hash is processed
+  const { data: { session } } = await _sb.auth.getSession();
+  if (session?.user) {
+    await boot(session.user);
+  } else {
+    // If URL contains an OAuth token, wait for onAuthStateChange to process it
+    const hasAuthHash = /access_token=|refresh_token=|type=recovery/.test(window.location.hash || '');
+    if (hasAuthHash) {
+      // wait up to 4s for auth state change before redirect
+      setTimeout(async () => {
+        if (_booted) return;
+        const { data: { session: s2 } } = await _sb.auth.getSession();
+        if (s2?.user) await boot(s2.user);
+        else window.location.href = 'login.html';
+      }, 4000);
+    } else {
+      window.location.href = 'login.html';
     }
-  }, 3000);
+  }
 });
 
 async function loadProfile() {
@@ -578,7 +594,7 @@ async function loadMyCard() {
   const el = document.getElementById('myCardBody');
   const { data: card } = await _sb.from('player_cards').select('*').eq('user_id', _user.id).single();
   if (!card) {
-    el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🎴</div><div class="empty-state-title">No card yet</div><div class="empty-state-sub">Go to the market and submit your listing to create your card.</div><br><a href="/bzx-market/index.html" style="color:var(--fire);font-weight:700;font-size:.84rem">→ Go to Market</a></div>`;
+    el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🎴</div><div class="empty-state-title">No card yet</div><div class="empty-state-sub">Go to the market and submit your listing to create your card.</div><br><a href="index.html" style="color:var(--fire);font-weight:700;font-size:.84rem">→ Go to Market</a></div>`;
     return;
   }
   const seed = (card.ign||'player').replace(/\s+/g,'');
@@ -636,7 +652,7 @@ async function loadEarnings() {
 // ── LOGOUT ──
 async function doLogout() {
   await _sb?.auth.signOut();
-  window.location.href = '/bzx-market/login.html';
+  window.location.href = 'login.html';
 }
 
 // ── UTILS ──
@@ -668,5 +684,6 @@ function toggleMobMenu() {
 
 document.getElementById('payOverlay').addEventListener('click', e => { if (e.target === document.getElementById('payOverlay')) closePayModal(); });
 </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>

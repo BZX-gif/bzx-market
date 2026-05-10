@@ -152,8 +152,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);-webk
 
 <!-- Topbar -->
 <nav class="topbar">
-  <a href="/bzx-market/index.html" class="brand">BlazeZoneX</a>
-  <a href="/bzx-market/index.html" class="back-link">← Back to Market</a>
+  <a href="index.html" class="brand">BlazeZoneX</a>
+  <a href="index.html" class="back-link">← Back to Market</a>
 </nav>
 
 <!-- Main -->
@@ -270,7 +270,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);-webk
         <div class="success-icon">🔥</div>
         <div class="success-title">You're In!</div>
         <div class="success-sub" id="successMsg">Welcome to BZX. Redirecting you to the market…</div>
-        <a href="/bzx-market/index.html" class="go-market-btn">🎮 Go to Market →</a>
+        <a href="index.html" class="go-market-btn">🎮 Go to Market →</a>
       </div>
 
     </div><!-- /auth-card -->
@@ -374,7 +374,7 @@ function showForgot() {
   if (!email) { showMsg('Enter your email first, then click Forgot Password', 'info'); return; }
   const sb = getSupabase();
   if (!sb) return;
-  sb.auth.resetPasswordForEmail(email, { redirectTo: 'https://bzx-gif.github.io/bzx-market/login.html' })
+  sb.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + '/login.html' })
     .then(({ error }) => {
       if (error) showMsg('❌ ' + error.message, 'error');
       else showMsg('📧 Password reset link sent to ' + email, 'success');
@@ -426,52 +426,52 @@ async function doRegister() {
 async function doGoogleAuth() {
   const sb = getSupabase();
   if (!sb) return;
+  // Build redirect URL → dashboard.html after Google auth
+  const origin = window.location.origin;
+  const path = window.location.pathname.replace('login.html','');
+  const redirectTo = origin + path + 'dashboard.html';
   const { error } = await sb.auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: 'https://bzx-gif.github.io/bzx-market/index.html' }
+    options: { redirectTo }
   });
   if (error) showMsg('❌ ' + error.message, 'error');
 }
 
-let _redirecting = false;
-
 function onLoginSuccess(user) {
-  if (_redirecting) return; // prevent double-fire
-  _redirecting = true;
   const ign = user.user_metadata?.ign || user.email?.split('@')[0] || 'Player';
   try {
-    localStorage.setItem('bzx_user_id', user.id);
-    localStorage.setItem('bzx_user_email', user.email);
-    localStorage.setItem('bzx_user_ign', ign);
+    sessionStorage.setItem('bzx_user_id', user.id);
+    sessionStorage.setItem('bzx_user_email', user.email);
+    sessionStorage.setItem('bzx_user_ign', ign);
   } catch(e) {}
   document.getElementById('loginPanel').style.display = 'none';
   document.getElementById('registerPanel').style.display = 'none';
-  document.getElementById('successMsg').textContent = `Welcome, ${ign}! Taking you to the market…`;
+  document.getElementById('successMsg').textContent = `Welcome, ${ign}! Taking you to your dashboard…`;
   document.getElementById('successScreen').classList.add('show');
+  // Update CTA in success screen → dashboard.html
+  const goBtn = document.querySelector('.go-market-btn');
+  if (goBtn) { goBtn.setAttribute('href', 'dashboard.html'); goBtn.innerHTML = '🎮 Go to Dashboard →'; }
+  // Hide tabs during success
   document.querySelector('.auth-tabs').style.display = 'none';
-  setTimeout(() => { window.location.href = '/bzx-market/index.html'; }, 1800);
+  setTimeout(() => { window.location.href = 'dashboard.html'; }, 1500);
 }
 
-// ── SESSION CHECK ──
+// ── SESSION CHECK — handles both normal login AND OAuth callback ──
 window.addEventListener('load', async () => {
   generateParticles();
   const sb = getSupabase();
   if (!sb) return;
 
-  // Only handle SIGNED_IN from an actual OAuth redirect (URL contains #access_token)
-  // NOT from a pre-existing session on page load
-  const isOAuthCallback = window.location.hash.includes('access_token');
+  // onAuthStateChange catches the OAuth redirect token in the URL hash
+  sb.auth.onAuthStateChange((event, session) => {
+    if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session?.user) {
+      onLoginSuccess(session.user);
+    }
+  });
 
-  if (isOAuthCallback) {
-    // OAuth redirect — let onAuthStateChange handle it
-    sb.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session?.user && !_redirecting) {
-        onLoginSuccess(session.user);
-      }
-    });
-  }
-  // For normal page load — DON'T auto-redirect if already logged in.
-  // User explicitly came to login page, let them stay here.
+  // Also check existing session (for normal page reload)
+  const { data: { session } } = await sb.auth.getSession();
+  if (session?.user) onLoginSuccess(session.user);
 });
 
 // ── PARTICLES ──
@@ -486,5 +486,6 @@ function generateParticles() {
   }
 }
 </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>

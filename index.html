@@ -1208,15 +1208,15 @@
 
 <!-- TOPBAR -->
 <nav class="topbar">
-  <a href="/bzx-market/index.html" class="topbar-brand">BlazeZoneX</a>
+  <a href="index.html" class="topbar-brand">BlazeZoneX</a>
   <div class="topbar-right">
     <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Light/Dark Mode">🌙 <span id="themeLabel">Dark</span></button>
     <button class="leaderboard-btn" onclick="openLeaderboard()">🏆 <span>Leaderboard</span></button>
     <button class="compare-toggle-btn" id="compareToggleBtn" onclick="toggleComparePanel()">⚔️ <span>Compare</span> <span class="compare-count-badge" id="compareBadge">0</span></button>
     <button class="compare-toggle-btn" id="wishlistTopBtn" onclick="openWishlist()" style="border-color:rgba(255,45,85,.25);color:var(--red);background:rgba(255,45,85,.07)">❤️ <span class="wl-label">Saved</span> <span class="wishlist-count-badge" id="wishlistBadge">0</span></button>
     <button class="compare-toggle-btn" id="dashboardBtn" onclick="goToDashboard()" style="display:none;border-color:rgba(0,229,255,.25);color:var(--cyan);background:rgba(0,229,255,.07)">🎮 <span id="topbarIGN">Dashboard</span></button>
-    <a href="/bzx-market/login.html" class="back-btn" id="loginTopBtn" style="background:linear-gradient(135deg,var(--fire),var(--fire2));border:none;color:#fff;padding:0 18px">🔐 Login</a>
-    <a href="/bzx-market/index.html" class="back-btn"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Back</a>
+    <a href="login.html" class="back-btn" id="loginTopBtn" style="background:linear-gradient(135deg,var(--fire),var(--fire2));border:none;color:#fff;padding:0 18px">🔐 Login</a>
+    <a href="index.html" class="back-btn"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Back</a>
   </div>
 </nav>
 
@@ -1445,53 +1445,7 @@
     </div>
   </div>
 
-  <div id="legendaryMore" class="section-collapse-wrap" style="max-height:0;overflow:hidden">
-  <div class="legendary-card reveal" id="legendaryShowcase2" style="margin-top:28px;" data-role="sniper" data-kd="8.8" data-wr="94" data-price="85" data-matches="760" data-skills="one shot 300m awm pro zone lock rotation god no scope">
-    <div class="legendary-inner">
-      <div class="lc-bg"></div><div class="lc-shimmer"></div>
-      <div class="lc-particles" id="lcParts2"></div>
-      <div class="lc-ribbon">LEGENDARY</div>
-      <button class="lc-compare-btn" onclick="toggleEliteCompare(this,'SolarDeath','Legendary Sniper','legendary','8.8','94','85','760','4.8','https://api.dicebear.com/7.x/adventurer/svg?seed=SolarDeath&amp;backgroundColor=1a1000')">⚔️ Compare</button>
-      <div class="lc-left">
-        <div style="display:flex;align-items:flex-start;gap:18px">
-          <div class="lc-avatar"><img src="https://api.dicebear.com/7.x/adventurer/svg?seed=SolarDeath&backgroundColor=1a1000&hair=long01&eyes=variant02" alt="SolarDeath"></div>
-          <div>
-            <div class="lc-verified">★ LEGENDARY</div>
-            <div class="lc-name">SolarDeath</div>
-            <div class="lc-role">Legendary Sniper · Sun Strike Assassin</div>
-          </div>
-        </div>
-        <div class="lc-bio">"One bullet. One life. I've never needed a second shot. Grandmaster sniper, unmissable, unforgettable."</div>
-        <div class="lc-rank-badge">🏆 Grandmaster · Top 30 Server</div>
-        <div class="lc-skills">
-          <span class="lc-skill-tag">One Shot</span><span class="lc-skill-tag">300m+ Kills</span><span class="lc-skill-tag">AWM Pro</span>
-          <span class="lc-skill-tag">Zone Lock</span><span class="lc-skill-tag">Rotation God</span><span class="lc-skill-tag">No Scope</span>
-        </div>
-        <div class="lc-rating-row"><div class="lc-stars" id="lr2"></div><span class="lc-rating-text">4.8 · 33 reviews</span></div>
-      </div>
-      <div class="lc-right">
-        <div class="lc-stats-grid">
-          <div class="lc-stat"><span class="lc-stat-val">8.8</span><span class="lc-stat-lbl">K/D</span></div>
-          <div class="lc-stat"><span class="lc-stat-val">760</span><span class="lc-stat-lbl">Matches</span></div>
-          <div class="lc-stat"><span class="lc-stat-val">14</span><span class="lc-stat-lbl">Avg Kills</span></div>
-          <div class="lc-stat"><span class="lc-stat-val">20x</span><span class="lc-stat-lbl">BZX Winner</span></div>
-        </div>
-        <div>
-          <div class="lc-wr-top"><span>Win Rate</span><span>94%</span></div>
-          <div class="lc-wr-track"><div class="lc-wr-fill" id="lcWr2"></div></div>
-        </div>
-        <a href="https://youtube.com/@solardeathff" class="lc-social" target="_blank" rel="noopener">▶️ youtube.com/@solardeathff ↗</a>
-        <div class="lc-footer">
-          <div><span class="lc-price-label">Per Match</span><span class="lc-price-val">₹85</span></div>
-          <button class="lc-hire-btn" onclick="openHireModal('SolarDeath')">☀️ Hire Legendary</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div><!-- /legendaryMore -->
-  <button class="show-more-btn" id="legendaryMoreBtn" onclick="toggleSection('legendaryMore','legendaryMoreBtn','🔥 Legendary Card','Legendary Cards')">
-    <span>+ View 1 More Legendary Card</span><span class="smb-arrow">▼</span>
-  </button>
+  <!-- Only one Legendary demo card kept per category -->
 </div>
 
 <!-- ELITE SHOWCASE CARDS -->
@@ -1544,191 +1498,7 @@
     </div>
   </div>
 
-  <div class="elite-card reveal" id="eliteShowcase2" style="margin-top:30px;" data-role="sniper" data-kd="6.5" data-wr="91" data-price="55" data-matches="590" data-skills="long range zone lock awm expert purgatory rotation read">
-    <div class="elite-card-inner">
-      <div class="elite-bg"></div><div class="elite-shimmer"></div>
-      <div class="elite-particles-wrap" id="eliteParts2"></div>
-      <div class="elite-featured-tag">ELITE</div>
-      <button class="elite-compare-btn" onclick="toggleEliteCompare(this,'GhostReaper','Sniper · Zone Controller','elite','6.5','91','55','590','4.7','https://api.dicebear.com/7.x/bottts/svg?seed=GhostReaper&amp;backgroundColor=0a0010')">⚔️ Compare</button>
-      <div class="elite-left">
-        <div class="elite-header">
-          <div class="elite-avatar"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=GhostReaper&backgroundColor=0a0010" alt="GhostReaper"></div>
-          <div>
-            <div class="elite-verified">✓ BZX Verified</div>
-            <div class="elite-name">GhostReaper</div>
-            <div class="elite-role">Sniper · Zone Controller · BZX Pro</div>
-          </div>
-        </div>
-        <div class="elite-bio">"Silent, deadly, precise. I lock zones and pick heads from 300m. My squad never loses the circle."</div>
-        <div class="elite-rank-badge">🏆 Heroic Rank · Season 28</div>
-        <div class="elite-skills">
-          <span class="elite-skill-tag">Long Range</span><span class="elite-skill-tag">Zone Lock</span><span class="elite-skill-tag">AWM Expert</span>
-          <span class="elite-skill-tag">Purgatory</span><span class="elite-skill-tag">Rotation Read</span><span class="elite-skill-tag">BZX Ranked</span>
-        </div>
-        <div class="elite-rating-row">
-          <div class="elite-stars" id="er2"></div>
-          <span class="elite-rating-text">4.7 · 31 reviews</span>
-        </div>
-      </div>
-      <div class="elite-right">
-        <div class="elite-stats-grid">
-          <div class="elite-stat"><span class="elite-stat-val">6.5</span><span class="elite-stat-lbl">K/D Ratio</span></div>
-          <div class="elite-stat"><span class="elite-stat-val">590</span><span class="elite-stat-lbl">Matches</span></div>
-          <div class="elite-stat"><span class="elite-stat-val">10</span><span class="elite-stat-lbl">Avg Kills</span></div>
-          <div class="elite-stat"><span class="elite-stat-val">9x</span><span class="elite-stat-lbl">BZX Winner</span></div>
-        </div>
-        <div>
-          <div class="wr-top"><span>Win Rate</span><span>91%</span></div>
-          <div class="wr-track"><div class="wr-fill" id="wrFill2"></div></div>
-        </div>
-        <a href="https://youtube.com/@ghostreaperff" class="elite-social" target="_blank" rel="noopener">▶️ youtube.com/@ghostreaperff ↗</a>
-        <div class="elite-footer">
-          <div><span class="elite-price-label">Per Match</span><span class="elite-price-val">₹55</span></div>
-          <button class="elite-hire-btn" onclick="openHireModal('GhostReaper')">⚡ Hire Me Now</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="eliteMore" class="section-collapse-wrap" style="max-height:0;overflow:hidden">
-  <div class="elite-card reveal" id="eliteShowcase3" style="margin-top:30px;" data-role="fragger" data-kd="7.8" data-wr="93" data-price="70" data-matches="720" data-skills="rush combat building break clutch plays bermuda gloo wall">
-    <div class="elite-card-inner">
-      <div class="elite-bg"></div><div class="elite-shimmer"></div>
-      <div class="elite-particles-wrap" id="eliteParts3"></div>
-      <div class="elite-featured-tag">ELITE</div>
-      <button class="elite-compare-btn" onclick="toggleEliteCompare(this,'VoidStrike_X','Entry Fragger · Rusher','elite','7.8','93','70','720','4.8','https://api.dicebear.com/7.x/adventurer/svg?seed=VoidStrikeX&amp;backgroundColor=100010')">⚔️ Compare</button>
-      <div class="elite-left">
-        <div class="elite-header">
-          <div class="elite-avatar"><img src="https://api.dicebear.com/7.x/adventurer/svg?seed=VoidStrikeX&backgroundColor=100010" alt="VoidStrike_X"></div>
-          <div>
-            <div class="elite-verified">✓ BZX Verified</div>
-            <div class="elite-name">VoidStrike_X</div>
-            <div class="elite-role">Entry Fragger · Rusher · Clutch King</div>
-          </div>
-        </div>
-        <div class="elite-bio">"I don't wait for the fight — I bring it. First in, last standing. Pure aggression, zero hesitation."</div>
-        <div class="elite-rank-badge">🏆 Grandmaster Rank · Season 28</div>
-        <div class="elite-skills">
-          <span class="elite-skill-tag">Rush Combat</span><span class="elite-skill-tag">Building Break</span><span class="elite-skill-tag">Clutch Plays</span>
-          <span class="elite-skill-tag">Bermuda Pro</span><span class="elite-skill-tag">Gloo Wall Master</span><span class="elite-skill-tag">Tournament Ready</span>
-        </div>
-        <div class="elite-rating-row">
-          <div class="elite-stars" id="er3"></div>
-          <span class="elite-rating-text">4.8 · 52 reviews</span>
-        </div>
-      </div>
-      <div class="elite-right">
-        <div class="elite-stats-grid">
-          <div class="elite-stat"><span class="elite-stat-val">7.8</span><span class="elite-stat-lbl">K/D Ratio</span></div>
-          <div class="elite-stat"><span class="elite-stat-val">720</span><span class="elite-stat-lbl">Matches</span></div>
-          <div class="elite-stat"><span class="elite-stat-val">14</span><span class="elite-stat-lbl">Avg Kills</span></div>
-          <div class="elite-stat"><span class="elite-stat-val">15x</span><span class="elite-stat-lbl">BZX Winner</span></div>
-        </div>
-        <div>
-          <div class="wr-top"><span>Win Rate</span><span>93%</span></div>
-          <div class="wr-track"><div class="wr-fill" id="wrFill3"></div></div>
-        </div>
-        <a href="https://youtube.com/@voidstrikex" class="elite-social" target="_blank" rel="noopener">▶️ youtube.com/@voidstrikex ↗</a>
-        <div class="elite-footer">
-          <div><span class="elite-price-label">Per Match</span><span class="elite-price-val">₹70</span></div>
-          <button class="elite-hire-btn" onclick="openHireModal('VoidStrike_X')">⚡ Hire Me Now</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="elite-card reveal" id="eliteShowcase4" style="margin-top:30px;" data-role="igl" data-kd="5.9" data-wr="97" data-price="65" data-matches="810" data-skills="igl calls map awareness zone prediction kalahari team comps">
-    <div class="elite-card-inner">
-      <div class="elite-bg"></div><div class="elite-shimmer"></div>
-      <div class="elite-particles-wrap" id="eliteParts4"></div>
-      <div class="elite-featured-tag">ELITE</div>
-      <button class="elite-compare-btn" onclick="toggleEliteCompare(this,'NovaSerpent','IGL · Strategist','elite','5.9','97','65','810','5.0','https://api.dicebear.com/7.x/adventurer/svg?seed=NovaSerpent&amp;backgroundColor=001020')">⚔️ Compare</button>
-      <div class="elite-left">
-        <div class="elite-header">
-          <div class="elite-avatar"><img src="https://api.dicebear.com/7.x/adventurer/svg?seed=NovaSerpent&backgroundColor=001020" alt="NovaSerpent"></div>
-          <div>
-            <div class="elite-verified">✓ BZX Verified</div>
-            <div class="elite-name">NovaSerpent</div>
-            <div class="elite-role">IGL · Strategist · Support God</div>
-          </div>
-        </div>
-        <div class="elite-bio">"Strategy wins games, not just aim. I read maps like code, call rotations perfectly, and never lose comps."</div>
-        <div class="elite-rank-badge">🏆 Grandmaster Rank · Season 28</div>
-        <div class="elite-skills">
-          <span class="elite-skill-tag">IGL Calls</span><span class="elite-skill-tag">Map Awareness</span><span class="elite-skill-tag">Zone Prediction</span>
-          <span class="elite-skill-tag">Kalahari Expert</span><span class="elite-skill-tag">Team Comps</span><span class="elite-skill-tag">BZX Legend</span>
-        </div>
-        <div class="elite-rating-row">
-          <div class="elite-stars" id="er4"></div>
-          <span class="elite-rating-text">5.0 · 29 reviews</span>
-        </div>
-      </div>
-      <div class="elite-right">
-        <div class="elite-stats-grid">
-          <div class="elite-stat"><span class="elite-stat-val">5.9</span><span class="elite-stat-lbl">K/D Ratio</span></div>
-          <div class="elite-stat"><span class="elite-stat-val">810</span><span class="elite-stat-lbl">Matches</span></div>
-          <div class="elite-stat"><span class="elite-stat-val">9</span><span class="elite-stat-lbl">Avg Kills</span></div>
-          <div class="elite-stat"><span class="elite-stat-val">18x</span><span class="elite-stat-lbl">BZX Winner</span></div>
-        </div>
-        <div>
-          <div class="wr-top"><span>Win Rate</span><span>97%</span></div>
-          <div class="wr-track"><div class="wr-fill" id="wrFill4"></div></div>
-        </div>
-        <a href="https://youtube.com/@novaserpent" class="elite-social" target="_blank" rel="noopener">▶️ youtube.com/@novaserpent ↗</a>
-        <div class="elite-footer">
-          <div><span class="elite-price-label">Per Match</span><span class="elite-price-val">₹65</span></div>
-          <button class="elite-hire-btn" onclick="openHireModal('NovaSerpent')">⚡ Hire Me Now</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Ｊａｎａཌ -->
-  <div class="elite-card reveal" id="card__mo2rpmow" style="margin-top:30px;" data-role="fragger" data-kd="5.46" data-wr="80" data-price="50" data-matches="89" data-skills="rusher igl zone predicter">
-    <div class="elite-card-inner">
-      <div class="elite-bg"></div><div class="elite-shimmer"></div>
-      <div class="elite-particles-wrap" id="ep_card__mo2rpmow"></div>
-      <div class="elite-featured-tag">ELITE</div>
-      <button class="elite-compare-btn" onclick="toggleEliteCompare(this,'Ｊａｎａཌ','Rusher · BZX Pro','elite','5.46','80','50','89','4.6','https://api.dicebear.com/7.x/bottts/svg?seed=Janad&amp;backgroundColor=000820')">⚔️ Compare</button>
-      <div class="elite-left">
-        <div class="elite-header">
-          <div class="elite-avatar"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=Janad&backgroundColor=000820" alt="Ｊａｎａཌ"></div>
-          <div>
-            <div class="elite-verified">✓ BZX Verified</div>
-            <div class="elite-name">Ｊａｎａཌ</div>
-            <div class="elite-role">Rusher · BZX Pro</div>
-          </div>
-        </div>
-        <div class="elite-bio">"Winning isn't luck, it's my plan"</div>
-        <div class="elite-rank-badge">🏆 Heroic</div>
-        <div class="elite-skills">
-          <span class="elite-skill-tag">Rusher</span><span class="elite-skill-tag">UID: 1329315617</span>
-          <span class="elite-skill-tag">Short Range</span><span class="elite-skill-tag">Close Combat God</span><span class="elite-skill-tag">Zone Lock</span>
-        </div>
-      </div>
-      <div class="elite-right">
-        <div class="elite-stats-grid">
-          <div class="elite-stat"><span class="elite-stat-val">5.46</span><span class="elite-stat-lbl">K/D Ratio</span></div>
-          <div class="elite-stat"><span class="elite-stat-val">89</span><span class="elite-stat-lbl">Matches</span></div>
-          <div class="elite-stat"><span class="elite-stat-val">7</span><span class="elite-stat-lbl">Avg Kills</span></div>
-          <div class="elite-stat"><span class="elite-stat-val">2X</span><span class="elite-stat-lbl">BZX Winner</span></div>
-        </div>
-        <div>
-          <div class="wr-top"><span>Win Rate</span><span>80%</span></div>
-          <div class="wr-track"><div class="wr-fill" id="wr_card__mo2rpmow" style="width:0%;transition:width 1.6s cubic-bezier(.22,.61,.36,1)"></div></div>
-        </div>
-        <a href="https://instagram.com/joker__kit" class="elite-social" target="_blank" rel="noopener">📸 instagram.com/joker__kit ↗</a>
-        <div class="elite-footer">
-          <div><span class="elite-price-label">Per Match</span><span class="elite-price-val">₹50</span></div>
-          <button class="elite-hire-btn" onclick="openHireModal('Ｊａｎａཌ')">⚡ Hire Me Now</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div><!-- /eliteMore -->
-  <button class="show-more-btn" id="eliteMoreBtn" onclick="toggleSection('eliteMore','eliteMoreBtn','⭐ Elite','Elite Cards')">
-    <span>+ View 3 More Elite Cards</span><span class="smb-arrow">▼</span>
-  </button>
+  <!-- Only one Elite demo card kept per category -->
 </div>
 
 
@@ -1993,85 +1763,7 @@
           </div>
         </div>
 
-        <!-- ── VOIDFRAG_X ── -->
-        <div class="pb-test-block">
-          <div class="pb-test-card">
-            <div class="pb-test-top">
-              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=PBTestVoid&backgroundColor=0d0020" class="pb-test-avatar" alt="VoidFrag_X">
-              <div><div class="pb-test-name">VoidFrag_X</div><div class="pb-test-since">⚡ Pro Boost · Month 5</div></div>
-              <div class="pb-test-stars">⭐⭐⭐⭐⭐</div>
-            </div>
-            <div class="pb-test-text">"₹29 per month. I charge ₹35 per match. I earned ₹420 in one week. My Pro Boost pays for itself in literally one match. Biggest no-brainer I've ever seen."</div>
-          </div>
-          <div class="pb-test-card-label">👆 That's their card below ↓</div>
-          <div class="pb-mini-card" style="--pb-mini-c1:rgba(180,77,255,.3);--pb-mini-glow:rgba(180,77,255,.12)">
-            <div class="pb-mini-glow" style="background:var(--pb-mini-glow,rgba(0,229,255,.1))"></div>
-            <div class="pb-mini-hire-badge" style="background:rgba(180,77,255,.15);border-color:rgba(180,77,255,.35);color:var(--purple)">🔥 12 hires this month</div>
-            <div class="pb-mini-top">
-              <div class="pb-mini-avatar-wrap">
-                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=PBTestVoid&backgroundColor=0d0020" alt="VoidFrag_X">
-                <div class="pb-mini-online"></div>
-              </div>
-              <div class="pb-mini-info">
-                <div class="pb-mini-verified" style="border-color:rgba(180,77,255,.3);background:rgba(180,77,255,.1);color:var(--purple)"><span class="pb-mini-vdot" style="background:var(--purple)"></span> Pro Verified</div>
-                <div class="pb-mini-name">VoidFrag_X</div>
-                <div class="pb-mini-role">All-Rounder · IGL</div>
-              </div>
-            </div>
-            <div class="pb-mini-stats" style="background:rgba(180,77,255,.08)">
-              <div class="pb-mini-stat" style="--sc:var(--purple)"><span>7.4</span><span>K/D</span></div>
-              <div class="pb-mini-stat" style="--sc:var(--purple)"><span>91%</span><span>Win%</span></div>
-              <div class="pb-mini-stat" style="--sc:var(--purple)"><span>580</span><span>Games</span></div>
-            </div>
-            <div class="pb-mini-skills">
-              <span>IGL</span><span>Clutch</span><span>All Maps</span><span>Sniper</span>
-            </div>
-            <div class="pb-mini-footer">
-              <div><span class="pb-mini-plbl">Per Match</span><span class="pb-mini-price" style="color:var(--purple)">₹35</span></div>
-              <button class="pb-mini-btn" style="border-color:rgba(180,77,255,.4);color:var(--purple);background:rgba(180,77,255,.08)" onclick="openAddModal('proboost')">⚡ Hire Now</button>
-            </div>
-          </div>
-        </div>
 
-        <!-- ── NIGHTSNIPER_9 ── -->
-        <div class="pb-test-block">
-          <div class="pb-test-card">
-            <div class="pb-test-top">
-              <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=PBTestSnipe&backgroundColor=001a0d" class="pb-test-avatar" alt="NightSniper_9">
-              <div><div class="pb-test-name">NightSniper_9</div><div class="pb-test-since">⚡ Pro Boost · Month 2</div></div>
-              <div class="pb-test-stars">⭐⭐⭐⭐⭐</div>
-            </div>
-            <div class="pb-test-text">"I was skeptical. Paid ₹29 on a whim. Got hired 7 times that month. The animated border literally makes hirers stop scrolling. I'll never go back to free."</div>
-          </div>
-          <div class="pb-test-card-label">👆 That's their card below ↓</div>
-          <div class="pb-mini-card" style="--pb-mini-c1:rgba(0,255,136,.3)">
-            <div class="pb-mini-glow" style="background:rgba(0,255,136,.08)"></div>
-            <div class="pb-mini-hire-badge" style="background:rgba(0,255,136,.1);border-color:rgba(0,255,136,.3);color:var(--green)">🔥 7 hires this month</div>
-            <div class="pb-mini-top">
-              <div class="pb-mini-avatar-wrap">
-                <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=PBTestSnipe&backgroundColor=001a0d" alt="NightSniper_9">
-                <div class="pb-mini-online"></div>
-              </div>
-              <div class="pb-mini-info">
-                <div class="pb-mini-verified" style="border-color:rgba(0,255,136,.3);background:rgba(0,255,136,.08);color:var(--green)"><span class="pb-mini-vdot" style="background:var(--green)"></span> Pro Verified</div>
-                <div class="pb-mini-name">NightSniper_9</div>
-                <div class="pb-mini-role">Sniper · Long Range God</div>
-              </div>
-            </div>
-            <div class="pb-mini-stats" style="background:rgba(0,255,136,.06)">
-              <div class="pb-mini-stat" style="--sc:var(--green)"><span>8.2</span><span>K/D</span></div>
-              <div class="pb-mini-stat" style="--sc:var(--green)"><span>93%</span><span>Win%</span></div>
-              <div class="pb-mini-stat" style="--sc:var(--green)"><span>490</span><span>Games</span></div>
-            </div>
-            <div class="pb-mini-skills">
-              <span>AWM Pro</span><span>No Scope</span><span>Purgatory</span><span>300m+</span>
-            </div>
-            <div class="pb-mini-footer">
-              <div><span class="pb-mini-plbl">Per Match</span><span class="pb-mini-price" style="color:var(--green)">₹40</span></div>
-              <button class="pb-mini-btn" style="border-color:rgba(0,255,136,.35);color:var(--green);background:rgba(0,255,136,.07)" onclick="openAddModal('proboost')">⚡ Hire Now</button>
-            </div>
-          </div>
-        </div>
 
         <!-- bottom nudge -->
         <div class="pb-test-nudge">
@@ -2299,33 +1991,6 @@
       </div>
     </div>
 
-    <div class="player-card tier-diamond reveal" data-tier="diamond" data-available="true" data-role="fragger" data-kd="5.1" data-wr="85" data-price="35" data-matches="440" data-skills="headshots 1v1 cqc" data-rating="4.5" data-name="AimGodZR">
-      <div class="card-glow"></div>
-      <div class="compare-checkbox" onclick="toggleCompare(this)" title="Compare">⊕</div>
-      <div class="card-top">
-        <div class="avatar-wrap">
-          <div class="avatar"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=AimGod&backgroundColor=200010" alt="AimGodZR"></div>
-          <div class="online-dot"></div>
-        </div>
-        <div class="player-info">
-          <div class="player-name">AimGodZR</div>
-          <div class="player-role">Fragger · Rusher</div>
-          <span class="tier-badge">💎 Diamond</span>
-        </div>
-      </div>
-      <div class="card-rating"><div class="stars" id="sr4"></div><span class="rating-count">4.5 · 21 reviews</span></div>
-      <div class="card-stats">
-        <div class="stat-box"><span class="stat-val">5.1</span><span class="stat-lbl">K/D</span></div>
-        <div class="stat-box"><span class="stat-val">85%</span><span class="stat-lbl">Win Rate</span></div>
-        <div class="stat-box"><span class="stat-val">440</span><span class="stat-lbl">Matches</span></div>
-      </div>
-      <div class="card-skills"><span class="skill-tag">Headshots</span><span class="skill-tag">1v1</span><span class="skill-tag">CQC</span></div>
-      <div class="card-footer">
-        <div><span class="price-label">Per Match</span><span class="price-val">₹35</span></div>
-        <button class="hire-btn" onclick="openHireModal('AimGodZR')">Hire Now</button>
-      </div>
-    </div>
-
     <div class="player-card tier-free reveal" data-tier="free" data-available="true" data-role="support" data-kd="2.6" data-wr="71" data-price="0" data-matches="155" data-skills="revive med kit kalahari" data-rating="4.1" data-name="StormBreaker_X">
       <div class="card-glow"></div>
       <div class="compare-checkbox" onclick="toggleCompare(this)" title="Compare">⊕</div>
@@ -2350,87 +2015,6 @@
       <div class="card-footer">
         <div><span class="price-label">Per Match</span><span class="price-val">FREE</span></div>
         <button class="hire-btn" onclick="openHireModal('StormBreaker_X')">Hire Now</button>
-      </div>
-    </div>
-
-    <div class="player-card tier-elite reveal" data-tier="elite" data-available="true" data-role="allrounder" data-kd="7.0" data-wr="95" data-price="60" data-matches="680" data-skills="all maps tournament bzx pro" data-rating="4.9" data-name="WarCraftGG">
-      <div class="card-glow"></div>
-      <div class="compare-checkbox" onclick="toggleCompare(this)" title="Compare">⊕</div>
-      <div class="card-top">
-        <div class="avatar-wrap">
-          <div class="avatar"><img src="https://api.dicebear.com/7.x/adventurer/svg?seed=WarCraft&backgroundColor=0d0500" alt="WarCraftGG"></div>
-          <div class="online-dot"></div>
-        </div>
-        <div class="player-info">
-          <div class="player-name">WarCraftGG</div>
-          <div class="player-role">All-Rounder</div>
-          <span class="tier-badge">👑 Elite</span>
-        </div>
-      </div>
-      <div class="card-rating"><div class="stars" id="sr6"></div><span class="rating-count">4.9 · 38 reviews</span></div>
-      <div class="card-stats">
-        <div class="stat-box"><span class="stat-val">7.0</span><span class="stat-lbl">K/D</span></div>
-        <div class="stat-box"><span class="stat-val">95%</span><span class="stat-lbl">Win Rate</span></div>
-        <div class="stat-box"><span class="stat-val">680</span><span class="stat-lbl">Matches</span></div>
-      </div>
-      <div class="card-skills"><span class="skill-tag">All Maps</span><span class="skill-tag">Tournament</span><span class="skill-tag">BZX Pro</span></div>
-      <div class="card-footer">
-        <div><span class="price-label">Per Match</span><span class="price-val">₹60</span></div>
-        <button class="hire-btn" onclick="openHireModal('WarCraftGG')">Hire Now</button>
-      </div>
-    </div>
-
-    <div class="player-card tier-diamond reveal" data-tier="diamond" data-available="true" data-role="support" data-kd="3.4" data-wr="82" data-price="25" data-matches="280" data-skills="heal support revive ep management" data-rating="4.4" data-name="Angel_Healer">
-      <div class="card-glow"></div>
-      <div class="compare-checkbox" onclick="toggleCompare(this)" title="Compare">⊕</div>
-      <div class="card-top">
-        <div class="avatar-wrap">
-          <div class="avatar"><img src="https://api.dicebear.com/7.x/adventurer/svg?seed=AngelHealer&backgroundColor=002010" alt="Angel_Healer"></div>
-          <div class="online-dot"></div>
-        </div>
-        <div class="player-info">
-          <div class="player-name">Angel_Healer</div>
-          <div class="player-role">Support · EP Manager</div>
-          <span class="tier-badge">💎 Diamond</span>
-        </div>
-      </div>
-      <div class="card-rating"><div class="stars" id="sr7"></div><span class="rating-count">4.4 · 15 reviews</span></div>
-      <div class="card-stats">
-        <div class="stat-box"><span class="stat-val">3.4</span><span class="stat-lbl">K/D</span></div>
-        <div class="stat-box"><span class="stat-val">82%</span><span class="stat-lbl">Win Rate</span></div>
-        <div class="stat-box"><span class="stat-val">280</span><span class="stat-lbl">Matches</span></div>
-      </div>
-      <div class="card-skills"><span class="skill-tag">Heal</span><span class="skill-tag">EP Boost</span><span class="skill-tag">Revive God</span></div>
-      <div class="card-footer">
-        <div><span class="price-label">Per Match</span><span class="price-val">₹25</span></div>
-        <button class="hire-btn" onclick="openHireModal('Angel_Healer')">Hire Now</button>
-      </div>
-    </div>
-
-    <div class="player-card tier-gold reveal" data-tier="gold" data-available="true" data-role="igl" data-kd="4.2" data-wr="80" data-price="20" data-matches="195" data-skills="callouts rotation awareness kalahari" data-rating="4.2" data-name="TacticBoss99">
-      <div class="card-glow"></div>
-      <div class="compare-checkbox" onclick="toggleCompare(this)" title="Compare">⊕</div>
-      <div class="card-top">
-        <div class="avatar-wrap">
-          <div class="avatar"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=TacticBoss&backgroundColor=151000" alt="TacticBoss99"></div>
-          <div class="online-dot"></div>
-        </div>
-        <div class="player-info">
-          <div class="player-name">TacticBoss99</div>
-          <div class="player-role">IGL · Rotation Expert</div>
-          <span class="tier-badge">🥇 Gold</span>
-        </div>
-      </div>
-      <div class="card-rating"><div class="stars" id="sr8"></div><span class="rating-count">4.2 · 9 reviews</span></div>
-      <div class="card-stats">
-        <div class="stat-box"><span class="stat-val">4.2</span><span class="stat-lbl">K/D</span></div>
-        <div class="stat-box"><span class="stat-val">80%</span><span class="stat-lbl">Win Rate</span></div>
-        <div class="stat-box"><span class="stat-val">195</span><span class="stat-lbl">Matches</span></div>
-      </div>
-      <div class="card-skills"><span class="skill-tag">Callouts</span><span class="skill-tag">Rotation</span><span class="skill-tag">Kalahari</span></div>
-      <div class="card-footer">
-        <div><span class="price-label">Per Match</span><span class="price-val">₹20</span></div>
-        <button class="hire-btn" onclick="openHireModal('TacticBoss99')">Hire Now</button>
       </div>
     </div>
 
@@ -2522,66 +2106,6 @@
       <div class="review-stars">⭐⭐⭐⭐⭐</div>
       <div class="review-text">"John Wick literally carried our squad from 20 kills deficit to Booyah. Best IGL I've ever played with on BZX. 100% rehiring."</div>
       <span class="review-player-tag">Hired: John Wick</span>
-    </div>
-    <div class="review-card reveal">
-      <div class="review-header">
-        <div class="review-avatar"><img src="https://api.dicebear.com/7.x/adventurer/svg?seed=ReviewUser2&backgroundColor=001520" alt="Review"></div>
-        <div>
-          <div class="review-name">NightHawkX</div>
-          <div class="review-meta">5 days ago · Duo Domination</div>
-        </div>
-      </div>
-      <div class="review-stars">⭐⭐⭐⭐⭐</div>
-      <div class="review-text">"GhostReaper sniped 3 enemies in the final zone before I even finished healing. Absolute monster. Highly recommend for any sniper slot."</div>
-      <span class="review-player-tag">Hired: GhostReaper</span>
-    </div>
-    <div class="review-card reveal">
-      <div class="review-header">
-        <div class="review-avatar"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=ReviewUser3&backgroundColor=0d0500" alt="Review"></div>
-        <div>
-          <div class="review-name">ZeroGrav_FF</div>
-          <div class="review-meta">1 week ago · Solo Knockout</div>
-        </div>
-      </div>
-      <div class="review-stars">⭐⭐⭐⭐⭐</div>
-      <div class="review-text">"VoidStrike_X is insane in close combat. He rushed 4 squads in 10 minutes and we ended with 22 kills. Unbelievable fragger."</div>
-      <span class="review-player-tag">Hired: VoidStrike_X</span>
-    </div>
-    <div class="review-card reveal">
-      <div class="review-header">
-        <div class="review-avatar"><img src="https://api.dicebear.com/7.x/adventurer/svg?seed=ReviewUser4&backgroundColor=150010" alt="Review"></div>
-        <div>
-          <div class="review-name">CrimsonBlade</div>
-          <div class="review-meta">3 days ago · Squad Elite Cup</div>
-        </div>
-      </div>
-      <div class="review-stars">⭐⭐⭐⭐☆</div>
-      <div class="review-text">"BloodKing was on fire the entire game. Got first blood in 30 seconds. Strong entry, great comms. One of the best fraggers on the market."</div>
-      <span class="review-player-tag">Hired: BloodKing</span>
-    </div>
-    <div class="review-card reveal">
-      <div class="review-header">
-        <div class="review-avatar"><img src="https://api.dicebear.com/7.x/adventurer/svg?seed=ReviewUser5&backgroundColor=001810" alt="Review"></div>
-        <div>
-          <div class="review-name">PurpleVoid_7</div>
-          <div class="review-meta">2 weeks ago · BZX Ranked</div>
-        </div>
-      </div>
-      <div class="review-stars">⭐⭐⭐⭐⭐</div>
-      <div class="review-text">"NovaSerpent's zone predictions were insane. He called every rotation perfectly. We didn't lose a single zone fight all match."</div>
-      <span class="review-player-tag">Hired: NovaSerpent</span>
-    </div>
-    <div class="review-card reveal">
-      <div class="review-header">
-        <div class="review-avatar"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=ReviewUser6&backgroundColor=100a00" alt="Review"></div>
-        <div>
-          <div class="review-name">SkullCrusher_X</div>
-          <div class="review-meta">4 days ago · Duo Domination</div>
-        </div>
-      </div>
-      <div class="review-stars">⭐⭐⭐⭐⭐</div>
-      <div class="review-text">"WarCraftGG is an absolute all-rounder. Sniped 2, rushed 4, and called every rotation. Worth every rupee. BZX legend for real."</div>
-      <span class="review-player-tag">Hired: WarCraftGG</span>
     </div>
   </div>
 </div>
@@ -2743,7 +2267,7 @@
       <div style="font-size:2.5rem;margin-bottom:12px">🔐</div>
       <div style="font-weight:700;font-size:.95rem;margin-bottom:8px">Login to Hire</div>
       <div style="font-size:.82rem;color:var(--muted);margin-bottom:20px">Create a free account to send hire requests, track status, and message players.</div>
-      <a href="/bzx-market/login.html" class="modal-submit" style="text-decoration:none;display:inline-block;text-align:center">🔐 Login / Register Free →</a>
+      <a href="login.html" class="modal-submit" style="text-decoration:none;display:inline-block;text-align:center">🔐 Login / Register Free →</a>
     </div>
 
     <!-- LOGGED IN HIRE FORM -->
@@ -3089,7 +2613,7 @@
 
 <!-- FOOTER -->
 <footer class="market-footer">
-  <p>BZX Player Market · Part of <a href="/bzx-market/index.html">BlazeZoneX</a> · Built For Pressure 🔥</p>
+  <p>BZX Player Market · Part of <a href="index.html">BlazeZoneX</a> · Built For Pressure 🔥</p>
   <div class="footer-links">
     <a href="#">Privacy Policy</a>
     <a href="#">Terms of Service</a>
@@ -3843,18 +3367,7 @@ function closeHireModal() {
   }
 }
 
-function submitHire() {
-  const player = document.getElementById('hirePlayerName').value;
-  const ign = document.getElementById('hireIGN').value.trim();
-  const tournament = document.getElementById('hireTournament').value;
-  const wa = document.getElementById('hireWA').value.trim();
-  const msg = document.getElementById('hireMsg')?.value.trim() || '';
-  if (!ign) { showToast('Please enter your IGN', 'warn'); return; }
-  if (wa.length !== 10 || isNaN(wa)) { showToast('Enter valid 10-digit WhatsApp number', 'warn'); return; }
-  closeHireModal();
-  const fullMsg = `🔥 BZX HIRE REQUEST\n\nHiring: ${player}\nMy IGN: ${ign}\nTournament: ${tournament || 'Not specified'}\nMatches: ${_hireMatchCount}\nUrgency: ${_hireUrgency.toUpperCase()}\nMy WhatsApp: ${wa}${msg ? '\nNote: ' + msg : ''}\n\nSent via BlazeZoneX Player Market`;
-  showWaRedirect(player, 'Hire Request', fullMsg);
-}
+// (Old WhatsApp-based submitHire removed — replaced by Supabase version below)
 
 // ═══ ADD PLAYER MODAL ═══
 let addTier = 'starter';
@@ -4894,38 +4407,51 @@ async function initBZXAuth() {
   const sb = getSB();
   if (!sb) return;
 
-  // onAuthStateChange is the ONLY reliable way to read session after any login type
-  // It fires immediately on page load if a session exists in storage
+  // onAuthStateChange handles Google OAuth token in URL hash
   sb.auth.onAuthStateChange(async (event, session) => {
-    if (session?.user) {
+    if ((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session?.user) {
       _bzxUser = session.user;
       if (!_bzxProfile) {
         const { data } = await sb.from('profiles').select('*').eq('id', _bzxUser.id).single();
         _bzxProfile = data;
       }
       updateTopbarAuth(true);
-    } else {
-      _bzxUser = null;
-      _bzxProfile = null;
+    }
+    if (event === 'SIGNED_OUT') {
+      _bzxUser = null; _bzxProfile = null;
       updateTopbarAuth(false);
     }
   });
+
+  const { data: { session } } = await sb.auth.getSession();
+  if (session?.user) {
+    _bzxUser = session.user;
+    const { data } = await sb.from('profiles').select('*').eq('id', _bzxUser.id).single();
+    _bzxProfile = data;
+    updateTopbarAuth(true);
+  } else {
+    updateTopbarAuth(false);
+  }
 }
 
 function updateTopbarAuth(loggedIn) {
   const loginBtn = document.getElementById('loginTopBtn');
   const dashBtn  = document.getElementById('dashboardBtn');
-  const ign = _bzxProfile?.ign || _bzxUser?.user_metadata?.ign || 'Dashboard';
+  const ign = _bzxProfile?.ign || _bzxUser?.user_metadata?.ign || _bzxUser?.email?.split('@')[0] || 'Dashboard';
   if (loggedIn) {
     if (loginBtn) loginBtn.style.display = 'none';
-    if (dashBtn)  { dashBtn.style.display = ''; document.getElementById('topbarIGN').textContent = '🎮 ' + ign; }
+    if (dashBtn)  {
+      dashBtn.style.display = '';
+      const ignEl = document.getElementById('topbarIGN');
+      if (ignEl) ignEl.textContent = '🎮 ' + ign;
+    }
   } else {
     if (loginBtn) loginBtn.style.display = '';
     if (dashBtn)  dashBtn.style.display = 'none';
   }
 }
 
-function goToDashboard() { window.location.href = "/bzx-market/dashboard.html"; }
+function goToDashboard() { window.location.href = 'dashboard.html'; }
 
 // ── OPEN HIRE MODAL (auth-aware) ──
 function openHireModal(playerName, playerId) {
@@ -4959,60 +4485,90 @@ function closeHireModal() {
 
 // ── SUBMIT HIRE (to Supabase, not WhatsApp) ──
 async function submitHire() {
-  if (!_bzxUser) { window.location.href = "/bzx-market/login.html"; return; }
+  // Always reset button if anything fails — defined here so finally can use it
+  const btn = document.getElementById('hireSubmitBtn');
+  const resetBtn = () => { if (btn) { btn.disabled = false; btn.textContent = '⚡ Send Hire Request'; } };
+
+  // Auth gate
+  if (!_bzxUser) { resetBtn(); window.location.href = 'login.html'; return; }
   const sb = getSB();
-  const playerName = document.getElementById('hirePlayerName').value;
-  const tournament = document.getElementById('hireTournament').value;
+  if (!sb) { resetBtn(); showToast('❌ Connection error. Please refresh.', 'warn'); return; }
+
+  const playerName = document.getElementById('hirePlayerName')?.value || '';
+  const tournament = document.getElementById('hireTournament')?.value || '';
   const note       = document.getElementById('hireMsg')?.value.trim() || '';
-  const btn        = document.getElementById('hireSubmitBtn');
 
-  btn.disabled = true; btn.textContent = '⏳ Sending…';
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Sending…'; }
 
-  // Look up player's user_id from player_cards
-  let playerId = window._hireTargetId;
-  if (!playerId) {
-    const { data: card } = await sb.from('player_cards').select('user_id,price').ilike('ign', playerName).limit(1).single();
-    playerId = card?.user_id || null;
-    window._hirePrice = card?.price || 0;
-  }
+  // Hard timeout safety net — if everything below stalls (network, RLS hang, etc.)
+  // we reset the button after 12s so user is never stuck on "Sending…"
+  const safetyTimer = setTimeout(() => {
+    resetBtn();
+    showToast('⚠️ Request is taking too long. Please try again.', 'warn');
+  }, 12000);
 
-  const { error } = await sb.from('hire_requests').insert({
-    hirer_id:    _bzxUser.id,
-    hirer_name:  _bzxProfile?.ign || _bzxUser.email,
-    player_id:   playerId,
-    player_name: playerName,
-    tournament:  tournament || 'Open',
-    matches:     _hireMatchCount,
-    urgency:     _hireUrgency,
-    note:        note,
-    amount:      window._hirePrice || 0,
-    status:      'pending',
-    created_at:  new Date().toISOString()
-  });
+  try {
+    // Look up player's user_id from player_cards (best-effort)
+    let playerId = window._hireTargetId;
+    if (!playerId && playerName) {
+      try {
+        const { data: card } = await sb.from('player_cards')
+          .select('user_id,price').ilike('ign', playerName).limit(1).maybeSingle();
+        playerId = card?.user_id || null;
+        window._hirePrice = card?.price || 0;
+      } catch(_) { /* not found — non-fatal */ }
+    }
 
-  btn.disabled = false; btn.textContent = '⚡ Send Hire Request';
-
-  if (error) {
-    showToast('❌ ' + (error.message || 'Error sending request'), 'warn');
-    return;
-  }
-
-  // Also create a message thread so both parties can chat
-  if (playerId) {
-    await sb.from('messages').insert({
-      sender_id:   _bzxUser.id,
-      receiver_id: playerId,
-      thread_id:   `hire_${Date.now()}`,
-      content:     `🔥 Hire Request from ${_bzxProfile?.ign || 'Hirer'}!\n\nTournament: ${tournament || 'Open'}\nMatches: ${_hireMatchCount}\nUrgency: ${_hireUrgency.toUpperCase()}\n${note ? 'Note: ' + note : ''}`,
-      type:        'hire_request',
-      read:        false,
+    // Insert hire request
+    const { error } = await sb.from('hire_requests').insert({
+      hirer_id:    _bzxUser.id,
+      hirer_name:  _bzxProfile?.ign || _bzxUser.email,
+      player_id:   playerId,
+      player_name: playerName,
+      tournament:  tournament || 'Open',
+      matches:     _hireMatchCount,
+      urgency:     _hireUrgency,
+      note:        note,
+      amount:      window._hirePrice || 0,
+      status:      'pending',
       created_at:  new Date().toISOString()
     });
-  }
 
-  closeHireModal();
-  showToast('✅ Hire request sent! Player will accept or reject soon.', 'success');
-  showHireConfirmBanner(playerName);
+    clearTimeout(safetyTimer);
+
+    if (error) {
+      resetBtn();
+      const msg = error.message || error.hint || 'Error sending request';
+      showToast('❌ ' + msg, 'warn');
+      console.error('[hire_requests insert]', error);
+      return;
+    }
+
+    // Create message thread so both parties can chat (best-effort)
+    if (playerId) {
+      try {
+        await sb.from('messages').insert({
+          sender_id:   _bzxUser.id,
+          receiver_id: playerId,
+          thread_id:   `hire_${Date.now()}`,
+          content:     `🔥 Hire Request from ${_bzxProfile?.ign || 'Hirer'}!\n\nTournament: ${tournament || 'Open'}\nMatches: ${_hireMatchCount}\nUrgency: ${_hireUrgency.toUpperCase()}\n${note ? 'Note: ' + note : ''}`,
+          type:        'hire_request',
+          read:        false,
+          created_at:  new Date().toISOString()
+        });
+      } catch(msgErr) { console.warn('[messages insert]', msgErr); }
+    }
+
+    resetBtn();
+    closeHireModal();
+    showToast('✅ Hire request sent! Player will accept or reject soon.', 'success');
+    showHireConfirmBanner(playerName);
+  } catch (err) {
+    clearTimeout(safetyTimer);
+    resetBtn();
+    showToast('❌ ' + (err?.message || 'Network error. Please try again.'), 'warn');
+    console.error('[submitHire]', err);
+  }
 }
 
 // ── IN-PAGE CONFIRMATION BANNER ──
@@ -5022,7 +4578,7 @@ function showHireConfirmBanner(playerName) {
   const banner = document.createElement('div');
   banner.id = 'hireConfirmBanner';
   banner.style.cssText = `position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:9999;background:rgba(0,255,136,.1);border:1.5px solid rgba(0,255,136,.3);border-radius:16px;padding:14px 24px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(16px);box-shadow:0 10px 40px rgba(0,0,0,.4);animation:slideDown .4s cubic-bezier(.34,1.56,.64,1)`;
-  banner.innerHTML = `<span style="font-size:1.4rem">✅</span><div><div style="font-weight:700;font-size:.9rem;color:var(--green)">Hire request sent to ${playerName}!</div><div style="font-size:.76rem;color:var(--muted);margin-top:2px">Check your <a href="/bzx-market/dashboard.html" style="color:var(--cyan);font-weight:700">Dashboard</a> to track status & messages.</div></div><button onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--soft);font-size:1rem;cursor:pointer;margin-left:8px">✕</button>`;
+  banner.innerHTML = `<span style="font-size:1.4rem">✅</span><div><div style="font-weight:700;font-size:.9rem;color:var(--green)">Hire request sent to ${playerName}!</div><div style="font-size:.76rem;color:var(--muted);margin-top:2px">Check your <a href="dashboard.html" style="color:var(--cyan);font-weight:700">Dashboard</a> to track status & messages.</div></div><button onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--soft);font-size:1rem;cursor:pointer;margin-left:8px">✕</button>`;
   document.body.appendChild(banner);
   setTimeout(() => banner.remove(), 8000);
 }
@@ -5230,5 +4786,6 @@ setTimeout(() => applyFilters(), 100);
 <style>
 @keyframes slideDown{0%{transform:translateX(-50%) translateY(-20px);opacity:0}100%{transform:translateX(-50%) translateY(0);opacity:1}}
 </style>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
