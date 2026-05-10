@@ -203,6 +203,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       <button class="nav-item" data-page="earnings" onclick="showPage('earnings',this)"><span class="nav-icon">💰</span> Earnings</button>
       <div class="nav-section">Market</div>
       <a class="nav-item" href="index.html"><span class="nav-icon">🛒</span> Browse Market</a>
+      <a class="nav-item" id="dashUpdatesBtn" href="#" onclick="return openUpdatesChannelDash(event)"><span class="nav-icon">📢</span> Updates Channel</a>
     </nav>
     <div class="sidebar-footer">
       <button class="logout-btn" onclick="doLogout()">🚪 Logout</button>
@@ -324,6 +325,20 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 const SUPABASE_URL = 'https://zcklqbdfolwoauqisezk.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpja2xxYmRmb2x3b2F1cWlzZXprIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzMTg0OTIsImV4cCI6MjA5Mzg5NDQ5Mn0.89LYcULvSa2iVKNa8VjpHCjiWifknlNQP6uWpZh5fNM';
 const BZX_UPI_ID = '9982593279@ybl'; // your UPI ID for payments
+
+// 👉 YOUR WHATSAPP CHANNEL LINK (NOT a phone number — public channel invite)
+//    Get it from: WhatsApp → Updates tab → your channel → Share link
+const WHATSAPP_CHANNEL_URL = 'https://whatsapp.com/channel/0029VbC5JUCCRs1xILik1B2U';
+
+function openUpdatesChannelDash(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  if (!WHATSAPP_CHANNEL_URL || WHATSAPP_CHANNEL_URL.includes('REPLACE_WITH_YOUR_CHANNEL_ID')) {
+    showDashToast('📢 Updates channel link not configured yet. Set WHATSAPP_CHANNEL_URL in dashboard.html', 'warn');
+    return false;
+  }
+  window.open(WHATSAPP_CHANNEL_URL, '_blank', 'noopener');
+  return false;
+}
 
 let _sb, _user, _profile;
 let _currentThreadId = null;
@@ -622,7 +637,7 @@ async function loadMyCard() {
         <div><span style="color:var(--muted)">Price/Match:</span> ₹${card.price||'Free'}</div>
         <div><span style="color:var(--muted)">Skills:</span> ${card.skills||'—'}</div>
         <div><span style="color:var(--muted)">Availability:</span> ${card.availability||'—'}</div>
-        <div><span style="color:var(--muted)">WhatsApp:</span> ${card.whatsapp||'—'}</div>
+        <div><span style="color:var(--muted)">Contact Email:</span> ${card.contact_email||card.email||'—'}</div>
         <div><span style="color:var(--muted)">Listed:</span> ${card.created_at?new Date(card.created_at).toLocaleDateString():'—'}</div>
       </div>
     </div>`;
