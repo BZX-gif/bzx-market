@@ -748,7 +748,7 @@
 
     /* ═══ RESPONSIVE ═══ */
     @media(max-width:900px){.elite-card-inner{grid-template-columns:1fr}.elite-left{border-right:none;border-bottom:1px solid rgba(255,179,71,.12)}.pricing-grid{grid-template-columns:1fr 1fr;max-width:760px}}
-    @media(max-width:768px){.topbar{padding:0 12px}.topbar-right{gap:5px}.market-hero{padding:70px 20px 50px}.discovery-bar{padding:18px 20px 16px}.players-section,.elite-showcase-wrap,.legendary-wrap,.phantom-wrap,.how-section,.reviews-section{padding:0 20px 50px}.add-section-wrap{padding:60px 20px 80px}.players-grid{grid-template-columns:repeat(2,1fr);gap:12px}.elite-left,.elite-right,.lc-left,.lc-right,.ph-left,.ph-right{padding:24px 20px}.form-2col{grid-template-columns:1fr}.disc-row1{flex-direction:column;align-items:stretch}.disc-row2{gap:6px}.sort-select{width:100%}.reset-btn{margin-left:0}.compare-panel{padding:14px 20px}.compare-slots{flex-wrap:wrap}.admin-layout{grid-template-columns:1fr}.leaderboard-btn span{display:none}.compare-toggle-btn span{display:none}.free-elite-banner{padding:0 20px}.feb-inner{padding:20px}.theme-toggle{padding:7px 10px}.theme-toggle #themeLabel{display:none}.pricing-grid{grid-template-columns:1fr}}
+    @media(max-width:768px){.topbar{padding:0 12px;height:auto;min-height:56px;flex-wrap:wrap;gap:6px;padding-top:8px;padding-bottom:8px}.topbar-right{gap:5px;flex-wrap:wrap;justify-content:flex-end;flex:1}.market-hero{padding:70px 20px 50px}.discovery-bar{padding:18px 20px 16px}.players-section,.elite-showcase-wrap,.legendary-wrap,.phantom-wrap,.how-section,.reviews-section{padding:0 20px 50px}.add-section-wrap{padding:60px 20px 80px}.players-grid{grid-template-columns:repeat(2,1fr);gap:12px}.elite-left,.elite-right,.lc-left,.lc-right,.ph-left,.ph-right{padding:24px 20px}.form-2col{grid-template-columns:1fr}.disc-row1{flex-direction:column;align-items:stretch}.disc-row2{gap:6px}.sort-select{width:100%}.reset-btn{margin-left:0}.compare-panel{padding:14px 20px}.compare-slots{flex-wrap:wrap}.admin-layout{grid-template-columns:1fr}.leaderboard-btn span{display:none}.compare-toggle-btn span{display:none}.free-elite-banner{padding:0 20px}.feb-inner{padding:20px}.theme-toggle{padding:7px 10px}.theme-toggle #themeLabel{display:none}.pricing-grid{grid-template-columns:1fr}#loginTopBtn{display:flex!important;order:-1;padding:7px 14px!important;font-size:.78rem}}
     @media(max-width:768px){#wishlistTopBtn .wl-label{display:none}}
     @media(max-width:400px){.players-grid{grid-template-columns:1fr}.pricing-grid{grid-template-columns:1fr}}
     .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s,transform .6s}
@@ -945,6 +945,10 @@
     .pb-sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:9000;background:rgba(0,0,0,.95);border-top:1.5px solid rgba(0,229,255,.25);backdrop-filter:blur(16px);transform:translateY(100%);transition:transform .4s cubic-bezier(.4,0,.2,1)}
     .pb-sticky-bar.show{transform:translateY(0)}
     .pb-sticky-inner{max-width:1300px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+    .pb-sticky-dismiss{background:transparent;border:none;color:rgba(255,255,255,.35);font-size:1.2rem;cursor:pointer;padding:4px 8px;border-radius:8px;flex-shrink:0;line-height:1;transition:color .2s}
+    .pb-sticky-dismiss:hover{color:rgba(255,255,255,.75)}
+    body.pb-bar-visible{padding-bottom:60px}
+    body.pb-bar-visible .toast-wrap{bottom:80px}
     .pb-sticky-left{display:flex;align-items:center;gap:8px;font-size:.8rem;color:var(--muted);flex-wrap:wrap}
     .pb-sticky-live{background:rgba(255,45,85,.2);border:1px solid var(--red);border-radius:50px;padding:2px 8px;font-size:.62rem;font-weight:900;color:var(--red);letter-spacing:1px;animation:pdot 1.5s infinite}
     .pb-sticky-sep{color:rgba(255,255,255,.2)}
@@ -1645,6 +1649,7 @@
         <span style="color:var(--red);font-weight:800">Only 6 slots left this month</span>
       </div>
       <button class="pb-sticky-cta" onclick="openAddModal('proboost')">⚡ Get Pro Boost — ₹29/mo</button>
+      <button class="pb-sticky-dismiss" onclick="dismissPbStickyBar()" title="Dismiss">✕</button>
     </div>
   </div>
 
@@ -2266,8 +2271,8 @@
       </div>
       <div class="ref-code-wrap">
         <span class="ref-code" id="refCode" onclick="copyRefCode()">BZX-XXXXXX</span>
-        <button class="ref-copy-btn" onclick="copyRefCode()" id="refCopyBtn">📋 Copy Code</button>
-        <button class="ref-copy-btn" style="background:rgba(37,211,102,.1);border-color:rgba(37,211,102,.3);color:var(--green)" onclick="shareRefWhatsApp()">📤 Share with Friends</button>
+        <button class="ref-copy-btn" onclick="copyRefCode()" id="refCopyBtn">📋 Coming Soon</button>
+        <button disabled class="ref-copy-btn" style="background:rgba(37,211,102,.1);border-color:rgba(37,211,102,.3);color:var(--green)" onclick="shareRefWhatsApp()">📤 Coming soon</button>
       </div>
     </div>
     <div class="ref-stats">
@@ -2289,7 +2294,7 @@
     <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)"><span>Is my payment secure?</span><span class="faq-arrow">▼</span></div><div class="faq-a"><div class="faq-a-inner">All payments are made via UPI directly. We never store payment details. Listing fees are confirmed inside your BZX Dashboard before your card goes live — no surprise charges, ever.</div></div></div>
     <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)"><span>How fast does my card go live after paying?</span><span class="faq-arrow">▼</span></div><div class="faq-a"><div class="faq-a-inner">Pro Boost and Elite cards go live within 30 minutes of UPI confirmation during active hours (9 AM – 11 PM). Legendary cards may take up to 1 hour due to custom design. Free cards appear instantly after submission.</div></div></div>
     <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)"><span>Can I cancel Pro Boost anytime?</span><span class="faq-arrow">▼</span></div><div class="faq-a"><div class="faq-a-inner">Yes. Tap the cancel button in your BZX Dashboard before your next renewal date and your card is cancelled with no questions asked. You keep the boost until your current month ends. No annual contracts, ever.</div></div></div>
-    <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)"><span>What if a player doesn't respond after I hire them?</span><span class="faq-arrow">▼</span></div><div class="faq-a"><div class="faq-a-inner">All players on BZX are verified accounts with active dashboards. If a player doesn't respond within 2 hours, open the in-app messages tab or follow our 📢 Updates Channel for support — we'll help you find an alternative match.</div></div></div>
+    <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)"><span>What if a player doesn't respond after I hire them?</span><span class="faq-arrow">▼</span></div><div class="faq-a"><div class="faq-a-inner">All players on BZX are verified accounts with active dashboards. If a player doesn't respond within 2 hours, open the in-app messages tab or follow our 📢 Updates Channel for support — we'll help you find an alternative match.<strong>or full refund</strong>.</div></div></div>
     <div class="faq-item reveal"><div class="faq-q" onclick="toggleFaq(this)"><span>How do I get my Pro Boost card looking different from the example?</span><span class="faq-arrow">▼</span></div><div class="faq-a"><div class="faq-a-inner">When you submit your Pro Boost request, include your IGN, your actual K/D and Win Rate, your role, up to 4 skill tags, and an optional contact email. Our team will build a card matching your real stats. The animated border, verified badge, and pin placement are automatic.</div></div></div>
   </div>
 </div>
@@ -2746,12 +2751,12 @@
   <div class="footer-links">
     <a href="#">Privacy Policy</a>
     <a href="#">Terms of Service</a>
-    <a href="#">Contact Us</a>
+    <a href="https://www.instagram.com/blazezonexofficial" target="_blank">Contact Us</a>
     <a href="#">FAQs</a>
   </div>
   <div class="footer-socials">
-    <a class="footer-social-btn" href="#" title="YouTube">▶</a>
-    <a class="footer-social-btn" href="#" title="Instagram">📸</a>
+    <a class="footer-social-btn" href="https://www.youtube.com/channel/UCpy3Tj8EBBjRzhqgle6Q42w" target="_blank" title="YouTube">▶</a>
+    <a class="footer-social-btn" href="https://www.instagram.com/blazezonexofficial" target="_blank" title="Instagram">📸</a>
     <a class="footer-social-btn" href="#" title="Discord">💬</a>
     <a class="footer-social-btn" href="#" id="footerUpdatesBtn" onclick="return openUpdatesChannel(event)" title="BZX Updates Channel">📢</a>
   </div>
@@ -3231,14 +3236,23 @@ const _playerSearchEl = document.getElementById('playerSearch');
 if (_playerSearchEl) {
   _playerSearchEl.addEventListener('input', () => {
     const matched = applyFilters();
-    openFilterResults(matched);
+    const q = _playerSearchEl.value.trim();
+    if (q.length > 0) {
+      openFilterResults(matched);
+    } else {
+      closeFilterResults();
+    }
   });
 }
 const _sortSelectEl = document.getElementById('sortSelect');
 if (_sortSelectEl) {
   _sortSelectEl.addEventListener('change', () => {
     const matched = applyFilters();
-    openFilterResults(matched);
+    if (_sortSelectEl.value !== 'default') {
+      openFilterResults(matched);
+    } else {
+      closeFilterResults();
+    }
   });
 }
 
@@ -3248,7 +3262,11 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.classList.add('active');
     activeFilter = btn.dataset.filter;
     const matched = applyFilters();
-    openFilterResults(matched);
+    if (activeFilter !== 'all') {
+      openFilterResults(matched);
+    } else {
+      closeFilterResults();
+    }
   });
 });
 
@@ -3258,7 +3276,11 @@ document.querySelectorAll('.role-chip').forEach(chip => {
     chip.classList.add('active');
     activeRole = chip.dataset.role;
     const matched = applyFilters();
-    openFilterResults(matched);
+    if (activeRole !== 'all') {
+      openFilterResults(matched);
+    } else {
+      closeFilterResults();
+    }
   });
 });
 
@@ -3268,7 +3290,11 @@ if (_eliteOnlyToggleEl) {
     eliteOnly = !eliteOnly;
     this.classList.toggle('active', eliteOnly);
     const matched = applyFilters();
-    openFilterResults(matched);
+    if (eliteOnly) {
+      openFilterResults(matched);
+    } else {
+      closeFilterResults();
+    }
   });
 }
 
@@ -3281,7 +3307,11 @@ if (priceRange) priceRange.addEventListener('input', () => {
   if (priceFill) priceFill.style.width = pct + '%';
   if (priceValBadge) priceValBadge.textContent = maxPrice >= 100 ? 'All Prices' : `Up to ₹${maxPrice}`;
   const matched = applyFilters();
-  openFilterResults(matched);
+  if (maxPrice < 100) {
+    openFilterResults(matched);
+  } else {
+    closeFilterResults();
+  }
 });
 
 const _resetBtnEl = document.getElementById('resetBtn');
@@ -3543,6 +3573,48 @@ function closeHireModal() {
 // ═══ ADD PLAYER MODAL ═══
 let addTier = 'starter';
 function openAddModal(tier) {
+  // ── AUTH GATE: must be logged in to add a card ──
+  if (!_bzxUser) {
+    // Show a quick login-prompt modal instead of the form
+    const overlay = document.getElementById('addModal');
+    if (overlay) {
+      // Temporarily replace modal content with login prompt
+      overlay.classList.add('show');
+      lockScroll();
+      overlay.scrollTop = 0;
+      // Hide multi-step form, show login wall
+      const stepProgress = document.getElementById('stepProgress');
+      const stepSlideWrap = document.getElementById('stepSlideWrap');
+      let addLoginWall = document.getElementById('addLoginWall');
+      if (!addLoginWall) {
+        addLoginWall = document.createElement('div');
+        addLoginWall.id = 'addLoginWall';
+        addLoginWall.style.cssText = 'text-align:center;padding:30px 10px';
+        addLoginWall.innerHTML = `
+          <div style="font-size:3rem;margin-bottom:14px">🔐</div>
+          <div style="font-family:\'Orbitron\',monospace;font-size:1.1rem;font-weight:900;margin-bottom:10px;color:var(--fire)">Login Required</div>
+          <div style="font-size:.88rem;color:var(--muted);margin-bottom:24px;line-height:1.6">You need a free BZX account to add or claim a player card.<br>It only takes 30 seconds.</div>
+          <a href="login.html" class="modal-submit" style="text-decoration:none;display:inline-block;text-align:center;margin-bottom:12px">🔐 Login / Register Free →</a>
+          <div style="margin-top:14px"><button onclick="closeAddModal()" style="background:transparent;border:none;color:var(--soft);font-size:.82rem;cursor:pointer;text-decoration:underline">Maybe later</button></div>
+        `;
+        const modalBox = overlay.querySelector('.add-modal-box');
+        if (modalBox) modalBox.appendChild(addLoginWall);
+      }
+      if (stepProgress) stepProgress.style.display = 'none';
+      if (stepSlideWrap) stepSlideWrap.style.display = 'none';
+      addLoginWall.style.display = '';
+    }
+    return;
+  }
+
+  // Restore form state if previously showing login wall
+  const stepProgress = document.getElementById('stepProgress');
+  const stepSlideWrap = document.getElementById('stepSlideWrap');
+  const addLoginWall = document.getElementById('addLoginWall');
+  if (stepProgress) stepProgress.style.display = '';
+  if (stepSlideWrap) stepSlideWrap.style.display = '';
+  if (addLoginWall) addLoginWall.style.display = 'none';
+
   addTier = tier;
   const badge = document.getElementById('addBadge');
   const badgeLabels = { elite:'⭐ Elite Card', legendary:'🔥 Legendary Card', proboost:'⚡ Pro Boost', starter:'Starter Card' };
@@ -3584,6 +3656,13 @@ function closeAddModal() {
   if (overlay && overlay.classList.contains('show')) {
     overlay.classList.remove('show');
     unlockScroll();
+    // Reset login wall in case it was shown
+    const addLoginWall = document.getElementById('addLoginWall');
+    const stepProgress = document.getElementById('stepProgress');
+    const stepSlideWrap = document.getElementById('stepSlideWrap');
+    if (addLoginWall) addLoginWall.style.display = 'none';
+    if (stepProgress) stepProgress.style.display = '';
+    if (stepSlideWrap) stepSlideWrap.style.display = '';
   }
 }
 
@@ -4322,9 +4401,17 @@ setInterval(updateCountdown, 30000);
 // Sticky urgency bar — show when user scrolls past pro boost section
 const pbSection = document.getElementById('proBoostSection');
 const pbStickyBar = document.getElementById('pbStickyBar');
+let pbStickyDismissed = false;
+function dismissPbStickyBar() {
+  pbStickyDismissed = true;
+  if (pbStickyBar) pbStickyBar.classList.remove('show');
+  document.body.classList.remove('pb-bar-visible');
+}
 if (pbSection && pbStickyBar) {
   const stickyObs = new IntersectionObserver(entries => {
-    pbStickyBar.classList.toggle('show', !entries[0].isIntersecting);
+    const shouldShow = !entries[0].isIntersecting && !pbStickyDismissed;
+    pbStickyBar.classList.toggle('show', shouldShow);
+    document.body.classList.toggle('pb-bar-visible', shouldShow);
   }, { threshold: 0 });
   stickyObs.observe(pbSection);
 }
