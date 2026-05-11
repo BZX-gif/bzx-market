@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BZX Player Market — Hire Elite Players</title>
+  <title>BZX Player Market — Add Card</title>
   <meta name="description" content="Browse and hire elite Free Fire players for your squad on BlazeZoneX Player Market.">
 
   <!-- ═══ Open Graph (Facebook, Instagram, WhatsApp, Discord, Telegram) ═══ -->
@@ -85,12 +85,6 @@
     .stat-chip{display:flex;align-items:center;gap:8px;padding:10px 20px;background:var(--glass);border:1px solid var(--line);border-radius:50px;font-size:.85rem;font-weight:600;cursor:default;transition:all .3s}
     .stat-chip:hover{border-color:rgba(255,122,24,.4);background:rgba(255,122,24,.06)}
     .stat-chip b{color:var(--fire)}
-    .primary-action-strip{max-width:1300px;margin:0 auto;padding:0 40px 34px}
-    .primary-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .primary-action-btn{display:flex;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px 18px;border-radius:18px;text-decoration:none;font-family:'Orbitron',monospace;font-size:.95rem;font-weight:800;letter-spacing:.7px;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
-    .primary-action-btn:hover{transform:translateY(-3px)}
-    .primary-action-btn.find{background:linear-gradient(135deg,rgba(0,229,255,.15),rgba(180,77,255,.12));border:1.5px solid rgba(0,229,255,.35);color:var(--cyan);box-shadow:0 18px 45px rgba(0,229,255,.13)}
-    .primary-action-btn.add{background:linear-gradient(135deg,rgba(255,122,24,.2),rgba(255,77,0,.14));border:1.5px solid rgba(255,122,24,.4);color:#ffd6bf;box-shadow:0 18px 45px rgba(255,122,24,.16)}
 
     /* ═══ LIVE ACTIVITY TICKER ═══ */
     .activity-ticker{background:rgba(0,229,255,.04);border-top:1px solid rgba(0,229,255,.1);border-bottom:1px solid rgba(0,229,255,.1);padding:10px 0;overflow:hidden;position:relative}
@@ -1204,17 +1198,6 @@
     .card-stats { margin: 0 16px; }
     .card-skills { padding: 12px 16px 0; }
     .card-footer { padding: 14px 16px; margin-top: 10px; }
-    .primary-action-strip{max-width:1300px;margin:0 auto;padding:0 40px 34px}
-    .primary-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .primary-action-btn{display:flex;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px 18px;border-radius:18px;text-decoration:none;font-family:'Orbitron',monospace;font-size:.95rem;font-weight:800;letter-spacing:.7px;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
-    .primary-action-btn:hover{transform:translateY(-3px)}
-    .primary-action-btn.find{background:linear-gradient(135deg,rgba(0,229,255,.15),rgba(180,77,255,.12));border:1.5px solid rgba(0,229,255,.35);color:var(--cyan);box-shadow:0 18px 45px rgba(0,229,255,.13)}
-    .primary-action-btn.add{background:linear-gradient(135deg,rgba(255,122,24,.2),rgba(255,77,0,.14));border:1.5px solid rgba(255,122,24,.4);color:#ffd6bf;box-shadow:0 18px 45px rgba(255,122,24,.16)}
-    @media(max-width:768px){
-      .primary-action-strip{padding:0 20px 26px}
-      .primary-action-grid{grid-template-columns:1fr}
-      .primary-action-btn{font-size:.86rem;padding:16px 12px}
-    }
   </style>
 </head>
 <body>
@@ -1237,6 +1220,7 @@
     <button class="compare-toggle-btn" id="compareToggleBtn" onclick="toggleComparePanel()">⚔️ <span>Compare</span> <span class="compare-count-badge" id="compareBadge">0</span></button>
     <button class="compare-toggle-btn" id="wishlistTopBtn" onclick="openWishlist()" style="border-color:rgba(255,45,85,.25);color:var(--red);background:rgba(255,45,85,.07)">❤️ <span class="wl-label">Saved</span> <span class="wishlist-count-badge" id="wishlistBadge">0</span></button>
     <button class="compare-toggle-btn" id="dashboardBtn" onclick="goToDashboard()" style="display:none;border-color:rgba(0,229,255,.25);color:var(--cyan);background:rgba(0,229,255,.07)">🎮 <span id="topbarIGN">Dashboard</span></button>
+    <a href="index.html" class="back-btn" style="padding:8px 14px">🏠 Home</a>
     <a href="login.html" class="back-btn" id="loginTopBtn" style="background:linear-gradient(135deg,var(--fire),var(--fire2));border:none;color:#fff;padding:0 18px">🔐 Login</a>
 
   </div>
@@ -1263,12 +1247,6 @@
     <div class="stat-chip"><b>Free</b>&nbsp;to List</div>
     <div class="stat-chip"><b>All</b>&nbsp;Tiers Available</div>
     <div class="stat-chip"><b id="hiresToday">14</b>&nbsp;Hires Today</div>
-  </div>
-</section>
-<section class="primary-action-strip">
-  <div class="primary-action-grid">
-    <a href="cards.html" class="primary-action-btn find">⚔️ Find Players</a>
-    <a href="add-card.html" class="primary-action-btn add">✨ Add Card</a>
   </div>
 </section>
 
@@ -5013,22 +4991,32 @@ setTimeout(() => applyFilters(), 100);
 </style>
 <script>
   (function () {
-    const hideOnHome = [
+    const hideOnAdd = [
+      '.trust-bar',
+      '.market-hero',
+      '.activity-ticker',
+      '.clock-wrap',
       '.discovery-bar',
       '.phantom-wrap',
       '.legendary-wrap',
       '.elite-showcase-wrap',
-      '.players-section',
+      '.proboost-section',
       '.recently-viewed',
+      '.players-section',
       '.squad-builder-section',
-      '.add-section-wrap',
+      '.how-section',
+      '.reviews-section',
+      '.faq-section',
       '.referral-banner'
     ];
-    hideOnHome.forEach((sel) => {
+    hideOnAdd.forEach((sel) => {
       document.querySelectorAll(sel).forEach((el) => {
         el.style.display = 'none';
       });
     });
+    setTimeout(() => {
+      if (typeof openAddModal === 'function') openAddModal();
+    }, 250);
   })();
 </script>
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4edd5f8ec12a48cfa682ab8261b80a79","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>

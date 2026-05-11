@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BZX Player Market — Hire Elite Players</title>
+  <title>BZX Player Market — All Free Tier Players</title>
   <meta name="description" content="Browse and hire elite Free Fire players for your squad on BlazeZoneX Player Market.">
 
   <!-- ═══ Open Graph (Facebook, Instagram, WhatsApp, Discord, Telegram) ═══ -->
@@ -85,12 +85,6 @@
     .stat-chip{display:flex;align-items:center;gap:8px;padding:10px 20px;background:var(--glass);border:1px solid var(--line);border-radius:50px;font-size:.85rem;font-weight:600;cursor:default;transition:all .3s}
     .stat-chip:hover{border-color:rgba(255,122,24,.4);background:rgba(255,122,24,.06)}
     .stat-chip b{color:var(--fire)}
-    .primary-action-strip{max-width:1300px;margin:0 auto;padding:0 40px 34px}
-    .primary-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .primary-action-btn{display:flex;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px 18px;border-radius:18px;text-decoration:none;font-family:'Orbitron',monospace;font-size:.95rem;font-weight:800;letter-spacing:.7px;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
-    .primary-action-btn:hover{transform:translateY(-3px)}
-    .primary-action-btn.find{background:linear-gradient(135deg,rgba(0,229,255,.15),rgba(180,77,255,.12));border:1.5px solid rgba(0,229,255,.35);color:var(--cyan);box-shadow:0 18px 45px rgba(0,229,255,.13)}
-    .primary-action-btn.add{background:linear-gradient(135deg,rgba(255,122,24,.2),rgba(255,77,0,.14));border:1.5px solid rgba(255,122,24,.4);color:#ffd6bf;box-shadow:0 18px 45px rgba(255,122,24,.16)}
 
     /* ═══ LIVE ACTIVITY TICKER ═══ */
     .activity-ticker{background:rgba(0,229,255,.04);border-top:1px solid rgba(0,229,255,.1);border-bottom:1px solid rgba(0,229,255,.1);padding:10px 0;overflow:hidden;position:relative}
@@ -1197,6 +1191,13 @@
   </style>
   <style>
     /* Compact card tuning without changing OG style language */
+    .players-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
+    .players-head .section-label { margin-bottom: 0; flex: 1; }
+    .create-card-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px; border-radius: 12px; text-decoration: none; font-family: 'Orbitron', monospace; font-size: .78rem; font-weight: 800; letter-spacing: .6px; background: linear-gradient(135deg,rgba(255,122,24,.22),rgba(255,77,0,.14)); border: 1.5px solid rgba(255,122,24,.4); color: #ffd6bf; transition: transform .2s ease, box-shadow .2s ease; }
+    .create-card-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(255,122,24,.22); }
+    .view-all-free-wrap{margin-top:18px;display:flex;justify-content:center}
+    .view-all-free-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 18px;border-radius:12px;text-decoration:none;font-family:'Orbitron',monospace;font-size:.78rem;font-weight:800;letter-spacing:.6px;background:linear-gradient(135deg,rgba(0,229,255,.14),rgba(180,77,255,.12));border:1.5px solid rgba(0,229,255,.35);color:var(--cyan);transition:transform .2s ease,box-shadow .2s ease}
+    .view-all-free-btn:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,229,255,.2)}
     .players-grid { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; }
     .player-card { border-radius: 20px; }
     .card-top { gap: 12px; padding: 18px 16px 12px; }
@@ -1204,16 +1205,9 @@
     .card-stats { margin: 0 16px; }
     .card-skills { padding: 12px 16px 0; }
     .card-footer { padding: 14px 16px; margin-top: 10px; }
-    .primary-action-strip{max-width:1300px;margin:0 auto;padding:0 40px 34px}
-    .primary-action-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .primary-action-btn{display:flex;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px 18px;border-radius:18px;text-decoration:none;font-family:'Orbitron',monospace;font-size:.95rem;font-weight:800;letter-spacing:.7px;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
-    .primary-action-btn:hover{transform:translateY(-3px)}
-    .primary-action-btn.find{background:linear-gradient(135deg,rgba(0,229,255,.15),rgba(180,77,255,.12));border:1.5px solid rgba(0,229,255,.35);color:var(--cyan);box-shadow:0 18px 45px rgba(0,229,255,.13)}
-    .primary-action-btn.add{background:linear-gradient(135deg,rgba(255,122,24,.2),rgba(255,77,0,.14));border:1.5px solid rgba(255,122,24,.4);color:#ffd6bf;box-shadow:0 18px 45px rgba(255,122,24,.16)}
-    @media(max-width:768px){
-      .primary-action-strip{padding:0 20px 26px}
-      .primary-action-grid{grid-template-columns:1fr}
-      .primary-action-btn{font-size:.86rem;padding:16px 12px}
+    @media (max-width: 768px) {
+      .players-head { flex-direction: column; align-items: stretch; }
+      .create-card-btn { width: 100%; font-size: .76rem; padding: 12px 14px; }
     }
   </style>
 </head>
@@ -1237,6 +1231,7 @@
     <button class="compare-toggle-btn" id="compareToggleBtn" onclick="toggleComparePanel()">⚔️ <span>Compare</span> <span class="compare-count-badge" id="compareBadge">0</span></button>
     <button class="compare-toggle-btn" id="wishlistTopBtn" onclick="openWishlist()" style="border-color:rgba(255,45,85,.25);color:var(--red);background:rgba(255,45,85,.07)">❤️ <span class="wl-label">Saved</span> <span class="wishlist-count-badge" id="wishlistBadge">0</span></button>
     <button class="compare-toggle-btn" id="dashboardBtn" onclick="goToDashboard()" style="display:none;border-color:rgba(0,229,255,.25);color:var(--cyan);background:rgba(0,229,255,.07)">🎮 <span id="topbarIGN">Dashboard</span></button>
+    <a href="index.html" class="back-btn" style="padding:8px 14px">🏠 Home</a>
     <a href="login.html" class="back-btn" id="loginTopBtn" style="background:linear-gradient(135deg,var(--fire),var(--fire2));border:none;color:#fff;padding:0 18px">🔐 Login</a>
 
   </div>
@@ -1263,12 +1258,6 @@
     <div class="stat-chip"><b>Free</b>&nbsp;to List</div>
     <div class="stat-chip"><b>All</b>&nbsp;Tiers Available</div>
     <div class="stat-chip"><b id="hiresToday">14</b>&nbsp;Hires Today</div>
-  </div>
-</section>
-<section class="primary-action-strip">
-  <div class="primary-action-grid">
-    <a href="cards.html" class="primary-action-btn find">⚔️ Find Players</a>
-    <a href="add-card.html" class="primary-action-btn add">✨ Add Card</a>
   </div>
 </section>
 
@@ -1936,7 +1925,10 @@
 </div>
 
 <div class="players-section">
-  <div class="section-label" id="gridLabel">All Players</div>
+  <div class="players-head">
+    <div class="section-label" id="gridLabel">All Players</div>
+    <a href="add-card.html" class="create-card-btn">✨ Create Card</a>
+  </div>
   <div class="players-grid" id="playersGrid">
 
     <div class="player-card tier-diamond reveal" data-tier="diamond" data-available="true" data-role="fragger" data-kd="4.8" data-wr="89" data-price="30" data-matches="320" data-skills="rush rush pro aim bermuda" data-rating="4.6" data-name="XxShadowKingxX">
@@ -2049,6 +2041,9 @@
 
   </div>
   <div class="no-results" id="noResults"><span>🔍</span>No players match your search.<br>Try different keywords or reset filters.</div>
+  <div class="view-all-free-wrap">
+    <a href="free-tier.html" class="view-all-free-btn">👀 View All Free Tier Cards</a>
+  </div>
 </div>
 
 <!-- SQUAD BUILDER -->
@@ -2980,6 +2975,31 @@ function applyFilters() {
     // Keep the returned list in the same order as the grid.
     matched.length = 0;
     visCards.forEach(c => matched.push(c));
+  }
+
+  const path = (window.location.pathname || '').toLowerCase();
+  const isCardsPreviewPage = path.endsWith('/cards.html') || path.endsWith('\\cards.html') || path === '/cards.html' || path.includes('cards.html');
+  const isFreeTierPage = path.endsWith('/free-tier.html') || path.endsWith('\\free-tier.html') || path === '/free-tier.html' || path.includes('free-tier.html');
+
+  if (isCardsPreviewPage || isFreeTierPage) {
+    const onlyFree = [];
+    matched.forEach(card => {
+      if ((card.dataset.tier || '') === 'free') onlyFree.push(card);
+    });
+
+    const limited = isCardsPreviewPage ? onlyFree.slice(0, 3) : onlyFree;
+    cards.forEach(card => { card.style.display = 'none'; });
+    limited.forEach(card => { card.style.display = ''; });
+
+    matched.length = 0;
+    limited.forEach(card => matched.push(card));
+    visible = limited.length;
+
+    const gridLabel = document.getElementById('gridLabel');
+    if (gridLabel) gridLabel.textContent = isFreeTierPage ? 'All Free Tier Players' : 'Free Tier Players';
+
+    const viewAllWrap = document.querySelector('.view-all-free-wrap');
+    if (viewAllWrap) viewAllWrap.style.display = isCardsPreviewPage ? 'flex' : 'none';
   }
 
   const nr = document.getElementById('noResults');
@@ -5013,18 +5033,18 @@ setTimeout(() => applyFilters(), 100);
 </style>
 <script>
   (function () {
-    const hideOnHome = [
-      '.discovery-bar',
-      '.phantom-wrap',
-      '.legendary-wrap',
-      '.elite-showcase-wrap',
-      '.players-section',
-      '.recently-viewed',
-      '.squad-builder-section',
-      '.add-section-wrap',
-      '.referral-banner'
+    const hideOnCards = [
+      '.trust-bar',
+      '.market-hero',
+      '.activity-ticker',
+      '.clock-wrap',
+      '.proboost-section',
+      '.how-section',
+      '.reviews-section',
+      '.faq-section',
+      '.add-section-wrap'
     ];
-    hideOnHome.forEach((sel) => {
+    hideOnCards.forEach((sel) => {
       document.querySelectorAll(sel).forEach((el) => {
         el.style.display = 'none';
       });
