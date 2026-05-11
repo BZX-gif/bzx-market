@@ -48,114 +48,15 @@
     html{scroll-behavior:smooth;overflow-x:hidden}
     body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;min-height:100vh;-webkit-font-smoothing:antialiased}
 
-    /* ═══ NEW ATTRACTIVE LOADER (v2) ═══ */
-    #bzxLoader{position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at center,#0a0510 0%,#000 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;perspective:1200px}
-    #bzxLoader.fade-out{animation:loaderFadeOut .9s cubic-bezier(.5,0,.7,1) forwards}
-    @keyframes loaderFadeOut{0%{opacity:1;filter:blur(0px)}60%{filter:blur(2px)}100%{opacity:0;transform:scale(1.08);filter:blur(8px);pointer-events:none}}
-
-    /* Animated grid floor */
-    .loader-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,122,24,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,122,24,.08) 1px,transparent 1px);background-size:60px 60px;animation:gridSlide 6s linear infinite;mask-image:radial-gradient(ellipse at center,#000 0%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse at center,#000 0%,transparent 70%);opacity:.55}
-    @keyframes gridSlide{0%{background-position:0 0}100%{background-position:60px 60px}}
-
-    /* Twinkling stars */
-    .loader-stars{position:absolute;inset:0;pointer-events:none}
-    .loader-star{position:absolute;border-radius:50%;animation:starTwinkle linear infinite}
-    @keyframes starTwinkle{0%,100%{opacity:0;transform:scale(.5)}50%{opacity:1;transform:scale(1)}}
-
-    /* Orbiting energy particles */
-    .loader-orbits{position:absolute;width:380px;height:380px;top:50%;left:50%;margin:-190px 0 0 -190px;pointer-events:none}
-    .loader-orbit{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,122,24,.08)}
-    .loader-orbit.o1{animation:orbitSpin 7s linear infinite}
-    .loader-orbit.o2{inset:30px;border-color:rgba(0,229,255,.08);animation:orbitSpin 10s linear infinite reverse}
-    .loader-orbit.o3{inset:60px;border-color:rgba(180,77,255,.08);animation:orbitSpin 13s linear infinite}
-    @keyframes orbitSpin{to{transform:rotate(360deg)}}
-    .loader-planet{position:absolute;width:14px;height:14px;border-radius:50%;top:50%;left:-7px;margin-top:-7px;box-shadow:0 0 18px currentColor;animation:planetPulse 1.6s ease-in-out infinite}
-    .loader-planet.p1{background:#ff7a18;color:#ff7a18}
-    .loader-planet.p2{background:#00e5ff;color:#00e5ff}
-    .loader-planet.p3{background:#b44dff;color:#b44dff}
-    @keyframes planetPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.4)}}
-
-    /* Hexagonal core */
-    .loader-core{position:relative;width:240px;height:240px;display:flex;align-items:center;justify-content:center;animation:coreFloat 3s ease-in-out infinite}
-    @keyframes coreFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-    .loader-hex-wrap{position:absolute;inset:0;animation:hexSpin 8s linear infinite}
-    @keyframes hexSpin{to{transform:rotate(360deg)}}
-    .loader-hex-svg{width:100%;height:100%;filter:drop-shadow(0 0 18px rgba(255,122,24,.55))}
-    .loader-hex-inner{position:absolute;inset:30px;animation:hexSpin 5s linear infinite reverse;opacity:.85}
-    .loader-hex-pulse{position:absolute;inset:0;border-radius:50%;animation:hexPulseOut 2.4s ease-out infinite;opacity:0}
-    .loader-hex-pulse.p2{animation-delay:.8s}
-    .loader-hex-pulse.p3{animation-delay:1.6s}
-    @keyframes hexPulseOut{0%{box-shadow:0 0 0 0 rgba(255,122,24,.5);opacity:1}100%{box-shadow:0 0 0 80px rgba(255,122,24,0);opacity:0}}
-
-    /* Logo center */
-    .loader-logo-wrap{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:5}
-    .loader-logo{font-family:'Orbitron',monospace;font-size:2.6rem;font-weight:900;background:linear-gradient(135deg,#ff4d00 0%,#ffb347 35%,#ffea00 50%,#ffb347 65%,#ff4d00 100%);background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:5px;animation:logoShine 2.4s linear infinite,logoBeat 1.4s ease-in-out infinite;text-shadow:0 0 30px rgba(255,122,24,.0);position:relative}
-    @keyframes logoShine{0%{background-position:200% 50%}100%{background-position:-200% 50%}}
-    @keyframes logoBeat{0%,100%{transform:scale(1);filter:drop-shadow(0 0 20px rgba(255,122,24,.5))}50%{transform:scale(1.06);filter:drop-shadow(0 0 35px rgba(255,179,71,.85))}}
-    .loader-sub{font-size:.6rem;font-weight:800;letter-spacing:6px;color:rgba(255,179,71,.75);text-transform:uppercase;margin-top:8px;animation:subFade 2s ease infinite}
-    @keyframes subFade{0%,100%{opacity:.5}50%{opacity:1}}
-    .loader-tagline{margin-top:6px;font-size:.55rem;font-weight:700;letter-spacing:3px;color:rgba(0,229,255,.6);text-transform:uppercase}
-
-    /* Progress section */
-    .loader-progress-wrap{margin-top:60px;width:320px;position:relative;z-index:5}
-    .loader-progress-track{width:100%;height:6px;background:rgba(255,255,255,.04);border-radius:50px;overflow:hidden;position:relative;border:1px solid rgba(255,122,24,.12);box-shadow:inset 0 0 8px rgba(0,0,0,.6)}
-    .loader-progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#ff4d00,#ff7a18,#ffea00,#ff7a18,#ff4d00);background-size:200% 100%;border-radius:50px;animation:progressShimmer 1.2s linear infinite;box-shadow:0 0 12px rgba(255,179,71,.7);position:relative;transition:width .25s ease}
-    .loader-progress-fill::after{content:'';position:absolute;top:0;right:0;width:30px;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.85));filter:blur(2px)}
-    @keyframes progressShimmer{0%{background-position:0%}100%{background-position:200%}}
-    .loader-progress-row{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:12px}
-    .loader-status{font-size:.7rem;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,.65);text-transform:uppercase;text-align:left;min-height:1em;flex:1;font-family:'Orbitron',monospace}
-    .loader-pct{font-size:.85rem;font-weight:900;color:#ffb347;font-family:'Orbitron',monospace;letter-spacing:1px;min-width:54px;text-align:right;text-shadow:0 0 10px rgba(255,179,71,.5)}
-
-    /* Scanlines + corner decorations */
-    .loader-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.18) 3px,rgba(0,0,0,.18) 4px);opacity:.35;z-index:6}
-    .loader-corner{position:absolute;width:48px;height:48px;border-color:rgba(255,122,24,.6);border-style:solid;animation:cornerGlow 2s ease-in-out infinite}
-    .loader-corner.tl{top:40px;left:40px;border-width:2px 0 0 2px}
-    .loader-corner.tr{top:40px;right:40px;border-width:2px 2px 0 0;animation-delay:.5s}
-    .loader-corner.bl{bottom:40px;left:40px;border-width:0 0 2px 2px;animation-delay:1s}
-    .loader-corner.br{bottom:40px;right:40px;border-width:0 2px 2px 0;animation-delay:1.5s}
-    @keyframes cornerGlow{0%,100%{box-shadow:0 0 0 rgba(255,122,24,0)}50%{box-shadow:0 0 16px rgba(255,122,24,.6)}}
-
-    /* Hud labels at corners */
-    .loader-hud{position:absolute;font-family:'Orbitron',monospace;font-size:.55rem;font-weight:700;letter-spacing:2px;color:rgba(255,122,24,.55);text-transform:uppercase;z-index:6}
-    .loader-hud.tl{top:48px;left:96px}
-    .loader-hud.tr{top:48px;right:96px;text-align:right}
-    .loader-hud.bl{bottom:48px;left:96px}
-    .loader-hud.br{bottom:48px;right:96px;text-align:right}
-    .loader-hud b{color:#ffb347}
-    .loader-hud .blink{display:inline-block;width:6px;height:6px;border-radius:50%;background:#00ff88;margin-left:6px;animation:blinkDot 1s infinite;vertical-align:middle}
-    @keyframes blinkDot{0%,100%{opacity:1}50%{opacity:.2}}
-
-    /* Energy streams */
-    .loader-stream{position:absolute;top:0;width:1px;background:linear-gradient(to bottom,transparent,rgba(255,122,24,.5),transparent);animation:streamfall linear infinite;opacity:0}
-    @keyframes streamfall{0%{top:-100%;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:100%;opacity:0}}
-
-    /* Final burst */
-    .loader-burst{position:absolute;inset:0;pointer-events:none;opacity:0}
-    .loader-burst.fire{animation:burstFire .8s ease forwards}
-    @keyframes burstFire{0%{opacity:0;transform:scale(.5)}30%{opacity:1;background:radial-gradient(ellipse at center,rgba(255,179,71,.45) 0%,rgba(255,122,24,.25) 30%,transparent 70%);transform:scale(1)}100%{opacity:0;background:radial-gradient(ellipse at center,rgba(255,179,71,.4) 0%,transparent 80%);transform:scale(2)}}
-
-    /* Tip rotator */
-    .loader-tips{position:absolute;bottom:120px;left:50%;transform:translateX(-50%);font-size:.7rem;color:rgba(255,255,255,.4);letter-spacing:1px;text-align:center;max-width:420px;padding:0 20px;z-index:5;font-style:italic}
-    .loader-tips b{color:rgba(255,179,71,.8);font-weight:700;font-style:normal}
-
-    /* Hide loader on mobile sub-elements gracefully */
-    @media (max-width:600px){
-      .loader-orbits{width:300px;height:300px;margin:-150px 0 0 -150px}
-      .loader-core{width:200px;height:200px}
-      .loader-logo{font-size:2rem;letter-spacing:3px}
-      .loader-progress-wrap{width:280px}
-      .loader-hud{font-size:.5rem}
-      .loader-hud.tl{left:24px;top:24px}
-      .loader-hud.tr{right:24px;top:24px}
-      .loader-hud.bl{left:24px;bottom:24px}
-      .loader-hud.br{right:24px;bottom:24px}
-      .loader-corner{width:32px;height:32px}
-      .loader-corner.tl,.loader-corner.tr{top:60px}
-      .loader-corner.tl,.loader-corner.bl{left:14px}
-      .loader-corner.tr,.loader-corner.br{right:14px}
-      .loader-corner.bl,.loader-corner.br{bottom:60px}
-      .loader-tips{bottom:80px;font-size:.62rem}
-    }
+    /* ═══ LOADER — minimal ═══ */
+    #bzxLoader{position:fixed;inset:0;z-index:99999;background:#050505;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px}
+    #bzxLoader.fade-out{animation:loaderFadeOut .6s ease forwards}
+    @keyframes loaderFadeOut{to{opacity:0;pointer-events:none}}
+    .loader-name{font-family:'Orbitron',monospace;font-size:clamp(1.6rem,6vw,2.8rem);font-weight:900;letter-spacing:clamp(4px,2vw,10px);background:linear-gradient(90deg,#ff4d00,#ffb347,#ff7a18);background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:nameShine 2s linear infinite,nameFadeIn .8s ease forwards;opacity:0}
+    @keyframes nameFadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes nameShine{0%{background-position:0%}100%{background-position:200%}}
+    .loader-bar-wrap{width:clamp(200px,40vw,320px);height:2px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden}
+    .loader-bar-fill{height:100%;width:0%;background:linear-gradient(90deg,#ff4d00,#ffb347);border-radius:2px;transition:width .3s ease}
     body.loading{overflow:hidden}
     .noise{position:fixed;inset:0;pointer-events:none;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");background-size:200px;opacity:.35}
 
@@ -1292,74 +1193,10 @@
 <body>
 <!-- ═══ ATTRACTIVE LOADER v2 ═══ -->
 <div id="bzxLoader">
-  <div class="loader-grid"></div>
-  <div class="loader-scan"></div>
-  <div class="loader-burst" id="loaderBurst"></div>
-  <div class="loader-stars" id="loaderStars"></div>
-
-  <div class="loader-corner tl"></div>
-  <div class="loader-corner tr"></div>
-  <div class="loader-corner bl"></div>
-  <div class="loader-corner br"></div>
-
-  <div class="loader-hud tl">SYS://BZX_BOOT<span class="blink"></span></div>
-  <div class="loader-hud tr">NODE-<b>IN-01</b> · ONLINE</div>
-  <div class="loader-hud bl">VER <b>2.4.1</b> · STABLE</div>
-  <div class="loader-hud br">SECURE LINK · <b>ENCRYPTED</b></div>
-
-  <!-- Orbits -->
-  <div class="loader-orbits">
-    <div class="loader-orbit o1"><div class="loader-planet p1"></div></div>
-    <div class="loader-orbit o2"><div class="loader-planet p2"></div></div>
-    <div class="loader-orbit o3"><div class="loader-planet p3"></div></div>
+  <div class="loader-name">BLAZEZONEX</div>
+  <div class="loader-bar-wrap">
+    <div class="loader-bar-fill" id="loaderFill"></div>
   </div>
-
-  <!-- Hexagonal Core -->
-  <div class="loader-core">
-    <div class="loader-hex-pulse"></div>
-    <div class="loader-hex-pulse p2"></div>
-    <div class="loader-hex-pulse p3"></div>
-    <div class="loader-hex-wrap">
-      <svg class="loader-hex-svg" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="hexG1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#ff4d00"/>
-            <stop offset="50%" stop-color="#ffb347"/>
-            <stop offset="100%" stop-color="#ff7a18"/>
-          </linearGradient>
-          <linearGradient id="hexG2" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#00e5ff" stop-opacity="0"/>
-            <stop offset="50%" stop-color="#00e5ff"/>
-            <stop offset="100%" stop-color="#b44dff" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <polygon points="120,18 210,68 210,172 120,222 30,172 30,68" fill="none" stroke="url(#hexG1)" stroke-width="2.5" stroke-linejoin="round" opacity=".85"/>
-        <polygon points="120,40 188,80 188,160 120,200 52,160 52,80" fill="none" stroke="rgba(255,122,24,.18)" stroke-width="1" stroke-dasharray="6 6"/>
-        <circle cx="120" cy="120" r="92" fill="none" stroke="url(#hexG2)" stroke-width="1.5" stroke-dasharray="140 440" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <div class="loader-hex-inner">
-      <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
-        <polygon points="120,60 168,90 168,150 120,180 72,150 72,90" fill="none" stroke="rgba(255,179,71,.4)" stroke-width="1" stroke-dasharray="3 5"/>
-      </svg>
-    </div>
-    <div class="loader-logo-wrap">
-      <div class="loader-logo">BZX</div>
-      <div class="loader-sub">Player Market</div>
-      <div class="loader-tagline">⚡ Free Fire · Hire · Dominate</div>
-    </div>
-  </div>
-
-  <!-- Progress -->
-  <div class="loader-progress-wrap">
-    <div class="loader-progress-track"><div class="loader-progress-fill" id="loaderFill"></div></div>
-    <div class="loader-progress-row">
-      <div class="loader-status" id="loaderStatus">Initializing system…</div>
-      <div class="loader-pct" id="loaderPct">0%</div>
-    </div>
-  </div>
-
-  <div class="loader-tips" id="loaderTips">💡 <b>Tip:</b> Press <b>bzxadmin</b> anywhere to open the secret admin panel.</div>
 </div>
 
 <div class="noise"></div>
@@ -1374,7 +1211,7 @@
     <button class="compare-toggle-btn" id="wishlistTopBtn" onclick="openWishlist()" style="border-color:rgba(255,45,85,.25);color:var(--red);background:rgba(255,45,85,.07)">❤️ <span class="wl-label">Saved</span> <span class="wishlist-count-badge" id="wishlistBadge">0</span></button>
     <button class="compare-toggle-btn" id="dashboardBtn" onclick="goToDashboard()" style="display:none;border-color:rgba(0,229,255,.25);color:var(--cyan);background:rgba(0,229,255,.07)">🎮 <span id="topbarIGN">Dashboard</span></button>
     <a href="login.html" class="back-btn" id="loginTopBtn" style="background:linear-gradient(135deg,var(--fire),var(--fire2));border:none;color:#fff;padding:0 18px">🔐 Login</a>
-    <a href="index.html" class="back-btn"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>Back</a>
+
   </div>
 </nav>
 
@@ -2270,19 +2107,7 @@
 </div>
 
 <!-- FREE ELITE BANNER -->
-<div class="free-elite-banner">
-  <div class="feb-inner reveal">
-    <div class="feb-icon">🎁</div>
-    <div class="feb-text">
-      <div class="feb-title">✅ Book Slots → Get Your Elite Card FREE</div>
-      <div class="feb-desc">Players who book <strong>Squad Elite Cup slots every week for a full month</strong> earn a <strong>free Elite Card (worth ₹30)</strong> — automatically awarded to the top continuous booker at month end.</div>
-    </div>
-    <div class="feb-badge">
-      <span class="feb-badge-main">FREE</span>
-      <span class="feb-badge-sub">Elite Card</span>
-    </div>
-  </div>
-</div>
+
 
 <!-- REFERRAL BANNER -->
 <div class="referral-banner">
@@ -2790,101 +2615,27 @@
 </footer>
 <script>
 // ═══════════════════════════════════════════════════
-//  BZX LOADER
+//  BZX LOADER — minimal
 // ═══════════════════════════════════════════════════
 (function() {
   document.body.classList.add('loading');
-  // Twinkling stars
-  const starsEl = document.getElementById('loaderStars');
-  if (starsEl) {
-    for (let i = 0; i < 140; i++) {
-      const s = document.createElement('div');
-      s.className = 'loader-star';
-      const sz = Math.random() * 2.5 + .5;
-      const colors = ['rgba(255,255,255,', 'rgba(255,179,71,', 'rgba(0,229,255,'];
-      const cBase = colors[Math.floor(Math.random() * colors.length)];
-      s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:${cBase}${(Math.random()*.5+.2).toFixed(2)});animation-duration:${(Math.random()*3+2).toFixed(1)}s;animation-delay:${(Math.random()*3).toFixed(1)}s`;
-      starsEl.appendChild(s);
-    }
-  }
-  // Energy streams
-  const loaderEl = document.getElementById('bzxLoader');
-  if (loaderEl) {
-    for (let i = 0; i < 10; i++) {
-      const stream = document.createElement('div');
-      stream.className = 'loader-stream';
-      stream.style.cssText = `left:${Math.random()*100}%;height:${Math.random()*30+20}%;animation-duration:${(Math.random()*3+2).toFixed(1)}s;animation-delay:${(Math.random()*2).toFixed(1)}s`;
-      loaderEl.appendChild(stream);
-    }
-  }
-  // Tip rotator
-  const tips = [
-    '💡 <b>Tip:</b> Press <b>bzxadmin</b> anywhere to open the secret admin panel.',
-    '🔥 <b>Pro Boost</b> players get <b>3x</b> more hire requests.',
-    '⚡ Use the <b>Compare</b> tool to evaluate up to 4 players side-by-side.',
-    '🏆 Climb the <b>Leaderboard</b> by completing more matches with high K/D.',
-    '❤️ <b>Save</b> players to your Wishlist and hire later in one tap.',
-    '🎯 Filter by role: <b>Sniper</b>, <b>IGL</b>, <b>Fragger</b>, <b>Support</b>.'
-  ];
-  const tipEl = document.getElementById('loaderTips');
-  let tipIdx = 0;
-  const tipTimer = setInterval(() => {
-    tipIdx = (tipIdx + 1) % tips.length;
-    if (tipEl) {
-      tipEl.style.opacity = '0';
-      setTimeout(() => { tipEl.innerHTML = tips[tipIdx]; tipEl.style.opacity = '1'; }, 240);
-    }
-  }, 2200);
-
-  const steps = [
-    { pct: 12, msg: 'Booting BZX core systems…' },
-    { pct: 26, msg: 'Connecting to game servers…' },
-    { pct: 42, msg: 'Loading player database…' },
-    { pct: 58, msg: 'Fetching elite cards…' },
-    { pct: 72, msg: 'Syncing live match data…' },
-    { pct: 86, msg: 'Building player market…' },
-    { pct: 96, msg: 'Almost ready…' },
-    { pct: 100, msg: 'Welcome to BZX ⚡' }
-  ];
   const fill = document.getElementById('loaderFill');
-  const status = document.getElementById('loaderStatus');
-  const pctEl = document.getElementById('loaderPct');
-  const burst = document.getElementById('loaderBurst');
-  if (fill) fill.style.transition = 'none';
-  let currentPct = 0, targetPct = 0, finished = false;
-  const totalDuration = 2800;
-  const startTime = performance.now() + 200;
-  steps.forEach((step) => {
-    const t = startTime + (step.pct / 100) * totalDuration;
-    setTimeout(() => { targetPct = step.pct; if (status) status.textContent = step.msg; }, Math.max(0, t - performance.now()));
-  });
-  function animate() {
-    if (finished) return;
-    currentPct += (targetPct - currentPct) * 0.055;
-    if (fill) fill.style.width = currentPct.toFixed(2) + '%';
-    if (pctEl) pctEl.textContent = Math.min(100, Math.round(currentPct)) + '%';
-    if (targetPct >= 100 && currentPct >= 99.5) {
-      finished = true;
-      if (fill) fill.style.width = '100%';
-      if (pctEl) pctEl.textContent = '100%';
-      clearInterval(tipTimer);
+  let pct = 0;
+  // Smoothly animate bar to 100% over ~1.4s then fade out
+  const interval = setInterval(() => {
+    pct = Math.min(pct + (Math.random() * 6 + 3), 100);
+    if (fill) fill.style.width = pct + '%';
+    if (pct >= 100) {
+      clearInterval(interval);
       setTimeout(() => {
-        if (burst) burst.classList.add('fire');
-        setTimeout(() => {
-          const loader = document.getElementById('bzxLoader');
-          if (loader) {
-            loader.classList.add('fade-out');
-            setTimeout(() => { loader.style.display = 'none'; document.body.classList.remove('loading'); }, 900);
-          }
-        }, 320);
-      }, 380);
-      return;
+        const loader = document.getElementById('bzxLoader');
+        if (loader) {
+          loader.classList.add('fade-out');
+          setTimeout(() => { loader.style.display = 'none'; document.body.classList.remove('loading'); }, 600);
+        }
+      }, 200);
     }
-    requestAnimationFrame(animate);
-  }
-  setTimeout(() => requestAnimationFrame(animate), 200);
-  // Smooth tip transitions
-  if (tipEl) tipEl.style.transition = 'opacity .25s ease';
+  }, 60);
 })();
 
 // ═══ REVEAL ═══
