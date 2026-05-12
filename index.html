@@ -768,7 +768,30 @@
     .show-more-btn .smb-arrow{transition:transform .35s}
     .show-more-btn.open .smb-arrow{transform:rotate(180deg)}
 
-    /* ═══ PRO BOOST — FULL REDESIGN ═══ */
+    /* ═══ LIST YOUR PROFILE — CLEAN CTA ═══ */
+    .list-cta-wrap{margin:0 0 60px;border-radius:28px;overflow:hidden;border:1px solid rgba(255,122,24,.18);background:linear-gradient(135deg,rgba(255,122,24,.06) 0%,rgba(255,77,0,.03) 50%,rgba(255,122,24,.06) 100%);position:relative}
+    .list-cta-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%,rgba(255,122,24,.08) 0%,transparent 60%);pointer-events:none}
+    .list-cta-inner{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;padding:50px 44px;position:relative;z-index:1}
+    .list-cta-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.72rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--fire);margin-bottom:14px}
+    .list-cta-title{font-family:'Orbitron',monospace;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:900;line-height:1.15;margin-bottom:14px;color:var(--text)}
+    .list-cta-title span{color:var(--fire)}
+    .list-cta-sub{font-size:.9rem;color:var(--muted);line-height:1.7;max-width:460px;margin-bottom:22px}
+    .list-cta-perks{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+    .list-cta-perk{display:flex;align-items:center;gap:10px;font-size:.82rem;color:rgba(255,255,255,.7);font-weight:500}
+    .perk-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;box-shadow:0 0 6px rgba(0,255,136,.5)}
+    .list-cta-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .list-cta-btn-primary{padding:14px 32px;background:linear-gradient(135deg,var(--fire),var(--fire-2));border:none;border-radius:50px;color:#fff;font-family:'Inter',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;transition:all .3s;box-shadow:0 14px 40px rgba(255,122,24,.35);letter-spacing:.3px}
+    .list-cta-btn-primary:hover{transform:translateY(-3px);box-shadow:0 20px 50px rgba(255,122,24,.5)}
+    .list-cta-btn-ghost{padding:13px 28px;background:transparent;border:1.5px solid rgba(255,255,255,.15);border-radius:50px;color:var(--muted);font-size:.88rem;font-weight:600;cursor:pointer;text-decoration:none;transition:all .25s;display:inline-flex;align-items:center}
+    .list-cta-btn-ghost:hover{border-color:var(--fire);color:var(--fire)}
+    .list-cta-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;min-width:220px}
+    .list-cta-stat{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:16px;padding:18px 16px;text-align:center;transition:border-color .2s}
+    .list-cta-stat:hover{border-color:rgba(255,122,24,.3)}
+    .lcs-val{font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:900;color:var(--fire);display:block;line-height:1}
+    .lcs-lbl{font-size:.65rem;font-weight:600;color:var(--soft);letter-spacing:1.5px;text-transform:uppercase;margin-top:6px;display:block}
+    @media(max-width:768px){.list-cta-inner{grid-template-columns:1fr;gap:28px;padding:32px 24px}.list-cta-stat-grid{grid-template-columns:repeat(4,1fr)}.list-cta-stat{padding:12px 8px}.lcs-val{font-size:1.1rem}}
+    @media(max-width:480px){.list-cta-stat-grid{grid-template-columns:1fr 1fr}}
+
     .proboost-section{max-width:1300px;margin:0 auto;padding:0 40px 60px}
     @media(max-width:768px){.proboost-section{padding:0 20px 40px}}
     .pb-section-head{text-align:center;margin-bottom:36px}
@@ -1074,36 +1097,6 @@
     .rv-chip-kd{font-size:.66rem;color:var(--fire);font-weight:700}
 
     /* ── SQUAD BUILDER ── */
-    .squad-builder-section{max-width:1300px;margin:0 auto;padding:0 40px 60px}
-    @media(max-width:768px){.squad-builder-section{padding:0 20px 40px}}
-    .sb-wrap{background:linear-gradient(145deg,rgba(0,229,255,.03),rgba(180,77,255,.02));border:1px solid rgba(0,229,255,.15);border-radius:24px;padding:30px 32px}
-    @media(max-width:768px){.sb-wrap{padding:22px 18px}}
-    .sb-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:24px}
-    .sb-title{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;color:var(--text)}
-    .sb-title span{color:var(--cyan)}
-    .sb-sub{font-size:.78rem;color:var(--muted);margin-top:4px;line-height:1.5}
-    .sb-role-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-    @media(max-width:600px){.sb-role-grid{grid-template-columns:repeat(2,1fr)}}
-    .sb-role-card{background:rgba(255,255,255,.03);border:1.5px solid var(--line);border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .25s;position:relative}
-    .sb-role-card:hover{border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.04)}
-    .sb-role-card.selected{border-color:rgba(0,229,255,.5);background:rgba(0,229,255,.07);box-shadow:0 0 20px rgba(0,229,255,.08)}
-    .sb-role-card.filled{border-color:rgba(0,255,136,.4);background:rgba(0,255,136,.06)}
-    .sb-role-icon{font-size:1.6rem;display:block;margin-bottom:6px}
-    .sb-role-name{font-size:.76rem;font-weight:700;color:var(--text)}
-    .sb-role-desc{font-size:.62rem;color:var(--soft);margin-top:2px}
-    .sb-role-filled{position:absolute;top:6px;right:8px;font-size:.58rem;font-weight:800;color:var(--green)}
-    .sb-result{background:rgba(0,0,0,.4);border-radius:14px;padding:16px;min-height:60px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-    .sb-result-empty{color:var(--soft);font-size:.8rem;width:100%;text-align:center}
-    .sb-result-player{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:8px 12px;cursor:pointer;transition:all .2s;flex:1;min-width:140px}
-    .sb-result-player:hover{border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.05)}
-    .sb-result-player img{width:32px;height:32px;border-radius:8px;flex-shrink:0}
-    .sb-result-name{font-size:.78rem;font-weight:700;color:var(--text)}
-    .sb-result-role{font-size:.64rem;color:var(--cyan)}
-    .sb-result-kd{font-size:.64rem;color:var(--fire);font-weight:700}
-    .sb-btn{padding:12px 24px;background:linear-gradient(135deg,var(--cyan),var(--purple));border:none;border-radius:12px;color:#000;font-weight:900;font-size:.85rem;cursor:pointer;transition:all .2s;margin-top:14px}
-    .sb-btn:hover{transform:scale(1.03);box-shadow:0 8px 25px rgba(0,229,255,.25)}
-
-    /* ── FAQ SECTION ── */
     .faq-section{max-width:800px;margin:0 auto;padding:0 40px 70px}
     @media(max-width:768px){.faq-section{padding:0 20px 50px}}
     .faq-head{text-align:center;margin-bottom:32px}
@@ -1119,8 +1112,6 @@
     .faq-a-inner a{color:var(--cyan);text-decoration:none}
 
     /* ── REFERRAL BANNER ── */
-    .referral-banner{max-width:1300px;margin:0 auto;padding:0 40px 50px}
-    @media(max-width:768px){.referral-banner{padding:0 20px 36px}}
     .ref-inner{background:linear-gradient(135deg,rgba(255,179,71,.08),rgba(255,45,85,.06));border:1.5px solid rgba(255,179,71,.2);border-radius:22px;padding:26px 30px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;position:relative;overflow:hidden}
     .ref-inner::before{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,179,71,.05) 50%,transparent 60%);background-size:200%;animation:eshimmer 4s ease infinite}
     .ref-icon{font-size:2.4rem;flex-shrink:0;animation:logopulse 2.5s ease infinite}
@@ -1532,397 +1523,35 @@
 
 
 <!-- ═══════════════════════════════════════════════
-     PRO BOOST — ULTIMATE CONVERSION SECTION
+     LIST YOUR PROFILE — CLEAN CTA
 ═══════════════════════════════════════════════ -->
 <div class="proboost-section" id="proBoostSection">
-
-  <!-- STICKY URGENCY BAR -->
-  <div class="pb-sticky-bar" id="pbStickyBar">
-    <div class="pb-sticky-inner">
-      <div class="pb-sticky-left">
-        <span class="pb-sticky-live">🔴 LIVE</span>
-        <span id="pbViewerCount">23 players</span> viewing this right now
-        <span class="pb-sticky-sep">·</span>
-        <span style="color:var(--red);font-weight:800">Only 6 slots left this month</span>
+  <div class="list-cta-wrap reveal">
+    <div class="list-cta-inner">
+      <div class="list-cta-left">
+        <div class="list-cta-eyebrow">🎮 For Players</div>
+        <h2 class="list-cta-title">Are You Elite Enough<br>to <span>Get Hired?</span></h2>
+        <p class="list-cta-sub">Verified players on BZX get discovered by hundreds of buyers every day. List your profile — it takes 2 minutes.</p>
+        <div class="list-cta-perks">
+          <div class="list-cta-perk"><span class="perk-dot"></span>Free to list · No commission</div>
+          <div class="list-cta-perk"><span class="perk-dot"></span>Instant hire requests to your dashboard</div>
+          <div class="list-cta-perk"><span class="perk-dot"></span>50+ active buyers daily</div>
+        </div>
+        <div class="list-cta-actions">
+          <a class="list-cta-btn-primary" href="add-card.html">⚡ List My Profile</a>
+          <a class="list-cta-btn-ghost" href="cards.html">Browse Players ↓</a>
+        </div>
       </div>
-      <button class="pb-sticky-cta" onclick="openAddModal('proboost')">⚡ Get Pro Boost — ₹29/mo</button>
-      <button class="pb-sticky-dismiss" onclick="dismissPbStickyBar()" title="Dismiss">✕</button>
-    </div>
-  </div>
-
-  <!-- HERO HEADER -->
-  <div class="pb-section-head reveal">
-    <div class="pb-section-eyebrow"><span></span> ₹1/day · No lock-in · 30-min activation</div>
-    <h2 class="pb-section-title">Stop Being <span class="pb-hl">Invisible.</span><br>Start Getting Hired.</h2>
-    <p class="pb-section-sub">Free players get skipped. Pro Boost players get hired. For the cost of one biscuit packet a day, your card sits at the top, glows in the grid, and drops hire requests into your BZX Dashboard every single month.</p>
-  </div>
-
-  <!-- LIVE TICKER -->
-  <div class="pb-ticker-wrap reveal">
-    <div class="pb-ticker">
-      <div class="pb-ticker-inner">
-        <span class="pb-tick-item">🟢 RushKing_07 just got hired · 4 min ago</span>
-        <span class="pb-tick-sep">·</span>
-        <span class="pb-tick-item">🟢 NightSniper got <strong>3 hire requests</strong> today</span>
-        <span class="pb-tick-sep">·</span>
-        <span class="pb-tick-item">🟢 BloodKing_X renewed Pro Boost for month 4</span>
-        <span class="pb-tick-sep">·</span>
-        <span class="pb-tick-item">🟢 VoidFrag earned <strong>₹420</strong> this week via BZX</span>
-        <span class="pb-tick-sep">·</span>
-        <span class="pb-tick-item">🟢 ZeroZone went live in 22 minutes after paying</span>
-        <span class="pb-tick-sep">·</span>
-        <span class="pb-tick-item">🟢 AimGodZR renewed Pro Boost · month 6 🔥</span>
-        <span class="pb-tick-sep">·</span>
-        <span class="pb-tick-item">🟢 PhantomX hired for Squad Cup within 1 hour of boosting</span>
-        <span class="pb-tick-sep">·</span>
-        <span class="pb-tick-item">🟢 StormRush gets 2–5 hires every week consistently</span>
-        <span class="pb-tick-sep">·</span>
-        <!-- duplicate for seamless loop -->
-        <span class="pb-tick-item">🟢 RushKing_07 just got hired · 4 min ago</span>
-        <span class="pb-tick-sep">·</span>
-        <span class="pb-tick-item">🟢 NightSniper got <strong>3 hire requests</strong> today</span>
-        <span class="pb-tick-sep">·</span>
-        <span class="pb-tick-item">🟢 BloodKing_X renewed Pro Boost for month 4</span>
-        <span class="pb-tick-sep">·</span>
-        <span class="pb-tick-item">🟢 VoidFrag earned <strong>₹420</strong> this week via BZX</span>
+      <div class="list-cta-right">
+        <div class="list-cta-stat-grid">
+          <div class="list-cta-stat"><span class="lcs-val">50+</span><span class="lcs-lbl">Verified Players</span></div>
+          <div class="list-cta-stat"><span class="lcs-val">₹0</span><span class="lcs-lbl">To List</span></div>
+          <div class="list-cta-stat"><span class="lcs-val">2 min</span><span class="lcs-lbl">Setup Time</span></div>
+          <div class="list-cta-stat"><span class="lcs-val">24/7</span><span class="lcs-lbl">Active Market</span></div>
+        </div>
       </div>
     </div>
   </div>
-
-  <!-- STATS ROW -->
-  <div class="pb-stats-row reveal">
-    <div class="pb-stat-item">
-      <span class="pb-stat-val" data-count="312" id="pbStat1">0</span>
-      <span class="pb-stat-lbl">Active Pro Boosters</span>
-    </div>
-    <div class="pb-stat-divider"></div>
-    <div class="pb-stat-item">
-      <span class="pb-stat-val" id="pbStat2">3×</span>
-      <span class="pb-stat-lbl">More Hire Requests</span>
-    </div>
-    <div class="pb-stat-divider"></div>
-    <div class="pb-stat-item">
-      <span class="pb-stat-val" id="pbStat3">4.9⭐</span>
-      <span class="pb-stat-lbl">Avg Pro Rating</span>
-    </div>
-    <div class="pb-stat-divider"></div>
-    <div class="pb-stat-item">
-      <span class="pb-stat-val" id="pbStat4">30</span>
-      <span class="pb-stat-lbl">Min to Go Live</span>
-    </div>
-  </div>
-
-  <!-- MAIN LAYOUT: PITCH LEFT + DEMO RIGHT -->
-  <div class="pb-main-layout reveal">
-
-    <!-- ════ LEFT: PITCH ════ -->
-    <div class="pb-pitch">
-
-      <!-- PRICE BLOCK -->
-      <div class="pb-price-block">
-        <div class="pb-price-eyebrow">One plan. Everything included. Cancel anytime.</div>
-        <div class="pb-price-anchor">
-          <div class="pb-strike">₹99</div>
-          <div class="pb-real-price">₹29</div>
-          <div class="pb-price-meta">
-            <div class="pb-price-per">per month</div>
-            <div class="pb-price-equiv">= ₹1/day 🫓 less than a samosa</div>
-          </div>
-        </div>
-        <div class="pb-launch-pill">🎉 Launch Offer — first 20 players get ₹29 locked forever</div>
-      </div>
-
-      <!-- FEATURE LIST -->
-      <div class="pb-features">
-        <div class="pb-feat">
-          <div class="pb-feat-icon" style="background:rgba(0,229,255,.1);border-color:rgba(0,229,255,.2)">🔵</div>
-          <div class="pb-feat-body">
-            <div class="pb-feat-title">Pro Verified Badge <span class="pb-feat-new">exclusive</span></div>
-            <div class="pb-feat-desc">A glowing <strong>🔵 Pro Verified</strong> badge on your card. Hirers trust verified players <strong>3× more</strong>. It's the difference between "who is this?" and "hire immediately."</div>
-          </div>
-        </div>
-        <div class="pb-feat">
-          <div class="pb-feat-icon" style="background:rgba(255,179,71,.08);border-color:rgba(255,179,71,.2)">👑</div>
-          <div class="pb-feat-body">
-            <div class="pb-feat-title">Pinned at Top of Player Grid <span class="pb-feat-new">always first</span></div>
-            <div class="pb-feat-desc">Your card is permanently sorted above every Free player. When any hirer opens the market, <strong>you are the first name they see</strong>. Free players are buried below you — always.</div>
-          </div>
-        </div>
-        <div class="pb-feat">
-          <div class="pb-feat-icon" style="background:rgba(180,77,255,.08);border-color:rgba(180,77,255,.2)">✨</div>
-          <div class="pb-feat-body">
-            <div class="pb-feat-title">Live Animated Cyan Glow Border</div>
-            <div class="pb-feat-desc">Your card has a real-time animated gradient border that sweeps and shimmers every 2 seconds. In a row of plain grey cards, <strong>yours is the one eyes jump to</strong>.</div>
-          </div>
-        </div>
-        <div class="pb-feat">
-          <div class="pb-feat-icon" style="background:rgba(0,255,136,.07);border-color:rgba(0,255,136,.18)">📊</div>
-          <div class="pb-feat-body">
-            <div class="pb-feat-title">Stats in Glowing Cyan — Not Dull Grey</div>
-            <div class="pb-feat-desc">K/D, Win Rate, Matches displayed in bold glowing cyan. Free cards show the same stats in dull grey no one notices. <strong>Your numbers demand attention.</strong></div>
-          </div>
-        </div>
-        <div class="pb-feat">
-          <div class="pb-feat-icon" style="background:rgba(37,211,102,.08);border-color:rgba(37,211,102,.2)">📱</div>
-          <div class="pb-feat-body">
-            <div class="pb-feat-title">One-Tap In-App Hire Button</div>
-            <div class="pb-feat-desc">A cyan "⚡ Hire Now" button instantly opens a hire form on BZX. <strong>Zero friction = more hires.</strong> Impulse hiring happens when it's easy — this makes it effortless.</div>
-          </div>
-        </div>
-        <div class="pb-feat">
-          <div class="pb-feat-icon" style="background:rgba(255,122,18,.08);border-color:rgba(255,122,18,.2)">🏷️</div>
-          <div class="pb-feat-body">
-            <div class="pb-feat-title">4 Skill Tags vs 3 on Free (Every Tag = More Discovery)</div>
-            <div class="pb-feat-desc">Each skill tag is searchable. 4 tags = 4 filters you match. <strong>One extra tag can be the one a hirer searches.</strong> More filters = more people finding you.</div>
-          </div>
-        </div>
-        <div class="pb-feat">
-          <div class="pb-feat-icon" style="background:rgba(255,45,85,.07);border-color:rgba(255,45,85,.18)">🌐</div>
-          <div class="pb-feat-body">
-            <div class="pb-feat-title">🟢 Online Status Pulse <span class="pb-feat-new">new</span></div>
-            <div class="pb-feat-desc">A pulsing green dot shows you're available right now. Hirers see "online" and hire <strong>immediately</strong> instead of later. This single feature drives most impulse hires.</div>
-          </div>
-        </div>
-        <div class="pb-feat">
-          <div class="pb-feat-icon" style="background:rgba(255,122,18,.07);border-color:rgba(255,122,18,.16)">🔥</div>
-          <div class="pb-feat-body">
-            <div class="pb-feat-title">"X Hires This Month" Counter on Card <span class="pb-feat-new">new</span></div>
-            <div class="pb-feat-desc">Shows how many times you've been hired this month — baked directly into your card. People hire who others hired. <strong>Social proof compounds. Success attracts success.</strong></div>
-          </div>
-        </div>
-        <div class="pb-feat">
-          <div class="pb-feat-icon" style="background:rgba(0,229,255,.07);border-color:rgba(0,229,255,.15)">🔒</div>
-          <div class="pb-feat-body">
-            <div class="pb-feat-title">Price Locked at ₹29 Forever</div>
-            <div class="pb-feat-desc">Early members keep ₹29 locked in. When we raise to ₹49 for new joiners, <strong>you still pay ₹29.</strong> The sooner you join, the more you save every single month going forward.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ROI CALCULATOR -->
-      <div class="pb-roi-calc">
-        <div class="pb-roi-title">💰 Will Pro Boost Pay For Itself?</div>
-        <div class="pb-roi-sub">Drag the sliders — see how fast it earns back ₹29</div>
-        <div class="pb-roi-slider-row">
-          <span class="pb-roi-slider-lbl">Hires/month</span>
-          <input type="range" class="pb-roi-slider" id="pbHireSlider" min="1" max="10" value="2" oninput="updateROI()">
-          <span class="pb-roi-slider-val" id="pbHireVal">2</span>
-        </div>
-        <div class="pb-roi-slider-row" style="margin-top:10px">
-          <span class="pb-roi-slider-lbl">Your charge/hire</span>
-          <input type="range" class="pb-roi-slider" id="pbPriceSlider" min="20" max="100" step="5" value="30" oninput="updateROI()">
-          <span class="pb-roi-slider-val" id="pbPriceVal">₹30</span>
-        </div>
-        <div class="pb-roi-result" id="pbROIResult">
-          <div class="pb-roi-earn"><span id="pbEarnAmt">₹60</span> <span class="pb-roi-earn-lbl">earned/month</span></div>
-          <div class="pb-roi-profit">
-            <span class="pb-roi-profit-val" id="pbProfitAmt">+₹31</span>
-            <span class="pb-roi-profit-lbl">net profit</span>
-          </div>
-        </div>
-        <div class="pb-roi-note" id="pbROINote">✅ Even 1 hire/month covers your Pro Boost completely. Everything else is pure profit.</div>
-      </div>
-
-      <!-- SCARCITY + COUNTDOWN -->
-      <div class="pb-urgency">
-        <div class="pb-urgency-icon">⏳</div>
-        <div class="pb-urgency-text">
-          <div class="pb-urgency-title">Only 20 slots per month — 14 already taken</div>
-          <div class="pb-urgency-desc">We cap Pro Boost so every boosted card gets real visibility — not buried in a sea of boosted ones. Once 20 fill, the next player waits until next month.</div>
-          <div class="pb-slots-bar" style="margin-top:12px">
-            <div class="pb-slots-label"><span>Slots claimed this month</span><span style="color:var(--red);font-weight:800">⚠️ 6 left</span></div>
-            <div class="pb-slots-track"><div class="pb-slots-fill" id="pbSlotsFill"></div></div>
-            <div class="pb-slots-note">🔴 Resets on the 1st · 23 players viewing this right now</div>
-          </div>
-          <div class="pb-countdown-row">
-            <div class="pb-countdown-label">⏰ This offer resets in:</div>
-            <div class="pb-countdown-boxes">
-              <div class="pb-cd-box"><span id="cdDays">--</span><span>days</span></div>
-              <div class="pb-cd-colon">:</div>
-              <div class="pb-cd-box"><span id="cdHours">--</span><span>hrs</span></div>
-              <div class="pb-cd-colon">:</div>
-              <div class="pb-cd-box"><span id="cdMins">--</span><span>min</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TESTIMONIALS -->
-      <div class="pb-testimonials">
-        <div class="pb-test-label">Real Pro Boosters — their review + their live card</div>
-
-        <!-- ── RUSHKING_07 ── -->
-        <div class="pb-test-block">
-          <div class="pb-test-card">
-            <div class="pb-test-top">
-              <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=PBTestRush&backgroundColor=000d1a" class="pb-test-avatar" alt="RushKing_07">
-              <div><div class="pb-test-name">RushKing_07</div><div class="pb-test-since">⚡ Pro Boost · Month 3</div></div>
-              <div class="pb-test-stars">⭐⭐⭐⭐⭐</div>
-            </div>
-            <div class="pb-test-text">"Before boost I had 0 hire requests in 2 weeks. After boost I got 4 in 3 days. The verified badge is what does it — people trust you instantly. ₹29 is nothing."</div>
-          </div>
-          <!-- Their actual Pro Boost card -->
-          <div class="pb-test-card-label">👆 That's their card below ↓</div>
-          <div class="pb-mini-card">
-            <div class="pb-mini-glow"></div>
-            <div class="pb-mini-hire-badge">🔥 4 hires this month</div>
-            <div class="pb-mini-top">
-              <div class="pb-mini-avatar-wrap">
-                <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=PBTestRush&backgroundColor=000d1a" alt="RushKing_07">
-                <div class="pb-mini-online"></div>
-              </div>
-              <div class="pb-mini-info">
-                <div class="pb-mini-verified"><span class="pb-mini-vdot"></span> Pro Verified</div>
-                <div class="pb-mini-name">RushKing_07</div>
-                <div class="pb-mini-role">Entry Fragger · Rush God</div>
-              </div>
-            </div>
-            <div class="pb-mini-stats">
-              <div class="pb-mini-stat"><span>6.1</span><span>K/D</span></div>
-              <div class="pb-mini-stat"><span>88%</span><span>Win%</span></div>
-              <div class="pb-mini-stat"><span>340</span><span>Games</span></div>
-            </div>
-            <div class="pb-mini-skills">
-              <span>Rush</span><span>Bermuda</span><span>CQC</span><span>Entry</span>
-            </div>
-            <div class="pb-mini-footer">
-              <div><span class="pb-mini-plbl">Per Match</span><span class="pb-mini-price">₹35</span></div>
-              <button class="pb-mini-btn" onclick="openAddModal('proboost')">⚡ Hire Now</button>
-            </div>
-          </div>
-        </div>
-
-
-
-        <!-- bottom nudge -->
-        <div class="pb-test-nudge">
-          Your card could be here too. <button class="pb-test-nudge-btn" onclick="openAddModal('proboost')">Get Pro Boost — ₹29/mo →</button>
-        </div>
-      </div>
-
-      <!-- COMPARISON TABLE -->
-      <div>
-        <div class="pb-compare-title">Free card vs ⚡ Pro Boost — head to head</div>
-        <div class="pb-compare-table">
-          <div class="pb-ct-header">
-            <div>Feature</div>
-            <div style="text-align:center;color:var(--soft)">😐 Free</div>
-            <div class="pb-ct-boost" style="text-align:center">⚡ Pro Boost</div>
-          </div>
-          <div class="pb-ct-row pb-ct-row-hl"><div class="pb-ct-feat">Card placement</div><div class="pb-ct-no" style="font-size:.68rem">Buried below all</div><div class="pb-ct-yes" style="font-size:.68rem">🔝 Always top</div></div>
-          <div class="pb-ct-row"><div class="pb-ct-feat">Pro Verified badge</div><div class="pb-ct-no">✗</div><div class="pb-ct-yes">🔵 Yes</div></div>
-          <div class="pb-ct-row pb-ct-row-hl"><div class="pb-ct-feat">Animated glow border</div><div class="pb-ct-no">✗</div><div class="pb-ct-yes">✨ Yes</div></div>
-          <div class="pb-ct-row"><div class="pb-ct-feat">Stat highlight color</div><div class="pb-ct-no" style="font-size:.68rem">Dull grey</div><div class="pb-ct-yes" style="font-size:.68rem">Glowing cyan</div></div>
-          <div class="pb-ct-row"><div class="pb-ct-feat">Online status pulse</div><div class="pb-ct-no">✗</div><div class="pb-ct-yes">🟢 Yes</div></div>
-          <div class="pb-ct-row pb-ct-row-hl"><div class="pb-ct-feat">Hire counter badge</div><div class="pb-ct-no">✗</div><div class="pb-ct-yes">🔥 Yes</div></div>
-          <div class="pb-ct-row"><div class="pb-ct-feat">Skill tags</div><div class="pb-ct-no" style="font-size:.68rem">3 max</div><div class="pb-ct-yes" style="font-size:.68rem">4 max</div></div>
-          <div class="pb-ct-row"><div class="pb-ct-feat">Price lock</div><div class="pb-ct-no">–</div><div class="pb-ct-yes">🔒 Forever</div></div>
-          <div class="pb-ct-row pb-ct-row-hl"><div class="pb-ct-feat">Avg monthly hires</div><div class="pb-ct-no" style="font-size:.68rem">0–1</div><div class="pb-ct-yes" style="font-size:.68rem;color:var(--green)">3–8 hires</div></div>
-        </div>
-      </div>
-
-      <!-- MAIN CTA -->
-      <div class="pb-cta-block">
-        <button class="pb-cta-btn" onclick="openAddModal('proboost')">⚡ Get My Pro Boost Card — ₹29/month</button>
-        <div class="pb-cta-sub">Pay via UPI in your Dashboard · <span>Live in 30 minutes</span> · Cancel anytime · Price locked 🔒</div>
-        <div class="pb-cta-micro">No forms. No app. Just BZX → UPI → Live.</div>
-      </div>
-
-    </div><!-- /pb-pitch -->
-
-    <!-- ════ RIGHT: DEMO CARDS SIDE-BY-SIDE ════ -->
-    <div class="pb-card-demo-wrap">
-      <div class="pb-card-demo-label">See the difference yourself</div>
-
-      <!-- FREE card (before) -->
-      <div class="pb-demo-free-card">
-        <div class="pb-demo-tag-bad">😐 Without Pro Boost — Free Card</div>
-        <div class="pb-free-card-inner">
-          <div class="pb-free-top">
-            <div class="pb-free-avatar">
-              <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=FreeDemo&backgroundColor=0a0a0a" alt="">
-            </div>
-            <div>
-              <div class="pb-free-name">YourIGN</div>
-              <div class="pb-free-role">Fragger</div>
-              <div class="pb-free-badge">Free</div>
-            </div>
-          </div>
-          <div class="pb-free-stats">
-            <div class="pb-free-stat"><span>5.2</span><span>K/D</span></div>
-            <div class="pb-free-stat"><span>84%</span><span>Win%</span></div>
-            <div class="pb-free-stat"><span>410</span><span>Games</span></div>
-          </div>
-          <div class="pb-free-note">📍 Page 3. Invisible. Zero hires.</div>
-        </div>
-      </div>
-
-      <!-- VS -->
-      <div class="pb-vs-divider">
-        <div class="pb-vs-line"></div>
-        <div class="pb-vs-badge">VS</div>
-        <div class="pb-vs-line"></div>
-      </div>
-
-      <!-- PRO BOOST card (after) -->
-      <div class="pb-card-demo-tag-good">⚡ With Pro Boost — ₹29/month</div>
-      <div class="pb-card" onclick="openAddModal('proboost')">
-        <div class="pb-card-glow"></div>
-        <div class="pb-card-glow2"></div>
-        <div class="pb-hire-counter">🔥 12 hires this month</div>
-
-        <div class="pb-card-top">
-          <div class="pb-card-avatar-wrap">
-            <div class="pb-card-avatar">
-              <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=ProBoostDemo&backgroundColor=000d1a" alt="YourIGN">
-            </div>
-            <div class="pb-online-ring"></div>
-          </div>
-          <div style="flex:1;min-width:0">
-            <div class="pb-verified-badge"><div class="pb-verified-dot"></div> Pro Verified</div>
-            <div class="pb-card-name">YourIGN</div>
-            <div class="pb-card-role">Fragger · Rush Specialist</div>
-          </div>
-        </div>
-
-        <div class="pb-card-stats">
-          <div class="pb-card-stat"><span class="pb-card-stat-val">5.2</span><span class="pb-card-stat-lbl">K/D</span></div>
-          <div class="pb-card-stat"><span class="pb-card-stat-val">84%</span><span class="pb-card-stat-lbl">Win Rate</span></div>
-          <div class="pb-card-stat"><span class="pb-card-stat-val">410</span><span class="pb-card-stat-lbl">Matches</span></div>
-        </div>
-
-        <div class="pb-card-skills">
-          <span class="pb-card-skill">Rush</span>
-          <span class="pb-card-skill">CQC God</span>
-          <span class="pb-card-skill">Bermuda</span>
-          <span class="pb-card-skill">Clutch King</span>
-        </div>
-
-        <div class="pb-card-footer">
-          <div>
-            <span style="font-size:.58rem;color:var(--soft);display:block;margin-bottom:1px">Per Match</span>
-            <span style="font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;color:var(--cyan)">₹35</span>
-          </div>
-          <button class="pb-card-hire-btn">⚡ Hire Now</button>
-        </div>
-        <div class="pb-demo-watermark">EXAMPLE</div>
-      </div>
-
-      <!-- Outcomes -->
-      <div class="pb-outcome-bad">
-        <div class="pb-outcome-icon">😔</div>
-        <div><strong>Without:</strong> buried on page 3. No glow, no badge, no online dot. Hirers scroll straight past. Zero hire requests. Zero income. You grind for free.</div>
-      </div>
-      <div class="pb-outcome-good">
-        <div class="pb-outcome-icon">🔥</div>
-        <div><strong>With Pro Boost:</strong> top of grid. Verified. Glowing. Hirers see you first, tap hire, the in-app hire form opens. One hire = ₹29–₹100. Pro Boost pays itself back on day 1.</div>
-      </div>
-
-      <button class="pb-card-get-btn" onclick="openAddModal('proboost')">⚡ I want this card — ₹29/mo</button>
-      <div style="text-align:center;font-size:.66rem;color:var(--soft);margin-top:6px">Activated via UPI in your Dashboard within 30 minutes</div>
-    </div><!-- /pb-card-demo-wrap -->
-
-  </div><!-- /pb-main-layout -->
 </div>
 
 
@@ -2051,44 +1680,6 @@
   <div class="no-results" id="noResults"><span>🔍</span>No players match your search.<br>Try different keywords or reset filters.</div>
 </div>
 
-<!-- SQUAD BUILDER -->
-<div class="squad-builder-section">
-  <div class="sb-wrap reveal">
-    <div class="sb-header">
-      <div>
-        <div class="sb-title">🎯 <span>Squad Builder</span></div>
-        <div class="sb-sub">Select the 4 roles you need. We'll pick the best available players for each slot automatically.</div>
-      </div>
-      <button class="sb-btn" onclick="buildSquad()" id="sbBuildBtn">⚡ Build My Squad</button>
-    </div>
-    <div class="sb-role-grid" id="sbRoleGrid">
-      <div class="sb-role-card" data-role="fragger" onclick="toggleSbRole(this)">
-        <span class="sb-role-icon">💥</span>
-        <div class="sb-role-name">Fragger</div>
-        <div class="sb-role-desc">Entry kills & rush</div>
-      </div>
-      <div class="sb-role-card" data-role="sniper" onclick="toggleSbRole(this)">
-        <span class="sb-role-icon">🎯</span>
-        <div class="sb-role-name">Sniper</div>
-        <div class="sb-role-desc">Long range & zone</div>
-      </div>
-      <div class="sb-role-card" data-role="igl" onclick="toggleSbRole(this)">
-        <span class="sb-role-icon">📡</span>
-        <div class="sb-role-name">IGL / Caller</div>
-        <div class="sb-role-desc">Rotations & strategy</div>
-      </div>
-      <div class="sb-role-card" data-role="allrounder" onclick="toggleSbRole(this)">
-        <span class="sb-role-icon">⚡</span>
-        <div class="sb-role-name">All-Rounder</div>
-        <div class="sb-role-desc">Flexible support</div>
-      </div>
-    </div>
-    <div class="sb-result" id="sbResult">
-      <div class="sb-result-empty">Select roles above and tap ⚡ Build My Squad</div>
-    </div>
-  </div>
-</div>
-
 <!-- HOW IT WORKS -->
 <div class="how-section">
   <div class="section-label reveal">How It Works</div>
@@ -2143,32 +1734,6 @@
 
 
 <!-- REFERRAL BANNER -->
-<div class="referral-banner">
-  <div class="ref-inner reveal">
-    <div class="ref-icon">🎁</div>
-    <div class="ref-body">
-      <div class="ref-title">⚡ Pro Boosters Only — Refer &amp; Get <span>20% Off</span> Next Month</div>
-      <div class="ref-desc">
-        Exclusive to <strong style="color:var(--cyan)">🔵 Pro Boost members</strong>. Share your unique code with a friend. When they activate Pro Boost using your code, you both get <strong>20% off your next renewal</strong> — that's just ₹23 instead of ₹29. No limit on referrals.
-        <div style="margin-top:8px;padding:8px 12px;background:rgba(255,45,85,.06);border:1px solid rgba(255,45,85,.15);border-radius:10px;font-size:.74rem;color:var(--red);font-weight:700">
-          🔒 Only available to active Pro Boost subscribers. Non-boosters cannot use this code.
-        </div>
-      </div>
-      <div class="ref-code-wrap">
-        <span class="ref-code" id="refCode" onclick="copyRefCode()">BZX-XXXXXX</span>
-        <button class="ref-copy-btn" onclick="copyRefCode()" id="refCopyBtn">📋 Coming Soon</button>
-        <button disabled class="ref-copy-btn" style="background:rgba(37,211,102,.1);border-color:rgba(37,211,102,.3);color:var(--green)" onclick="shareRefWhatsApp()">📤 Coming soon</button>
-      </div>
-    </div>
-    <div class="ref-stats">
-      <div class="ref-stat"><span class="ref-stat-val">20%</span><span class="ref-stat-lbl">You Save</span></div>
-      <div class="ref-stat"><span class="ref-stat-val">20%</span><span class="ref-stat-lbl">Friend Saves</span></div>
-      <div class="ref-stat"><span class="ref-stat-val">∞</span><span class="ref-stat-lbl">No Limit</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- FAQ -->
 <div class="faq-section">
   <div class="faq-head reveal">
     <div class="section-label">Frequently Asked Questions</div>
@@ -2634,8 +2199,9 @@
 <footer class="market-footer">
   <p>BZX Player Market · Part of <a href="index.html">BlazeZoneX</a> · Built For Pressure 🔥</p>
   <div class="footer-links">
-    <a href="#">Privacy Policy</a>
-    <a href="#">Terms of Service</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Service</a>
+    <a href="refund-policy.html">Refund Policy</a>
     <a href="https://www.instagram.com/blazezonexofficial" target="_blank">Contact Us</a>
     <a href="#">FAQs</a>
   </div>
