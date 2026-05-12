@@ -232,13 +232,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <nav class="sidebar-nav">
       <div class="nav-section">Main</div>
       <button class="nav-item active" data-page="overview" onclick="showPage('overview',this)"><span class="nav-icon">🏠</span> Overview</button>
-      <button class="nav-item" data-page="hires" onclick="showPage('hires',this)"><span class="nav-icon">⚡</span> Hire Requests <span class="nav-badge" id="hiresBadge" style="display:none">0</span></button>
+      <button class="nav-item" data-page="hires" onclick="showPage('bookings',this)"><span class="nav-icon">⚡</span> Booking Requests <span class="nav-badge" id="hiresBadge" style="display:none">0</span></button>
       <button class="nav-item" data-page="messages" onclick="showPage('messages',this)"><span class="nav-icon">💬</span> Messages <span class="nav-badge" id="msgsBadge" style="display:none">0</span></button>
       <div class="nav-section">My Card</div>
       <button class="nav-item" data-page="mycard" onclick="showPage('mycard',this)"><span class="nav-icon">🎴</span> My Card</button>
       <button class="nav-item" data-page="earnings" onclick="showPage('earnings',this)"><span class="nav-icon">💰</span> Earnings</button>
       <div class="nav-section">Market</div>
-      <a class="nav-item" href="index.html"><span class="nav-icon">🛒</span> Browse Market</a>
+      <a class="nav-item" href="index.html"><span class="nav-icon">🛒</span> Browse Roster</a>
       <a class="nav-item" id="dashUpdatesBtn" href="#" onclick="return openUpdatesChannelDash(event)"><span class="nav-icon">📢</span> Updates Channel</a>
     </nav>
     <div class="sidebar-footer">
@@ -263,22 +263,22 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="page-sub">Here's what's happening with your BZX account today.</div>
       </div>
       <div class="stat-cards" id="overviewStats">
-        <div class="stat-card"><div class="stat-card-glow" style="background:rgba(255,122,24,.2)"></div><div class="stat-card-icon">⚡</div><div class="stat-card-val" id="statPending">—</div><div class="stat-card-lbl">Pending Hires</div></div>
+        <div class="stat-card"><div class="stat-card-glow" style="background:rgba(255,122,24,.2)"></div><div class="stat-card-icon">⚡</div><div class="stat-card-val" id="statPending">—</div><div class="stat-card-lbl">Pending Bookings</div></div>
         <div class="stat-card"><div class="stat-card-glow" style="background:rgba(0,255,136,.15)"></div><div class="stat-card-icon">✅</div><div class="stat-card-val" id="statAccepted">—</div><div class="stat-card-lbl">Accepted</div></div>
         <div class="stat-card"><div class="stat-card-glow" style="background:rgba(0,229,255,.15)"></div><div class="stat-card-icon">💰</div><div class="stat-card-val" id="statEarnings">—</div><div class="stat-card-lbl">Total Earned</div></div>
         <div class="stat-card"><div class="stat-card-glow" style="background:rgba(180,77,255,.15)"></div><div class="stat-card-icon">💬</div><div class="stat-card-val" id="statMsgs">—</div><div class="stat-card-lbl">Messages</div></div>
       </div>
       <div class="section-card">
-        <div class="section-card-header"><div class="section-card-title">⚡ Recent Hire Requests</div><button class="section-card-action" onclick="showPage('hires',document.querySelector('[data-page=hires]'))">View All →</button></div>
+        <div class="section-card-header"><div class="section-card-title">⚡ Recent Booking Requests</div><button class="section-card-action" onclick="showPage('bookings',document.querySelector('[data-page=bookings]'))">View All →</button></div>
         <div class="section-card-body" id="recentHiresBody"><div class="dash-loader"><div class="dash-spinner"></div> Loading…</div></div>
       </div>
     </div>
 
-    <!-- ── HIRE REQUESTS PAGE ── -->
+    <!-- ── BOOKING REQUESTS PAGE ── -->
     <div class="dash-page" id="page-hires">
       <div class="page-header">
-        <div class="page-title">⚡ Hire Requests</div>
-        <div class="page-sub">Players wanting to hire you. Accept to confirm, reject to decline.</div>
+        <div class="page-title">⚡ Booking Requests</div>
+        <div class="page-sub">Players wanting to book you. Accept to confirm, reject to decline.</div>
       </div>
       <div id="hiresBody"><div class="dash-loader"><div class="dash-spinner"></div> Loading…</div></div>
     </div>
@@ -287,12 +287,12 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="dash-page" id="page-messages">
       <div class="page-header">
         <div class="page-title">💬 Messages</div>
-        <div class="page-sub">Direct messages with hirers and players.</div>
+        <div class="page-sub">Direct messages with clients and players.</div>
       </div>
       <div class="msg-layout section-card" style="padding:0">
         <div class="msg-list">
           <div class="msg-list-header">Conversations</div>
-          <div id="msgThreadList"><div class="empty-state"><div class="empty-state-icon">💬</div><div class="empty-state-title">No conversations yet</div><div class="empty-state-sub">Hire requests will create message threads here.</div></div></div>
+          <div id="msgThreadList"><div class="empty-state"><div class="empty-state-icon">💬</div><div class="empty-state-title">No conversations yet</div><div class="empty-state-sub">Book requests will create message threads here.</div></div></div>
         </div>
         <div class="msg-chat">
           <div class="msg-chat-header">
@@ -321,7 +321,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="dash-page" id="page-earnings">
       <div class="page-header">
         <div class="page-title">💰 Earnings</div>
-        <div class="page-sub">Track your income from accepted hires.</div>
+        <div class="page-sub">Track your income from accepted bookings.</div>
       </div>
       <div id="earningsBody"><div class="dash-loader"><div class="dash-spinner"></div> Loading…</div></div>
     </div>
@@ -349,13 +349,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   <nav class="sidebar-nav" style="flex:1">
     <div class="nav-section">Main</div>
     <button class="nav-item active" data-drawer-page="overview" onclick="showPageDrawer('overview',this)"><span class="nav-icon">🏠</span> Overview</button>
-    <button class="nav-item" data-drawer-page="hires" onclick="showPageDrawer('hires',this)"><span class="nav-icon">⚡</span> Hire Requests <span class="nav-badge" id="hiresBadge2" style="display:none">0</span></button>
+    <button class="nav-item" data-drawer-page="hires" onclick="showPageDrawer('bookings',this)"><span class="nav-icon">⚡</span> Booking Requests <span class="nav-badge" id="hiresBadge2" style="display:none">0</span></button>
     <button class="nav-item" data-drawer-page="messages" onclick="showPageDrawer('messages',this)"><span class="nav-icon">💬</span> Messages <span class="nav-badge" id="msgsBadge2" style="display:none">0</span></button>
     <div class="nav-section">My Card</div>
     <button class="nav-item" data-drawer-page="mycard" onclick="showPageDrawer('mycard',this)"><span class="nav-icon">🎴</span> My Card</button>
     <button class="nav-item" data-drawer-page="earnings" onclick="showPageDrawer('earnings',this)"><span class="nav-icon">💰</span> Earnings</button>
     <div class="nav-section">Market</div>
-    <a class="nav-item" href="index.html"><span class="nav-icon">🛒</span> Browse Market</a>
+    <a class="nav-item" href="index.html"><span class="nav-icon">🛒</span> Browse Roster</a>
     <a class="nav-item" href="#" onclick="return openUpdatesChannelDash(event)"><span class="nav-icon">📢</span> Updates Channel</a>
   </nav>
   <div class="sidebar-footer">
@@ -368,8 +368,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   <button class="bn-item active" id="bn-overview" onclick="showPageMob('overview')">
     <span class="bn-icon">🏠</span><span>Home</span>
   </button>
-  <button class="bn-item" id="bn-hires" onclick="showPageMob('hires')">
-    <span class="bn-icon">⚡</span><span>Hires</span>
+  <button class="bn-item" id="bn-hires" onclick="showPageMob('bookings')">
+    <span class="bn-icon">⚡</span><span>Bookings</span>
     <div class="bn-dot" id="bnDotHires"></div>
   </button>
   <button class="bn-item" id="bn-messages" onclick="showPageMob('messages')">
@@ -389,7 +389,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   <div class="pay-box">
     <button class="pay-close" onclick="closePayModal()">✕</button>
     <div class="pay-title">💳 Complete Payment</div>
-    <div class="pay-sub">Your hire has been accepted! Complete payment to confirm the match.</div>
+    <div class="pay-sub">Your book has been accepted! Complete payment to confirm the match.</div>
     <div class="pay-amount" id="payAmount">₹0</div>
     <div class="pay-upi-box">
       <div class="pay-upi-id" id="payUpiId">bzx@upi</div>
@@ -399,9 +399,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       <div class="pay-step"><div class="pay-step-num">1</div><span>Open any UPI app (GPay, PhonePe, Paytm)</span></div>
       <div class="pay-step"><div class="pay-step-num">2</div><span>Send <strong id="payAmountSmall">₹0</strong> to the UPI ID above</span></div>
       <div class="pay-step"><div class="pay-step-num">3</div><span>Screenshot your payment & share in the message thread</span></div>
-      <div class="pay-step"><div class="pay-step-num">4</div><span>Click "I've Paid" below — your hire is confirmed!</span></div>
+      <div class="pay-step"><div class="pay-step-num">4</div><span>Click "I've Paid" below — your book is confirmed!</span></div>
     </div>
-    <button class="pay-confirm-btn" id="payConfirmBtn" onclick="confirmPayment()">✅ I've Paid — Confirm Hire</button>
+    <button class="pay-confirm-btn" id="payConfirmBtn" onclick="confirmPayment()">✅ I've Paid — Confirm Book</button>
   </div>
 </div>
 
@@ -523,7 +523,7 @@ function showPage(page, btn) {
   document.getElementById('page-' + page)?.classList.add('active');
   if (btn) btn.classList.add('active');
   // Lazy load page data
-  if (page === 'hires') loadHires();
+  if (page === 'bookings') loadHires();
   if (page === 'messages') loadMessages();
   if (page === 'mycard') loadMyCard();
   if (page === 'earnings') loadEarnings();
@@ -531,39 +531,39 @@ function showPage(page, btn) {
 
 // ── OVERVIEW ──
 async function loadOverview() {
-  // Count pending hires for this player
-  const { data: hires } = await _sb.from('hire_requests').select('*').eq('player_id', _user.id);
-  const pending = (hires||[]).filter(h=>h.status==='pending').length;
-  const accepted = (hires||[]).filter(h=>h.status==='accepted').length;
-  const totalEarned = (hires||[]).filter(h=>h.status==='paid').reduce((s,h)=>s+(h.amount||0),0);
+  // Count pending bookings for this player
+  const { data: bookings } = await _sb.from('hire_requests').select('*').eq('player_id', _user.id);
+  const pending = (bookings||[]).filter(h=>h.status==='pending').length;
+  const accepted = (bookings||[]).filter(h=>h.status==='accepted').length;
+  const totalEarned = (bookings||[]).filter(h=>h.status==='paid').reduce((s,h)=>s+(h.amount||0),0);
   const { count: msgCount } = await _sb.from('messages').select('*',{count:'exact',head:true}).eq('receiver_id',_user.id).eq('read',false);
   document.getElementById('statPending').textContent = pending;
   document.getElementById('statAccepted').textContent = accepted;
   document.getElementById('statEarnings').textContent = '₹' + totalEarned;
   document.getElementById('statMsgs').textContent = msgCount || 0;
-  if (pending > 0) { const b = document.getElementById('hiresBadge'); b.textContent = pending; b.style.display = ''; }
+  if (pending > 0) { const b = document.getElementById(' M341 '); b.textContent = pending; b.style.display = ''; }
   if (msgCount > 0) { const b = document.getElementById('msgsBadge'); b.textContent = msgCount; b.style.display = ''; }
   syncBadges();
-  // Recent hires
-  const recent = (hires||[]).slice(0,3);
+  // Recent bookings
+  const recent = (bookings||[]).slice(0,3);
   renderHireList('recentHiresBody', recent, true);
 }
 
-// ── HIRES ──
+// ── BOOKINGS ──
 async function loadHires() {
-  const { data: hires } = await _sb.from('hire_requests')
-    .select('*, hirer:hirer_id(ign,email)')
+  const { data: bookings } = await _sb.from('hire_requests')
+    .select('*, client:hirer_id(ign,email)')
     .eq('player_id', _user.id)
     .order('created_at', { ascending: false });
-  renderHireList('hiresBody', hires||[], false);
+  renderHireList('hiresBody', bookings||[], false);
 }
 
-function renderHireList(containerId, hires, compact) {
+function renderHireList(containerId, bookings, compact) {
   const el = document.getElementById(containerId);
   if (!el) return;
-  if (!hires.length) { el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">⚡</div><div class="empty-state-title">No hire requests yet</div><div class="empty-state-sub">When someone hires you from the market, they'll appear here.</div></div>`; return; }
-  el.innerHTML = hires.map(h => {
-    const hirerName = h.hirer?.ign || h.hirer_name || 'Unknown Player';
+  if (!bookings.length) { el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">⚡</div><div class="empty-state-title">No booking requests yet</div><div class="empty-state-sub">When someone bookings you from the roster, they'll appear here.</div></div>`; return; }
+  el.innerHTML = bookings.map(h => {
+    const hirerName = h.client?.ign || h.hirer_name || 'Unknown Player';
     const hirerSeed = hirerName.replace(/\s+/g,'');
     const actions = h.status === 'pending'
       ? `<button class="btn-accept" onclick="acceptHire('${h.id}','${hirerName}','${h.hirer_id||''}',${h.amount||0})">✅ Accept</button><button class="btn-reject" onclick="rejectHire('${h.id}')">✗ Reject</button>`
@@ -586,23 +586,23 @@ function renderHireList(containerId, hires, compact) {
 async function acceptHire(hireId, hirerName, hirerId, amount) {
   const { error } = await _sb.from('hire_requests').update({ status:'accepted', updated_at: new Date().toISOString() }).eq('id', hireId);
   if (error) { showDashToast('Error: ' + error.message, 'error'); return; }
-  // Send message to hirer with payment details
+  // Send message to client with payment details
   if (hirerId) {
     await _sb.from('messages').insert({
       sender_id: _user.id, receiver_id: hirerId, thread_id: hireId,
-      content: `✅ Hire Accepted! I've confirmed your request. Please complete the payment of ₹${amount} to proceed.\n\n💳 UPI ID: ${BZX_UPI_ID}\n\nAfter payment, share the screenshot here and we're good to go! 🔥`,
+      content: `✅ Book Accepted! I've confirmed your request. Please complete the payment of ₹${amount} to proceed.\n\n💳 UPI ID: ${BZX_UPI_ID}\n\nAfter payment, share the screenshot here and we're good to go! 🔥`,
       created_at: new Date().toISOString(), read: false,
       type: 'system_accept'
     });
   }
-  showDashToast('✅ Hire accepted! Payment details sent to hirer.', 'success');
+  showDashToast('✅ Book accepted! Payment details sent to client.', 'success');
   loadHires(); loadOverview();
 }
 
 async function rejectHire(hireId) {
   const { error } = await _sb.from('hire_requests').update({ status:'rejected', updated_at: new Date().toISOString() }).eq('id', hireId);
   if (error) { showDashToast('Error: ' + error.message, 'error'); return; }
-  showDashToast('Hire rejected.', 'error');
+  showDashToast('Book rejected.', 'error');
   loadHires(); loadOverview();
 }
 
@@ -623,7 +623,7 @@ async function confirmPayment() {
   await _sb.from('hire_requests').update({ status:'paid', paid_at: new Date().toISOString() }).eq('id', _currentPayHireId);
   closePayModal();
   showDashToast('🎉 Payment confirmed! Match is locked in. GL HF!', 'success');
-  btn.disabled = false; btn.textContent = '✅ I\'ve Paid — Confirm Hire';
+  btn.disabled = false; btn.textContent = '✅ I\'ve Paid — Confirm Book';
   loadHires(); loadOverview();
 }
 
@@ -650,7 +650,7 @@ async function loadMessages() {
     return `<div class="msg-thread ${_currentThreadId===tid?'active':''}" onclick="openThread('${tid}','${otherId}')">
       <div class="msg-thread-avatar"><img src="https://api.dicebear.com/7.x/bottts/svg?seed=${otherId}" alt="" onerror="this.src='https://api.dicebear.com/7.x/adventurer/svg?seed=${otherId}'"></div>
       <div style="flex:1;min-width:0">
-        <div style="display:flex;align-items:center;gap:6px"><div class="msg-thread-name">Hirer</div>${unread?`<div class="msg-unread"></div>`:''}</div>
+        <div style="display:flex;align-items:center;gap:6px"><div class="msg-thread-name">Client</div>${unread?`<div class="msg-unread"></div>`:''}</div>
         <div class="msg-thread-preview">${last.content?.slice(0,40)||'...'}</div>
       </div>
       <div class="msg-thread-time">${timeAgo(last.created_at)}</div>
@@ -701,9 +701,9 @@ function subscribeRealtime() {
   if (!_sb || !_user) return;
   _realtimeChannel = _sb.channel('bzx_realtime')
     .on('postgres_changes', { event:'INSERT', schema:'public', table:'hire_requests', filter:`player_id=eq.${_user.id}` }, payload => {
-      showDashToast('⚡ New hire request!', 'success');
+      showDashToast('⚡ New booking request!', 'success');
       loadOverview();
-      if (document.getElementById('page-hires').classList.contains('active')) loadHires();
+      if (document.getElementById('page- M379 ').classList.contains('active')) loadHires();
     })
     .on('postgres_changes', { event:'INSERT', schema:'public', table:'messages', filter:`receiver_id=eq.${_user.id}` }, payload => {
       showDashToast('💬 New message received!', 'success');
@@ -720,7 +720,7 @@ async function loadMyCard() {
   const el = document.getElementById('myCardBody');
   const { data: card } = await _sb.from('player_cards').select('*').eq('user_id', _user.id).single();
   if (!card) {
-    el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🎴</div><div class="empty-state-title">No card yet</div><div class="empty-state-sub">Go to the market and submit your listing to create your card.</div><br><a href="index.html" style="color:var(--fire);font-weight:700;font-size:.84rem">→ Go to Market</a></div>`;
+    el.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🎴</div><div class="empty-state-title">No card yet</div><div class="empty-state-sub">Go to the roster and submit your listing to create your card.</div><br><a href="index.html" style="color:var(--fire);font-weight:700;font-size:.84rem">→ Go to Roster</a></div>`;
     return;
   }
   const seed = (card.ign||'player').replace(/\s+/g,'');
@@ -762,15 +762,15 @@ async function loadEarnings() {
   el.innerHTML = `
     <div class="stat-cards">
       <div class="stat-card"><div class="stat-card-icon">💰</div><div class="stat-card-val" style="color:var(--green)">₹${total}</div><div class="stat-card-lbl">Total Earned</div></div>
-      <div class="stat-card"><div class="stat-card-icon">✅</div><div class="stat-card-val">${(paid||[]).length}</div><div class="stat-card-lbl">Completed Hires</div></div>
+      <div class="stat-card"><div class="stat-card-icon">✅</div><div class="stat-card-val">${(paid||[]).length}</div><div class="stat-card-lbl">Completed Bookings</div></div>
     </div>
     <div class="section-card">
       <div class="section-card-header"><div class="section-card-title">💰 Payment History</div></div>
       <div class="section-card-body">
         ${(paid||[]).length ? paid.map(h => `<div class="hire-req">
-          <div class="hire-req-body"><div class="hire-req-name">${h.hirer_name||'Hirer'}</div><div class="hire-req-meta">${h.tournament||'—'} · ${timeAgo(h.paid_at||h.created_at)}</div></div>
+          <div class="hire-req-body"><div class="hire-req-name">${h.hirer_name||'Client'}</div><div class="hire-req-meta">${h.tournament||'—'} · ${timeAgo(h.paid_at||h.created_at)}</div></div>
           <span class="hire-req-badge badge-paid">₹${h.amount||0} PAID</span>
-        </div>`).join('') : `<div class="empty-state"><div class="empty-state-icon">💰</div><div class="empty-state-title">No payments yet</div><div class="empty-state-sub">Accepted and completed hires will appear here.</div></div>`}
+        </div>`).join('') : `<div class="empty-state"><div class="empty-state-icon">💰</div><div class="empty-state-title">No payments yet</div><div class="empty-state-sub">Accepted and completed bookings will appear here.</div></div>`}
       </div>
     </div>`;
 }
@@ -815,13 +815,13 @@ function closeDrawer() {
   document.body.style.overflow = '';
 }
 function showPageDrawer(page, btn) {
-  showPage(page, document.querySelector('[data-page="'+page+'"]'));
+  showPage(page, document.querySelector('[ MASK_303 ]'));
   document.querySelectorAll('[data-drawer-page]').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   closeDrawer();
 }
 function showPageMob(page) {
-  showPage(page, document.querySelector('[data-page="'+page+'"]'));
+  showPage(page, document.querySelector('[ MASK_304 ]'));
   document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
   const bn = document.getElementById('bn-'+page);
   if (bn) bn.classList.add('active');
@@ -829,12 +829,12 @@ function showPageMob(page) {
 
 // sync badges to bottom nav dots
 function syncBadges() {
-  const hBadge = document.getElementById('hiresBadge');
+  const hBadge = document.getElementById(' M382 ');
   const mBadge = document.getElementById('msgsBadge');
-  document.getElementById('bnDotHires').classList.toggle('show', hBadge && hBadge.style.display !== 'none');
+  document.getElementById(' M383 ').classList.toggle('show', hBadge && hBadge.style.display !== 'none');
   document.getElementById('bnDotMsgs').classList.toggle('show', mBadge && mBadge.style.display !== 'none');
   // mirror to drawer
-  const hb2 = document.getElementById('hiresBadge2');
+  const hb2 = document.getElementById(' M384 ');
   const mb2 = document.getElementById('msgsBadge2');
   if (hb2 && hBadge) { hb2.textContent = hBadge.textContent; hb2.style.display = hBadge.style.display; }
   if (mb2 && mBadge) { mb2.textContent = mBadge.textContent; mb2.style.display = mBadge.style.display; }
